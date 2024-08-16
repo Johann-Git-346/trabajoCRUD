@@ -1,5 +1,7 @@
 from ControladorInicio import Controlador
+from BaseInicio import Crear_Conexion
 
-if __name__ == "__main__":
-    controlador = Controlador(conexion=None)
-    controlador.iniciar()
+#PRINCIPAL
+conexion = Crear_Conexion.conexionBaseDeDatos()
+controlador = Controlador(conexion)
+controlador.iniciar()
