@@ -61,7 +61,7 @@ class VistaUsuario:
         nombre_usuario = self.entry_nombre_usuario.get()
         contrasena = self.entry_contrasena.get()
         if self.controlador.iniciar_sesion(nombre_usuario, contrasena):
-            self.root.destroy()  # Cierra la ventana principal si la autenticación es exitosa
+            self.root.destroy()  
             self.mostrar_ventana_bienvenida()
 
     def mostrar_ventana_bienvenida(self):

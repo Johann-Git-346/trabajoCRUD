@@ -1,9 +1,9 @@
-from modelo import ModeloUsuario
-from vista import VistaUsuario
+from ModeloInicio import ModeloUsuario
+from VistaInicio import VistaUsuario
 
 class Controlador:
-    def __init__(self):
-        self.modelo = ModeloUsuario()
+    def __init__(self, conexion):
+        self.modelo = ModeloUsuario(conexion)
         self.vista = VistaUsuario(self)
 
     def iniciar(self):
