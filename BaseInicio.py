@@ -8,13 +8,10 @@ class Crear_Conexion:
                 host="localhost",
                 user="root",
                 password="",
-                database="principal",
+                database="principal"
             )
             print("Conexión correcta")
             return conexion
         except mysql.connector.Error as e:
             print(f"Error en la conexión: {e}")
             return None
-
-# Uso de la clase para obtener la conexión
-conexion = Crear_Conexion.conexionBaseDeDatos()

@@ -1,7 +1,10 @@
 from ControladorInicio import Controlador
 from BaseInicio import Crear_Conexion
 
-#PRINCIPAL
+# PRINCIPAL
 conexion = Crear_Conexion.conexionBaseDeDatos()
-controlador = Controlador(conexion)
-controlador.iniciar()
+if conexion:
+    controlador = Controlador(conexion)
+    controlador.iniciar()
+else:
+    print("No se pudo establecer conexión con la base de datos.")
