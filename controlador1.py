@@ -11,13 +11,13 @@ class Controlador:
 
     def registrar(self, nombre_usuario, contrasena):
         if self.modelo.registrar_usuario(nombre_usuario, contrasena):
-            self.vista.mostrar_mensaje("Registro exitoso.")
+            self.vista.mostrarMensajeExitoso()
         else:
-            self.vista.mostrar_mensaje("El nombre de usuario ya está registrado.")
+            self.vista.mostrarMensajeRegistrado()
 
     def iniciar_sesion(self, nombre_usuario, contrasena):
         if self.modelo.autenticar_usuario(nombre_usuario, contrasena):
             return True
         else:
-            self.vista.mostrar_mensaje("Nombre de usuario o contraseña incorrectos.")
+            self.vista.mostrarMensajeError()
             return False
