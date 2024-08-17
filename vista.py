@@ -71,6 +71,15 @@ class VistaUsuario:
             self.root.destroy()  
             self.mostrarVentanaProductos()
 
+    def mostarMensajeExitoso(self):
+        messagebox.showinfo("info","Registro exitoso.")
+
+    def mostarMensajeRegistrado(self):
+        messagebox.showinfo("info","El nombre de usuario ya está registrado.")
+
+    def mostarMensajeError(self):
+        messagebox.showerror("Error","Usuario o Contraseña incorrectos")
+
     def mostrarVentanaProductos(self):
         app = Davista()
 
