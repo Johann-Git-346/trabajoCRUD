@@ -6,7 +6,7 @@ from io import BytesIO
 class Davista:
     def __init__(self, root):
         self.root = root
-        self.root.title("Nombre de la Empresa")
+        self.root.title("TecnoNube")
         self.root.geometry("800x600")
 
         self.create_top_frame()
@@ -20,12 +20,19 @@ class Davista:
         self.frame_top = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
         self.frame_top.pack(side=tk.TOP, fill=tk.X)
 
-        company_name = tk.Label(self.frame_top, text="Nombre de la Empresa", font=("Arial", 24))
+        # Añadir un widget de Frame central vacío para centrar los otros widgets
+        spacer_left = tk.Frame(self.frame_top)
+        spacer_left.pack(side=tk.LEFT, expand=True)
+
+        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24), anchor="center")
         company_name.pack(side=tk.LEFT, padx=10, pady=10)
 
-        # Logo (espacio reservado)
         logo = tk.Label(self.frame_top, text="Logo", width=20, height=10, bg="lightgray")
         logo.pack(side=tk.RIGHT, padx=10, pady=10)
+
+        # Añadir un widget de Frame central vacío para centrar los otros widgets
+        spacer_right = tk.Frame(self.frame_top)
+        spacer_right.pack(side=tk.RIGHT, expand=True)
 
     def create_menu_frame(self):
         """ Crear el marco para el menú de navegación. """
@@ -33,7 +40,7 @@ class Davista:
         self.frame_menu.pack(side=tk.TOP, fill=tk.X)
 
         # Botones de navegación
-        menu_buttons = ["Home", "Products", "About", "Contact"]
+        menu_buttons = ["Inicio", "Productos", "Perfil", "Contacto"]
         commands = [self.home_command, self.products_command, self.about_command, self.contact_command]
 
         for text, command in zip(menu_buttons, commands):
@@ -49,7 +56,7 @@ class Davista:
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Apps", "Games", "Movies", "Books", "Newspapers"]
+        sidebar_buttons = ["Apps", "Juegos", "Peliculas", "Libros", "Noticias"]
         sidebar_commands = [self.apps_command, self.games_command, self.movies_command, self.books_command, self.newspapers_command]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
@@ -69,7 +76,7 @@ class Davista:
         self.frame_categories.pack(side=tk.TOP, fill=tk.X)
 
         # Añadir botones de categorías
-        categories = ["Categoría 1", "Categoría 2", "Categoría 3", "Categoría 4", "Categoría 5"]
+        categories = ["Smartphones", "Tablets", "Laptops", "Monitores", "Cámaras", "Audífonos", "Cargadores"]
         for category in categories:
             tk.Button(self.frame_categories, text=category).pack(side=tk.LEFT, padx=10, pady=5)
 
@@ -82,7 +89,18 @@ class Davista:
         self.frame_products.pack(fill=tk.BOTH, expand=True)
 
         # URLs válidas de las imágenes
+        # Validar si subir en base de datos
         image_urls = [
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
             "https://via.placeholder.com/100",
             "https://via.placeholder.com/100",
             "https://via.placeholder.com/100",
@@ -119,7 +137,7 @@ class Davista:
         for i in range(2):  # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            for j in range(7):  # columnas
+            for j in range(12):  # columnas
                 product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                 product_frame.pack(side=tk.LEFT, padx=5, pady=5)
 
