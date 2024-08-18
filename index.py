@@ -1,5 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
+from PIL import Image, ImageTk
+import requests
+from io import BytesIO
 
 class Davista:
     def __init__(self, root):
@@ -11,7 +13,7 @@ class Davista:
         self.create_menu_frame()
         self.create_sidebar_frame()
         self.create_catalog_frame()
-        self.create_bottom_frame()
+        
 
     def create_top_frame(self):
         """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
@@ -79,29 +81,72 @@ class Davista:
         self.frame_products = tk.Frame(self.frame_catalog)
         self.frame_products.pack(fill=tk.BOTH, expand=True)
 
+        # URLs válidas de las imágenes
+        image_urls = [
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100",
+            "https://via.placeholder.com/100"
+        ]
+        
+        # Descargar y procesar imágenes
+        self.images = []
+        for url in image_urls:
+            try:
+                response = requests.get(url)
+                response.raise_for_status()  # Asegura que la solicitud fue exitosa
+                img_data = response.content
+                img = Image.open(BytesIO(img_data)).resize((100, 100))
+                self.images.append(ImageTk.PhotoImage(img))
+            except (requests.exceptions.RequestException, Image.UnidentifiedImageError) as e:
+                print(f"Error al cargar la imagen desde {url}: {e}")
+                self.images.append(None)
+
         # Añadir productos (simulación de imágenes y texto)
-        for i in range(2):  # filas
+        for i in range(3):  # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            for j in range(6):  # columnas
+            for j in range(10):  # columnas
                 product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                 product_frame.pack(side=tk.LEFT, padx=5, pady=5)
-                img_label = tk.Label(product_frame, text="Imagen", bg="lightgray", width=20, height=10)
+
+                # Asignar una imagen diferente a cada producto
+                img_index = (i * 10) + j  # Calcular el índice de la imagen
+                if img_index < len(self.images) and self.images[img_index] is not None:
+                    img_label = tk.Label(product_frame, image=self.images[img_index])
+                else:
+                    img_label = tk.Label(product_frame, text="Sin Imagen", bg="lightgray", width=10, height=5)
+                
                 img_label.pack()
-                info_label = tk.Label(product_frame, text="Nombre del Producto\nCategoría\nPrecio", justify=tk.LEFT)
+
+                info_label = tk.Label(product_frame, text=f"Producto {img_index + 1}\nCategoría\nPrecio", justify=tk.LEFT)
                 info_label.pack()
-
-    def create_bottom_frame(self):
-        """ Crear el marco inferior para la barra de navegación. """
-        self.frame_bottom = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
-        self.frame_bottom.pack(side=tk.BOTTOM, fill=tk.X)
-
-        # Botones de navegación inferior
-        bottom_buttons = ["Home", "Apps", "Games", "Movies", "Books"]
-        bottom_commands = [self.home_command, self.apps_command, self.games_command, self.movies_command, self.books_command]
-
-        for text, command in zip(bottom_buttons, bottom_commands):
-            tk.Button(self.frame_bottom, text=text, command=command).pack(side=tk.RIGHT, padx=10, pady=5)
 
     # Métodos de comando para los botones
     def home_command(self):
