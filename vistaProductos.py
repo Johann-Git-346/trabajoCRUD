@@ -1,7 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-import requests
-from io import BytesIO
+
 
 class Davista:
     def __init__(self, root):
@@ -90,35 +89,7 @@ class Davista:
 
         # URLs válidas de las imágenes
         # Validar si subir en base de datos
-        image_urls = [
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100"
-        ]
+        image_urls = []
         
         # Descargar y procesar imágenes
         self.images = []
@@ -137,16 +108,16 @@ class Davista:
         for i in range(2):  # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            for j in range(12):  # columnas
+            for j in range(7):  # columnas
                 product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                 product_frame.pack(side=tk.LEFT, padx=5, pady=5)
 
                 # Asignar una imagen diferente a cada producto
-                img_index = (i * 10) + j  # Calcular el índice de la imagen
+                img_index = (i * 7) + j  # Calcular el índice de la imagen
                 if img_index < len(self.images) and self.images[img_index] is not None:
                     img_label = tk.Label(product_frame, image=self.images[img_index])
                 else:
-                    img_label = tk.Label(product_frame, text="Sin Imagen", bg="lightgray", width=10, height=5)
+                    img_label = tk.Label(product_frame, text="Sin Imagen", bg="lightgray", width=20, height=8)
                 
                 img_label.pack()
 
@@ -189,4 +160,3 @@ app = Davista(root)
 
 # Iniciar el bucle principal de la aplicación
 root.mainloop()
-
