@@ -1,7 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-
 class Davista:
     def __init__(self, root):
         self.root = root
@@ -55,8 +54,8 @@ class Davista:
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Apps", "Juegos", "Peliculas", "Libros", "Noticias"]
-        sidebar_commands = [self.apps_command, self.games_command, self.movies_command, self.books_command, self.newspapers_command]
+        sidebar_buttons = ["Modificar", "Eliminar", "Agregar"]
+        sidebar_commands = [self.modificar_command, self.eliminar_command, self.agregar_command]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
             tk.Button(self.frame_sidebar, text=text, command=command).pack(fill=tk.X, padx=5, pady=5)
@@ -92,7 +91,7 @@ class Davista:
         image_urls = []
         
         # Descargar y procesar imágenes
-        self.images = []
+        self.images = []#definir si se realiza en url o imagenes descargadas
         for url in image_urls:
             try:
                 response = requests.get(url)
@@ -125,32 +124,14 @@ class Davista:
                 info_label.pack()
 
     # Métodos de comando para los botones
-    def home_command(self):
-        print("Home button clicked")
+    def agregar_command(self):
+        print("agregar button clicked")
 
-    def products_command(self):
-        print("Products button clicked")
+    def eliminar_command(self):
+        print("eliminar button clicked")
 
-    def about_command(self):
-        print("About button clicked")
-
-    def contact_command(self):
-        print("Contact button clicked")
-
-    def apps_command(self):
-        print("Apps button clicked")
-
-    def games_command(self):
-        print("Games button clicked")
-
-    def movies_command(self):
-        print("Movies button clicked")
-
-    def books_command(self):
-        print("Books button clicked")
-
-    def newspapers_command(self):
-        print("Newspapers button clicked")
+    def agregar_command(self):
+        print("agregar button clicked")
 
 # Crear la ventana principal
 root = tk.Tk()

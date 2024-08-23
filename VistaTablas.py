@@ -5,7 +5,7 @@ class VistaTablas1:
     def __init__(self):
         # Crear la ventana principal
         self.root = tk.Tk()
-        self.root.title("Nombre de la Empresa")
+        self.root.title("TecnoNube")
         self.root.geometry("800x600")
 
         self.create_top_frame()
@@ -21,7 +21,7 @@ class VistaTablas1:
         frame_top = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
         frame_top.pack(side=tk.TOP, fill=tk.X)
 
-        company_name = tk.Label(frame_top, text="Nombre de la Empresa", font=("Arial", 24))
+        company_name = tk.Label(frame_top, text="TecnoNube", font=("Arial", 24))
         company_name.pack(side=tk.LEFT, padx=10, pady=10)
 
         # Logo (espacio reservado)
@@ -34,7 +34,7 @@ class VistaTablas1:
         frame_menu.pack(side=tk.TOP, fill=tk.X)
 
         # Botones de navegación
-        menu_buttons = ["Home", "Products", "About", "Contact"]
+        menu_buttons = ["Inicio", "Productos", "Contacto"]
         for button in menu_buttons:
             btn = tk.Button(frame_menu, text=button)
             btn.pack(side=tk.LEFT, padx=10, pady=5)
@@ -60,7 +60,7 @@ class VistaTablas1:
         frame_categories.pack(side=tk.TOP, fill=tk.X)
 
         # Añadir botones de categorías
-        categories = ["Categoría 1", "Categoría 2", "Categoría 3", "Categoría 4", "Categoría 5"]
+        categories = ["Smartphones", "Tablets", "Laptops", "Monitores", "Cámaras", "Audífonos", "Cargadores"]
         for category in categories:
             btn = tk.Button(frame_categories, text=category)
             btn.pack(side=tk.LEFT, padx=10, pady=5)
