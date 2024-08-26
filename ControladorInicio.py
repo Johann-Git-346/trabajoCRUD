@@ -2,6 +2,7 @@ from ModeloInicio import ModeloUsuario
 from VistaInicio import VistaUsuario
 from vistaProductos import Davista
 from VistaTablas import VistaTablas1
+from VistaVendedor import Davista2
 
 class Controlador:
     def __init__(self, conexion):
@@ -32,7 +33,7 @@ class Controlador:
         tablas=VistaTablas1()
 
     def mostrar_vista_vendedor(self):
-        app = Davista()
+        app = Davista2()
 
     def mostrar_vista_cliente(self):
-        app = Davista() #<-- todavia falta la vista cliente..(JOHANA MUEVALO)
+        app = Davista()
