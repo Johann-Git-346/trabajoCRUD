@@ -1,9 +1,7 @@
 from ModeloInicio import ModeloUsuario
 from VistaInicio import VistaUsuario
-# Las siguientes vistas deberán ser creadas para los diferentes roles
-# from VistaAdmin import VistaAdmin
-# from VistaVendedor import VistaVendedor
-# from VistaCliente import VistaCliente
+from vistaProductos import Davista
+from VistaTablas import VistaTablas1
 
 class Controlador:
     def __init__(self, conexion):
@@ -19,30 +17,22 @@ class Controlador:
     def iniciar_sesion(self, email, contrasena):
         rol = self.modelo.autenticar_usuario(email, contrasena)
         if rol:
-            if rol == 'Administrador':
+            #si quiere que le sirva cambie lo que esta en las comillas por lo que tiene en la base de datos
+            if rol == 'ADMINISTRA':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
                 self.mostrar_vista_admin()
-            elif rol == 'Vendedor':
+            elif rol == 'VENDEDOR':
                 self.mostrar_vista_vendedor()
-            elif rol == 'Usuario':
+            elif rol == 'CLIENTE':
                 self.mostrar_vista_cliente()
             return rol
         else:
             return None
 
     def mostrar_vista_admin(self):
-        # Aquí puedes agregar el código para abrir la ventana del Administrador
-        self.vista.root.destroy()
-        # vista_admin = VistaAdmin()
-        # vista_admin.iniciar()
+        tablas=VistaTablas1()
 
     def mostrar_vista_vendedor(self):
-        # Aquí puedes agregar el código para abrir la ventana del Vendedor
-        self.vista.root.destroy()
-        # vista_vendedor = VistaVendedor()
-        # vista_vendedor.iniciar()
+        app = Davista()
 
     def mostrar_vista_cliente(self):
-        # Aquí puedes agregar el código para abrir la ventana del Usuario
-        self.vista.root.destroy()
-        # vista_cliente = VistaCliente()
-        # vista_cliente.iniciar()
+        app = Davista() #<-- todavia falta la vista cliente..(JOHANA MUEVALO)
