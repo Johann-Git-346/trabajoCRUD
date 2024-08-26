@@ -83,7 +83,6 @@ class VistaUsuario:
     def iniciar_sesion(self):
         email = self.entry_email.get()
         contrasena = self.entry_contrasena.get()
-        self.root.destroy()
         if not self.controlador.iniciar_sesion(email, contrasena):
             messagebox.showerror("Error", "Correo electrónico o contraseña incorrectos.")
 
