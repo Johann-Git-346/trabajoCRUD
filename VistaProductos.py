@@ -89,36 +89,7 @@ class Davista:
         self.frame_products.pack(fill=tk.BOTH, expand=True)
 
         # URLs válidas de las imágenes
-        # Validar si subir en base de datos
-        image_urls = [
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100"
-        ]
+        image_urls = []
         
         # Descargar y procesar imágenes
         self.images = []
