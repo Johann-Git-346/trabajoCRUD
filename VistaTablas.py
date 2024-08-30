@@ -10,23 +10,30 @@ class VistaTablas1:
 
         self.create_top_frame()
         self.create_menu_frame()
-        self.create_sidebar_frame()
+        """self.create_sidebar_frame()"""
         self.create_catalog_frame()
         self.crearMarcoInferior()
 
         self.root.mainloop()
 
     def create_top_frame(self):
-        # Crear el marco superior para el nombre de la empresa y la imagen del logo
-        frame_top = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
-        frame_top.pack(side=tk.TOP, fill=tk.X)
+        """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
+        self.frame_top = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
+        self.frame_top.pack(side=tk.TOP, fill=tk.X)
 
-        company_name = tk.Label(frame_top, text="TecnoNube", font=("Arial", 24))
+        # Añadir un widget de Frame central vacío para centrar los otros widgets
+        spacer_left = tk.Frame(self.frame_top)
+        spacer_left.pack(side=tk.LEFT, expand=True)
+
+        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24), anchor="center")
         company_name.pack(side=tk.LEFT, padx=10, pady=10)
 
-        # Logo (espacio reservado)
-        logo = tk.Label(frame_top, text="Logo", width=20, height=10, bg="lightgray")
+        logo = tk.Label(self.frame_top, text="Logo", width=20, height=10, bg="lightgray")
         logo.pack(side=tk.RIGHT, padx=10, pady=10)
+
+        # Añadir un widget de Frame central vacío para centrar los otros widgets
+        spacer_right = tk.Frame(self.frame_top)
+        spacer_right.pack(side=tk.RIGHT, expand=True)
 
     def create_menu_frame(self):
         # Crear el marco para el menú de navegación
@@ -34,22 +41,28 @@ class VistaTablas1:
         frame_menu.pack(side=tk.TOP, fill=tk.X)
 
         # Botones de navegación
-        menu_buttons = ["Inicio", "Productos", "Contacto"]
-        for button in menu_buttons:
+        menu_buttons = ["Inicio", "Productos", "Servicios", "Contacto", "Perfil"]
+        for i, button in enumerate(menu_buttons):
             btn = tk.Button(frame_menu, text=button)
-            btn.pack(side=tk.LEFT, padx=10, pady=5)
-
+            btn.pack(side=tk.LEFT, padx=120, pady=5)
+            
+            # Añadir espaciador entre los botones
+            if i < len(menu_buttons) - 1:
+                spacer = tk.Frame(frame_menu, width=20)
+                spacer.pack(side=tk.LEFT)
+    """"
     def create_sidebar_frame(self):
         # Crear el marco para la barra lateral izquierda
         frame_sidebar = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
         frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Apps", "Games", "Movies", "Books", "Newspapers"]
+        sidebar_buttons = []
         for button in sidebar_buttons:
             btn = tk.Button(frame_sidebar, text=button)
             btn.pack(fill=tk.X, padx=5, pady=5)
-
+    """
+    
     def create_catalog_frame(self):
         # Crear el marco para las categorías y el informe de productos
         frame_report = tk.Frame(self.root)
@@ -106,4 +119,4 @@ class VistaTablas1:
         frame_bottom = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
         frame_bottom.pack(side=tk.BOTTOM, fill=tk.X)
 
-x=VistaTablas1()
+x = VistaTablas1()

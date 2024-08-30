@@ -1,9 +1,11 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+import requests
+from io import BytesIO
 
-class Davista:
-    def __init__(self, root):
-        self.root = root
+class Davista2:
+    def __init__(self):
+        self.root = tk.Tk()
         self.root.title("TecnoNube")
         self.root.geometry("800x600")
 
@@ -11,6 +13,8 @@ class Davista:
         self.create_menu_frame()
         self.create_sidebar_frame()
         self.create_catalog_frame()
+
+        self.root.mainloop()
         
 
     def create_top_frame(self):
@@ -133,11 +137,3 @@ class Davista:
     def agregar_command(self):
         print("agregar button clicked")
 
-# Crear la ventana principal
-root = tk.Tk()
-
-# Crear la instancia de la clase Davista
-app = Davista(root)
-
-# Iniciar el bucle principal de la aplicación
-root.mainloop()

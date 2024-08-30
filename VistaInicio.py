@@ -59,6 +59,9 @@ class VistaUsuario:
         radio_vendedor = tk.Radiobutton(ventana_registro, text="Vendedor", variable=rol_var, value="Vendedor", bg="lightyellow", font=("Arial", 12))
         radio_vendedor.pack()
 
+        radio_Administrador = tk.Radiobutton(ventana_registro, text="Administrador", variable=rol_var, value="Administrador", bg="lightyellow", font=("Arial", 12))
+        radio_Administrador.pack() #<-- cuando ya coloque al admin predeterminado boora esto.
+
         def registrar_usuario():
             email = entry_email.get()
             contrasena = entry_contrasena.get()
