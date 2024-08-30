@@ -99,19 +99,6 @@ class Davista:
             "https://via.placeholder.com/100",
             "https://via.placeholder.com/100",
             "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
             "https://via.placeholder.com/100"
         ]
         
@@ -129,10 +116,10 @@ class Davista:
                 self.images.append(None)
 
         # Añadir productos (simulación de imágenes y texto)
-        for i in range(3):  # filas
+        for i in range(2):  # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            for j in range(10):  # columnas
+            for j in range(7):  # columnas
                 product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                 product_frame.pack(side=tk.LEFT, padx=5, pady=5)
 
