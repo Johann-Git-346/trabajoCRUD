@@ -1,7 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-import requests
-from io import BytesIO
+import os
 
 class Davista:
     def __init__(self, root):
@@ -13,147 +12,115 @@ class Davista:
         self.create_menu_frame()
         self.create_sidebar_frame()
         self.create_catalog_frame()
-        
 
     def create_top_frame(self):
-        """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
-        self.frame_top = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
-        self.frame_top.pack(side=tk.TOP, fill=tk.X)
-
-        # Añadir un widget de Frame central vacío para centrar los otros widgets
-        spacer_left = tk.Frame(self.frame_top)
-        spacer_left.pack(side=tk.LEFT, expand=True)
-
-        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24), anchor="center")
-        company_name.pack(side=tk.LEFT, padx=10, pady=10)
-
-        logo = tk.Label(self.frame_top, text="Logo", width=20, height=10, bg="lightgray")
-        logo.pack(side=tk.RIGHT, padx=10, pady=10)
-
-        # Añadir un widget de Frame central vacío para centrar los otros widgets
-        spacer_right = tk.Frame(self.frame_top)
-        spacer_right.pack(side=tk.RIGHT, expand=True)
+        self.baner = tk.Frame(self.root, borderwidth=1)
+        self.baner.pack(side=tk.TOP)
+        
+        izespacio = tk.Frame(self.baner)
+        izespacio.pack(side=tk.LEFT)
+        
+        nombre = tk.Label(self.baner, text="TecnoNube", font=("Arial", 26), anchor="center")
+        nombre.pack(side=tk.LEFT)
+        
+        etiqueta = tk.Label(self.baner)
+        etiqueta.pack(side=tk.LEFT)
+        
+        rutaimagen = 'imagenes/logoc.png'
+        
+        if not os.path.exists(rutaimagen):
+            print(f"Error: La ruta de la imagen no existe: {rutaimagen}")
+            return
+        
+        try:
+            imagen = Image.open(rutaimagen)
+            imagen = imagen.resize((100, 100))
+            self.imagen_tk = ImageTk.PhotoImage(imagen)  # Mantén la referencia a la imagen
+            
+            etiqueta_imagen = tk.Label(self.baner, image=self.imagen_tk)
+            etiqueta_imagen.pack(side=tk.RIGHT, pady=10)
+        
+        except Exception as e:
+            print(f"Error al abrir o procesar la imagen: {e}")
 
     def create_menu_frame(self):
-        """ Crear el marco para el menú de navegación. """
         self.frame_menu = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
         self.frame_menu.pack(side=tk.TOP, fill=tk.X)
 
-        # Botones de navegación
         menu_buttons = ["Inicio", "Productos", "Perfil", "Contacto"]
         commands = [self.home_command, self.products_command, self.about_command, self.contact_command]
 
         for text, command in zip(menu_buttons, commands):
             tk.Button(self.frame_menu, text=text, command=command).grid(row=0, column=menu_buttons.index(text), padx=10, pady=5)
 
-        # Configurar las columnas para que se expandan igualmente
         for i in range(len(menu_buttons)):
             self.frame_menu.grid_columnconfigure(i, weight=1)
 
     def create_sidebar_frame(self):
-        """ Crear el marco para la barra lateral izquierda y añadir botones. """
         self.frame_sidebar = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
 
-        # Añadir botones de la barra lateral
         sidebar_buttons = ["Apps", "Juegos", "Peliculas", "Libros", "Noticias"]
         sidebar_commands = [self.apps_command, self.games_command, self.movies_command, self.books_command, self.newspapers_command]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
             tk.Button(self.frame_sidebar, text=text, command=command).pack(fill=tk.X, padx=5, pady=5)
 
-        # Controles multimedia (espacios reservados)
         multimedia_frame = tk.Frame(self.frame_sidebar)
         multimedia_frame.pack(fill=tk.X, padx=5, pady=5)
 
     def create_catalog_frame(self):
-        """ Crear el marco para las categorías y el catálogo. """
         self.frame_catalog = tk.Frame(self.root)
         self.frame_catalog.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        # Crear el marco de categorías
         self.frame_categories = tk.Frame(self.frame_catalog, relief=tk.RAISED, borderwidth=1)
         self.frame_categories.pack(side=tk.TOP, fill=tk.X)
 
-        # Añadir botones de categorías
         categories = ["Smartphones", "Tablets", "Laptops", "Monitores", "Cámaras", "Audífonos", "Cargadores"]
         for category in categories:
             tk.Button(self.frame_categories, text=category).pack(side=tk.LEFT, padx=10, pady=5)
 
-        # Crear el título del catálogo
         catalog_title = tk.Label(self.frame_catalog, text="Título del Catálogo", font=("Arial", 16))
         catalog_title.pack(side=tk.TOP, pady=10)
 
-        # Crear el marco para los productos
         self.frame_products = tk.Frame(self.frame_catalog)
         self.frame_products.pack(fill=tk.BOTH, expand=True)
 
-        # URLs válidas de las imágenes
-        # Validar si subir en base de datos
-        image_urls = [
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100",
-            "https://via.placeholder.com/100"
-        ]
+        # Cargar una sola vez la imagen productoc.png
+        product_image_path = 'imagenes/productoc.png'  # Ruta a la imagen que se utilizará para todos los productos
         
-        # Descargar y procesar imágenes
-        self.images = []
-        for url in image_urls:
-            try:
-                response = requests.get(url)
-                response.raise_for_status()  # Asegura que la solicitud fue exitosa
-                img_data = response.content
-                img = Image.open(BytesIO(img_data)).resize((100, 100))
-                self.images.append(ImageTk.PhotoImage(img))
-            except (requests.exceptions.RequestException, Image.UnidentifiedImageError) as e:
-                print(f"Error al cargar la imagen desde {url}: {e}")
-                self.images.append(None)
+        print("Intentando cargar la imagen desde:", product_image_path)
+        if not os.path.exists(product_image_path):
+            print(f"Error: La ruta de la imagen no existe: {product_image_path}")
+            return
+        
+        try:
+            imagen = Image.open(product_image_path)
+            print("Imagen cargada correctamente")
+            imagen = imagen.resize((100, 100))  # Redimensiona la imagen si es necesario
+            self.product_image = ImageTk.PhotoImage(imagen)  # Mantén la referencia a la imagen
+        except Exception as e:
+            print(f"Error al abrir o procesar la imagen: {e}")
+            self.product_image = None
 
         # Añadir productos (simulación de imágenes y texto)
         for i in range(2):  # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            for j in range(12):  # columnas
+            for j in range(7):  # columnas
                 product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                 product_frame.pack(side=tk.LEFT, padx=5, pady=5)
 
-                # Asignar una imagen diferente a cada producto
-                img_index = (i * 10) + j  # Calcular el índice de la imagen
-                if img_index < len(self.images) and self.images[img_index] is not None:
-                    img_label = tk.Label(product_frame, image=self.images[img_index])
+                if self.product_image is not None:
+                    img_label = tk.Label(product_frame, image=self.product_image)
                 else:
                     img_label = tk.Label(product_frame, text="Sin Imagen", bg="lightgray", width=10, height=5)
                 
                 img_label.pack()
 
-                info_label = tk.Label(product_frame, text=f"Producto {img_index + 1}\nCategoría\nPrecio", justify=tk.LEFT)
+                info_label = tk.Label(product_frame, text=f"Producto {(i * 7) + j + 1}\nCategoría\nPrecio", justify=tk.LEFT)
                 info_label.pack()
 
-    # Métodos de comando para los botones
     def home_command(self):
         print("Home button clicked")
 
@@ -183,10 +150,5 @@ class Davista:
 
 # Crear la ventana principal
 root = tk.Tk()
-
-# Crear la instancia de la clase Davista
 app = Davista(root)
-
-# Iniciar el bucle principal de la aplicación
 root.mainloop()
-
