@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
+import os
 
 class VistaTablas1:
     def __init__(self):
@@ -10,30 +12,40 @@ class VistaTablas1:
 
         self.create_top_frame()
         self.create_menu_frame()
-        """self.create_sidebar_frame()"""
         self.create_catalog_frame()
         self.crearMarcoInferior()
 
         self.root.mainloop()
 
     def create_top_frame(self):
-        """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
-        self.frame_top = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
-        self.frame_top.pack(side=tk.TOP, fill=tk.X)
-
-        # Añadir un widget de Frame central vacío para centrar los otros widgets
-        spacer_left = tk.Frame(self.frame_top)
-        spacer_left.pack(side=tk.LEFT, expand=True)
-
-        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24), anchor="center")
-        company_name.pack(side=tk.LEFT, padx=10, pady=10)
-
-        logo = tk.Label(self.frame_top, text="Logo", width=20, height=10, bg="lightgray")
-        logo.pack(side=tk.RIGHT, padx=10, pady=10)
-
-        # Añadir un widget de Frame central vacío para centrar los otros widgets
-        spacer_right = tk.Frame(self.frame_top)
-        spacer_right.pack(side=tk.RIGHT, expand=True)
+        self.baner = tk.Frame(self.root, borderwidth=1)
+        self.baner.pack(side=tk.TOP)
+        
+        izespacio = tk.Frame(self.baner)
+        izespacio.pack(side=tk.LEFT)
+        
+        nombre = tk.Label(self.baner, text="TecnoNube", font=("Arial", 26), anchor="center")
+        nombre.pack(side=tk.LEFT)
+        
+        etiqueta = tk.Label(self.baner)
+        etiqueta.pack(side=tk.LEFT)
+        
+        rutaimagen = 'imagenes/logoc.png'
+        
+        if not os.path.exists(rutaimagen):
+            print(f"Error: La ruta de la imagen no existe: {rutaimagen}")
+            return
+        
+        try:
+            imagen = Image.open(rutaimagen)
+            imagen = imagen.resize((100, 100))
+            self.imagen_tk = ImageTk.PhotoImage(imagen)  # Mantén la referencia a la imagen
+            
+            etiqueta_imagen = tk.Label(self.baner, image=self.imagen_tk)
+            etiqueta_imagen.pack(side=tk.RIGHT, pady=10)
+        
+        except Exception as e:
+            print(f"Error al abrir o procesar la imagen: {e}")
 
     def create_menu_frame(self):
         # Crear el marco para el menú de navegación
@@ -50,18 +62,6 @@ class VistaTablas1:
             if i < len(menu_buttons) - 1:
                 spacer = tk.Frame(frame_menu, width=20)
                 spacer.pack(side=tk.LEFT)
-    """"
-    def create_sidebar_frame(self):
-        # Crear el marco para la barra lateral izquierda
-        frame_sidebar = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
-        frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
-
-        # Añadir botones de la barra lateral
-        sidebar_buttons = []
-        for button in sidebar_buttons:
-            btn = tk.Button(frame_sidebar, text=button)
-            btn.pack(fill=tk.X, padx=5, pady=5)
-    """
     
     def create_catalog_frame(self):
         # Crear el marco para las categorías y el informe de productos
