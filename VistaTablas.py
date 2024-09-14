@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
+import os
 
 class VistaTablas1:
     def __init__(self):
@@ -20,8 +22,8 @@ class VistaTablas1:
         self.rootTablas.mainloop()
 
     def create_top_frame(self):
-        """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
-        self.frame_top = tk.Frame(self.rootTablas, relief=tk.RAISED, borderwidth=1)
+        """ Crear el marco superior para el nombreTelefonos de la empresa y la imagen del logo. """
+        self.frame_top = tk.Frame(self.rootTablas, relief=tk.RAISED,borderwidth=1)
         self.frame_top.pack(side=tk.TOP, fill=tk.X)
         self.frame_top.config(background="#333333")
 
@@ -29,12 +31,37 @@ class VistaTablas1:
         spacer_left = tk.Frame(self.frame_top)
         spacer_left.pack(side=tk.LEFT, expand=True)
 
-        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24),foreground="#FFFFFF", anchor="center")
+        company_name = tk.Label(self.frame_top, text="TecnoNube", foreground="#FFFFFF",font=("Arial", 24), anchor="center")
         company_name.pack(side=tk.LEFT, padx=10, pady=10)
         company_name.config(background="#333333")
 
-        logo = tk.Label(self.frame_top, text="Logo", width=20, height=10, bg="lightgray")
-        logo.pack(side=tk.RIGHT, padx=10, pady=10)
+
+        logo = tk.Frame(self.frame_top)
+        logo.pack(side=tk.RIGHT, padx=20, pady=20)
+
+        # Añadir un widget de Frame central vacío para centrar los otros widgets
+        spacer_right = tk.Frame(self.frame_top)
+        spacer_right.pack(side=tk.RIGHT, expand=True)
+
+        etiqueta = tk.Label(logo)
+        etiqueta.pack(side=tk.RIGHT)
+        
+        self.rutaimagen = 'imagenes/LOGO.jpg'
+        
+        if not os.path.exists(self.rutaimagen):
+            print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
+            return
+        
+        try:
+            imagen = Image.open(self.rutaimagen)
+            imagen = imagen.resize((155, 130))
+            self.imagen_tk = ImageTk.PhotoImage(imagen)  # Mantén la referencia a la imagen
+            
+            etiqueta_imagen = tk.Label(logo, image=self.imagen_tk)
+            etiqueta_imagen.pack()
+        
+        except Exception as e:
+            print(f"Error al abrir o procesar la imagen: {e}")
 
         # Añadir un widget de Frame central vacío para centrar los otros widgets
         spacer_right = tk.Frame(self.frame_top)

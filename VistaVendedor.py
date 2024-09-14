@@ -12,7 +12,6 @@ class Davista:
         self.rootProductos.geometry("800x600")
 
         self.create_top_frame()
-        self.create_menu_frame()
         self.create_sidebar_frame()
         self.create_catalog_frame()
 
@@ -61,23 +60,6 @@ class Davista:
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
 
-    def create_menu_frame(self):
-        """ Crear el marco para el menú de navegación. """
-        self.frame_menu = tk.Frame(self.rootProductos, relief=tk.RAISED,borderwidth=1)
-        self.frame_menu.pack(side=tk.TOP, fill=tk.X)
-        self.frame_menu.config(background="#FFFFFF")
-
-        # Botones de navegación
-        menu_buttons = ["Inicio", "Productos", "Perfil", "Cerrar Sesion"]
-        commands = [self.home_command, self.products_command, self.about_command, self.salir]
-
-        for text, command in zip(menu_buttons, commands):
-            tk.Button(self.frame_menu, cursor="hand2",text=text,bg="#333333",foreground="#FFFFFF", command=command).grid(row=0, column=menu_buttons.index(text), padx=10, pady=5)
-
-        # Configurar las columnas para que se expandan igualmente
-        for i in range(len(menu_buttons)):
-            self.frame_menu.grid_columnconfigure(i, weight=1)
-
     def create_sidebar_frame(self):
         """ Crear el marco para la barra lateral izquierda y añadir botones. """
         self.frame_sidebar = tk.Frame(self.rootProductos, relief=tk.RAISED,borderwidth=1)
@@ -85,8 +67,8 @@ class Davista:
         self.frame_sidebar.config(background="#FFFFFF")
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Agregar", "Modificar", "Eliminar","Comprar"]
-        sidebar_commands = [self.apps_command, self.games_command, self.movies_command, self.books_command, self.newspapers_command]
+        sidebar_buttons = ["Agregar", "Modificar", "Eliminar", "Informe", "Cerrar Sesion"]
+        sidebar_commands = [self.agregar, self.modificar, self.eliminar, self.informe, self.salir]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
             tk.Button(self.frame_sidebar, cursor="hand2",text=text,bg="#FFD700",foreground="#333333", command=command).pack(fill=tk.X, padx=5, pady=15)
@@ -107,7 +89,7 @@ class Davista:
         self.frame_categories.config(background="#FFFFFF")
 
         # Añadir botones de categorías
-        categories = ["Smartphones", "Tablets", "Laptops", "Monitores", "Cámaras", "Audífonos", "Cargadores"]
+        categories = ["Telefonos", "Tablets", "Laptops", "Monitores", "Cámaras", "Audífonos", "Cargadores"]
         comandoCategoria=[self.telefono,self.tablet,self.laptop,self.monitor,self.camara,self.audifonos,self.cargador]
         for text, comandoCategoria in zip(categories,comandoCategoria):
             tk.Button(self.frame_categories,cursor="hand2", bg="#FFD700",foreground="#333333",text=text,command=comandoCategoria).pack(side=tk.LEFT, padx=50, pady=5)
@@ -123,27 +105,20 @@ class Davista:
         self.frame_products.config(background="#FFFFFF")
 
         self.crearmarcos()
-    def crearmarcos(self):
-        #base_dir = os.path.dirname(os.path.abspath(__file__))
-        #imagenes_dir = os.path.join(base_dir, "imagenes")
 
-        #self.imagenes2 = [os.path.join(imagenes_dir, f"compu{i}.jpg") for i in range(1, 15)]
-        #self.imagenes3 = [os.path.join(imagenes_dir, f"cel{i}.jpg") for i in range(1, 15)]
+    def crearmarcos(self):
+
         self.imagenes2=["imagenes/compu1.jpg","imagenes/compu2.jpg","imagenes/compu3.jpeg","imagenes/compu4.jpg","imagenes/compu5.jpeg","imagenes/compu6.png",
                "imagenes/compu7.jpeg","imagenes/compu8.jpg","imagenes/compu9.jpeg","imagenes/compu10.jpg","imagenes/compu11.jpg","imagenes/compu12.jpg",
                "imagenes/compu13.png","imagenes/compu14.png"]
         self.imagenes3=["imagenes/cel.jpg","imagenes/cel2.jpg","imagenes/cel3.jpg","imagenes/cel4.jpg","imagenes/cel5.jpg","imagenes/cel6.jpeg",
                        "imagenes/cel7.jpeg","imagenes/cel8.jpeg","imagenes/cel9.jpg","imagenes/cel10.jpg","imagenes/cel11.png","imagenes/cel12.jpg",
                        "imagenes/cel13.jpg","imagenes/cel14.jpg"]
+        
         self.imagenes_tk = []
         self.labels_imagenes = []
-        #self.nombreTelefonos=["samsung","iphone","redmi","redmi2","honor x8","honor x6","honor x7","huawei p40","samsung2","samsung3","redmi3","huawei y9","zte","honor magic"] 
-        #self.nombreCompus=["lenovo","Asus","HP","Asus","Lenovo","Asus","Hp","Hp","HP","Lenovo","HP","Lenovo","hp","Asus"] 
-        #self.current_catalog = "telefonos"
-        #nombre_index = 0
-        # Añadir productos (simulación de imágenes y texto)
-        for i in range(2):
-             # filas
+
+        for i in range(2): # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
             row.config(background="#FFFFFF")
@@ -219,16 +194,6 @@ class Davista:
     def catalogoCargador(self):
         self.catalog_title.config(text="Cargadores")
 
-    # Métodos de comando para los botones
-    def home_command(self):
-        print("Home button clicked")
-
-    def products_command(self):
-        print("Products button clicked")
-
-    def about_command(self):
-        print("About button clicked")
-
     def salir(self):
         self.mensajeCerrrarSesion=tk.Toplevel()
         self.mensajeCerrrarSesion.title("¿seguro?")
@@ -249,20 +214,17 @@ class Davista:
     def salirTodo(self):
         self.rootProductos.destroy()    
 
-    def apps_command(self):
-        print("Apps button clicked")
+    def agregar(self):
+        print("agregar button clicked")
 
-    def games_command(self):
-        print("Games button clicked")
+    def modificar(self):
+        print("modificar button clicked")
 
-    def movies_command(self):
-        print("Movies button clicked")
+    def eliminar(self):
+        print("eliminar button clicked")
 
-    def books_command(self):
-        print("Books button clicked")
-
-    def newspapers_command(self):
-        print("Newspapers button clicked")
+    def informe(self):
+        print("generar informe button clicked")
 
     def telefono(self):
         print("telfono")
@@ -291,3 +253,7 @@ class Davista:
     def cargador(self):
         print("cargador")
         self.catalogoCargador()
+
+#codigo "fuente para la verificacion del funcionamiento"
+x = Davista()
+x.iniciarProductos()
