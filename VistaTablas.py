@@ -4,8 +4,8 @@ from PIL import Image, ImageTk
 import os
 
 class VistaTablas1:
-    def __init__(self):
-        pass
+    def __init__(self,objController):
+        self.objController=objController
 
     def iniciarTablas(self):
         # Crear la ventana principal
@@ -112,6 +112,9 @@ class VistaTablas1:
         mas_vendidos_tree.heading("Producto", text="Nombre Producto")
         mas_vendidos_tree.heading("Cantidad", text="Cantidad")
         mas_vendidos_tree.heading("Categoria", text="Categoria")
+        mas_vendidos_tree.insert("", "end", values=("Producto 1", "10", "Categoria A"))
+        mas_vendidos_tree.insert("", "end", values=("Producto 2", "20", "Categoria B"))
+        mas_vendidos_tree.insert("", "end", values=("Producto 3", "30", "Categoria C"))
         mas_vendidos_tree.pack(fill=tk.BOTH, expand=True)
 
         # Tabla de Menos Vendidos
@@ -158,10 +161,8 @@ class VistaTablas1:
 
     def salirTodo(self):
         self.mensajeCerrrarSesion.destroy()
-        self.rootTablas.destroy()  
+        self.rootTablas.destroy()
+        self.objController.mostraLogin() 
 
     def inicio(self):
         self.rootTablas.destroy()
-
-x=VistaTablas1()
-x.iniciarTablas()
