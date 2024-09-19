@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import os
-
+from tkinter import messagebox
 class Davista2:
     def __init__(self,objController):
         self.objController=objController
@@ -125,55 +125,50 @@ class Davista2:
         self.frame_products = tk.Frame(self.frame_catalog)
         self.frame_products.pack(fill=tk.BOTH, expand=True)
         self.frame_products.config(background="#FFFFFF")
-        self.imagenes=[]
-        #"imagenes/compu1.jpg","imagenes/compu2.jpg","imagenes/compu3.jpeg","imagenes/compu4.jpg","imagenes/compu5.jpeg","imagenes/compu6.png",
-        #       "imagenes/compu7.jpeg","imagenes/compu8.jpg","imagenes/compu9.jpeg","imagenes/compu10.jpg","imagenes/compu11.jpg","imagenes/compu12.jpg",
-        #       "imagenes/compu13.png","imagenes/compu14.png"
-        self.imagenes4=[]
-        #"imagenes/cel.jpg","imagenes/cel2.jpg","imagenes/cel3.jpg","imagenes/cel4.jpg","imagenes/cel5.jpg","imagenes/cel6.jpeg",
-        #               "imagenes/cel7.jpeg","imagenes/cel8.jpeg","imagenes/cel9.jpg","imagenes/cel10.jpg","imagenes/cel11.png","imagenes/cel12.jpg",
-        #               "imagenes/cel13.jpg","imagenes/cel14.jpg"
+
         self.imagenes_tk = []
         self.labels_imagenes = []
 
-        for i in range(2):
-             # filas
+        productos = self.objController.obtener_productos()
+
+        for i in range(2):  # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
             row.config(background="#FFFFFF")
-            for j in range(7):  # columnas
+            
+            for j in range(3):  # columnas
                 self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                 self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
+                self.crear_cuadro_producto(row,productos,i,j)
 
-                # Asignar una imagen diferente a cada producto
-                img_index = (i * 7) + j  # Calcular el índice de la imagen
-                if img_index < len(self.imagenes4):
-                    self.rutaimagen = self.imagenes4[img_index]
-                    
-                    if not os.path.exists(self.rutaimagen):
-                        print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
-                        continue
-                
-                    try:
-                        imagen = Image.open(self.rutaimagen)
-                        imagen = imagen.resize((110, 110))      
-                        imagen_tk = ImageTk.PhotoImage(imagen)  # Crear una nueva referencia a la imagen
-                        self.imagenes_tk.append(imagen_tk)  # Guardar la referencia en la lista
-                        
-                        etiqueta_imagen = tk.Label(self.product_frame, image=imagen_tk, width=130, height=100)
-                        etiqueta_imagen.pack(pady=5)
-                        self.labels_imagenes.append(etiqueta_imagen)
-                    
-                    except Exception as e:
-                        print(f"Error al abrir o procesar la imagen: {e}")
-                else:
-                    etiqueta_imagen = tk.Label(self.product_frame, text="No Image", width=10, height=5)
-                    etiqueta_imagen.pack(pady=5)
-                info_label = tk.Label(self.product_frame, text=f"Producto {img_index + 1}\nCategoría\nPrecio", justify=tk.LEFT)
-                info_label.pack()
-        #productos = self.controller.obtener_productos()
-        #for producto in productos:
-        #    self.product_listbox.insert(tk.END, f"Nombre: {producto[1]}, Precio: {producto[2]}, Descripcion:{producto[3]}, Cantidad: {producto[4]}")
+    def crear_cuadro_producto(self, row, productos, i, j):
+        self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
+        self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
+        img_index = (i * 3) + j
+        if img_index < len(productos):
+            producto = productos[img_index]
+            self.rutaimagen = producto[5]  # Suponiendo que la ruta de la imagen está en la columna 5
+            if not os.path.exists(self.rutaimagen):
+                print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
+                return
+            try:
+                imagen = Image.open(self.rutaimagen)
+                imagen = imagen.resize((110, 110))      
+                imagen_tk = ImageTk.PhotoImage(imagen)
+                self.imagenes_tk.append(imagen_tk)
+                etiqueta_imagen = tk.Label(self.product_frame, image=imagen_tk, width=130, height=100)
+                etiqueta_imagen.pack(pady=5)
+                self.labels_imagenes.append(etiqueta_imagen)
+            except Exception as e:
+                print(f"Error al abrir o procesar la imagen: {e}")
+        else:
+            etiqueta_imagen = tk.Label(self.product_frame, text="No Image", width=10, height=5)
+            etiqueta_imagen.pack(pady=5)
+
+        if img_index < len(productos):
+            producto = productos[img_index]
+            info_label = tk.Label(self.product_frame, text=f"Nombre: {producto[1]}\nPrecio: {producto[2]}\nDescripción: {producto[3]}\nCantidad: {producto[4]}", justify=tk.LEFT)
+            info_label.pack()
 
 
     def actualizar_imagenes(self, imagenes):
@@ -196,22 +191,69 @@ class Davista2:
                 except Exception as e:
                     print(f"Error al abrir o procesar la imagen: {e}")
 
+    def agregar_producto(self):
+        self.ventanaAgregar=tk.Toplevel()
+        self.ventanaAgregar.title("agregar producto")
+        self.ventanaAgregar.geometry("500x500")
+        self.contenedor2=tk.Frame(self.ventanaAgregar)
+        self.contenedor2.pack()
+        nombre=tk.StringVar()
+        precio=tk.DoubleVar()
+        categoria=tk.StringVar()
+        cantidad=tk.IntVar()
+        self.labelNombre=tk.Label(self.contenedor2, text="ingrese el nombre del producto")
+        self.labelNombre.pack(padx=10,pady=10)
+        self.entryNombre=tk.Entry(self.contenedor2,textvariable=nombre)
+        self.entryNombre.pack(padx=10,pady=10)
+        self.labelPrecio=tk.Label(self.contenedor2, text="ingrese el precio del producto")
+        self.labelPrecio.pack(padx=10,pady=10)
+        self.entryPrecio=tk.Entry(self.contenedor2, textvariable=precio)
+        self.entryPrecio.pack(padx=10,pady=10)
+        self.labeCategoria=tk.Label(self.contenedor2, text="ingrese la categoria")
+        self.labeCategoria.pack(padx=10,pady=10)
+        self.entryCategoria=tk.Entry(self.contenedor2, textvariable=categoria)
+        self.entryCategoria.pack(padx=10,pady=10)
+        self.labelCantidad=tk.Label(self.contenedor2, text="ingrese la cantidad del producto")
+        self.labelCantidad.pack(padx=10,pady=10)
+        self.entryCantidad=tk.Entry(self.contenedor2, textvariable=cantidad)
+        self.entryCantidad.pack(padx=10,pady=10)
+
+        self.boton=tk.Button(self.contenedor2, text="agregar",command=lambda: self.agregarProducto(nombre,precio,categoria,cantidad))
+        self.boton.pack(padx=10,pady=10)
+
+    def agregarProducto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
+        nombre = datoNombre.get()
+        precio = datoPrecio.get()
+        categoria = datoCategoria.get()
+        cantidad = datoCantidad.get()
+
+        if not nombre or not precio or not categoria or not cantidad:
+            messagebox.showerror("Error", "Todos los campos son obligatorios para agregar un producto")
+            return
+
+        try:
+            self.objController.agregar_productos(nombre,precio,categoria,cantidad)
+            messagebox.showinfo("Éxito", "Producto agregado correctamente")
+            self.actualizar_lista_productos()
+        except ValueError:
+            messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
 
     def agregar_imagen_a_bd(self):
-        self.agregarProducto=tk.Toplevel()
-        self.agregarProducto.title("Agregando producto")
-        self.agregarProducto.geometry("400x400")
-        contenedor=tk.Frame(self.agregarProducto)
+        self.agregarProducto2=tk.Toplevel()
+        self.agregarProducto2.title("Agregando producto")
+        self.agregarProducto2.geometry("400x400")
+        nombre=tk.StringVar()
+        contenedor=tk.Frame(self.agregarProducto2)
         contenedor.pack()
         self.label=tk.Label(contenedor,text="ingrese el nombre del producto")
         self.label.pack(padx=10,pady=10)
-        self.entry=tk.Entry(contenedor,textvariable=self.label)
+        self.entry=tk.Entry(contenedor,textvariable=nombre)
         self.entry.pack(padx=10,pady=10)
-        self.boton=tk.Button(contenedor,text="agregar imagen", command=lambda:self.montarImagen(self.label))
+        self.boton=tk.Button(contenedor,text="agregar imagen", command=lambda:self.montarImagen(nombre))
         self.boton.pack(padx=10,pady=10)
 
     def montarImagen(self,datoNombre):
-        dato=[datoNombre]
+        nombre=datoNombre.get()
         # Abre el diálogo para seleccionar una imagen
         ruta_imagen = filedialog.askopenfilename(
             title="Selecciona una imagen",
@@ -221,46 +263,18 @@ class Davista2:
         if not ruta_imagen:
             print("No se seleccionó ninguna imagen")
             return
-        
-        # Abrir y convertir la imagen en formato binario
-        try:
-            with open(ruta_imagen, 'rb') as file:
-                imagen_binaria = file.read()
-        except Exception as e:
-            print(f"Error al leer la imagen: {e}")
-            return
-        self.objController.subirImagen(dato,imagen_binaria)
-        #try:
-        #    conexion = mysql.connector.connect(
-        #        host="localhost",
-        #        user="root",
-        #        password="",
-        #        database="Usuarios",
-        #    )
-        #    cursor = conexion.cursor()
-        #    
-        #    # Inserta la imagen en la base de datos
-        #    sql = "INSERT INTO imagen (nombre, imagenes) VALUES (%s, %s)"
-        #    valores = ("Producto desde Tkinter", imagen_binaria)
-        #    cursor.execute(sql, valores)
-        #    conexion.commit()
-        #    print("Imagen guardada exitosamente en la base de datos")
-        #
-        #except mysql.connector.Error as error:
-        #    print(f"Error al guardar en la base de datos: {error}")
-        #
-        #finally:
-        #    cursor.close()
+        imagen=ruta_imagen
+        self.objController.subirImagen(nombre,imagen)
         
     def catalogoTelefono(self):
         self.catalog_title.config(text="Telefonos")
-        self.actualizar_imagenes(self.imagenes4)
+        #self.actualizar_imagenes(self.imagenes4)
 
     def catalogoTablet(self):
         self.catalog_title.config(text="Tablets")
     def catalogoLaptop(self):
         self.catalog_title.config(text="Laptops")
-        self.actualizar_imagenes(self.imagenes)
+        #self.actualizar_imagenes(self.imagenes)
 
     def catalogoMonitor(self):
         self.catalog_title.config(text="Monitores")
@@ -285,6 +299,7 @@ class Davista2:
         self.mensajeCerrrarSesion=tk.Toplevel()
         self.mensajeCerrrarSesion.title("¿seguro?")
         self.mensajeCerrrarSesion.geometry("300x200")
+        self.mensajeCerrrarSesion.config(background="lightblue")
         self.respuesta=tk.StringVar()
         self.contenedorMensaje=tk.Frame(self.mensajeCerrrarSesion)
         self.contenedorMensaje.pack()
