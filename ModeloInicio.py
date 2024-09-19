@@ -2,6 +2,18 @@ class ModeloUsuario:
     def __init__(self, conexion):
         self.connection = conexion
 
+    def obtener_productos(self):
+        if self.connection:
+            cursor = self.connection.cursor()
+            try:
+                cursor.execute("SELECT * FROM productos")
+                productos=cursor.fetchall()
+                return productos
+            
+            except Exception as e:
+                print(f"Error al registrar usuario: {e}")
+                return []
+            
     def registrar_usuario(self, email, contrasena, rol):
         if self.connection:
             cursor = self.connection.cursor()
@@ -42,3 +54,31 @@ class ModeloUsuario:
             if resultado:
                 return resultado[0]  # Devuelve el nombre del rol ('Administrador', 'Vendedor', 'Usuario')
         return None
+    
+    def imagenABaseDatos(self, nombreProducto, imagen):
+        if self.connection:
+            cursor = self.connection.cursor()
+            try:
+                # Consulta para actualizar la imagen del producto basado en el nombre
+                sql = "UPDATE productos SET imagenes = %s WHERE nombre = %s"
+                valores = (imagen, nombreProducto)
+                cursor.execute(sql, valores)
+                self.connection.commit()
+                print("Imagen actualizada exitosamente en la base de datos")
+            
+            except Exception as e:
+                print(f"Error al actualizar en la base de datos: {e}")
+            finally:
+                cursor.close()
+
+    def agregar_producto(self,nombre,precio,categoria,cantidad):
+        if self.connection:
+            cursor=self.connection.cursor()
+            try:
+                cursor.execute("INSERT INTO productos (nombre, precio, categoria, cantidad) VALUES (%s, %s, %s, %s)",
+                                (nombre,precio,categoria,cantidad))
+                self.connection.commit()
+
+            except Exception as e:
+                print(f"Error al registrar usuario: {e}")
+                return False
