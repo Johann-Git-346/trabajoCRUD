@@ -10,12 +10,14 @@ class Controlador:
         self.conexion=conexion
         self.modelo = modelo
         
-
-    def obtener_productos(self):
-        return self.modelo.obtener_productos()
+    def agregar_productos(self,nombre,precio,categoria,cantidad):
+        return self.modelo.agregar_producto(nombre,precio,categoria,cantidad)
     
     def subirImagen(self,nombre,imagen):
         return self.modelo.imagenABaseDatos(nombre, imagen )
+    
+    def obtener_productos(self):
+        return self.modelo.obtener_productos()
 
     def registrar(self, email, contrasena, rol):
         return self.modelo.registrar_usuario(email, contrasena, rol)
