@@ -11,7 +11,40 @@ class ModeloUsuario:
                 return productos
             
             except Exception as e:
-                print(f"Error al registrar usuario: {e}")
+                print(f"Error al obtener producto: {e}")
+                return []
+
+            
+    def obtenerMasVendidos(self):
+        if self.connection:
+            cursor=self.connection.cursor()
+            try:
+                query = """
+                SELECT * FROM productos
+                ORDER BY cantidad DESC
+                LIMIT 5
+                """
+                cursor.execute(query)
+                mas_vendidos = cursor.fetchall()
+                return mas_vendidos
+            except Exception as e:
+                print(f"Error: {e}")
+                return []
+    
+    def obtenerMenosVendidos(self):
+        if self.connection:
+            cursor=self.connection.cursor()
+            try:
+                query = """
+                SELECT * FROM productos
+                ORDER BY cantidad ASC
+                LIMIT 5
+                """
+                cursor.execute(query)
+                menos_vendidos = cursor.fetchall()
+                return menos_vendidos
+            except Exception as e:
+                print(f"Error: {e}")
                 return []
             
     def registrar_usuario(self, email, contrasena, rol):
@@ -80,5 +113,52 @@ class ModeloUsuario:
                 self.connection.commit()
 
             except Exception as e:
-                print(f"Error al registrar usuario: {e}")
+                print(f"Error al agregar producto: {e}")
+                return False
+            
+    def obtener_producto_por_nombre(self, nombre):
+        if self.connection:
+            cursor=self.connection.cursor()
+            try:
+                sql = "SELECT * FROM productos WHERE nombre = %s"
+                cursor.execute(sql, (nombre,))
+                return cursor.fetchone()
+            except Exception as e:
+                print(f"Error al obtener producto: {e}")
+                return []
+
+    def modificar_producto(self, nombre, nuevo_precio=None, nueva_categoria=None, nueva_cantidad=None):
+        if self.connection:
+            cursor=self.connection.cursor()
+            try:
+                sql = "UPDATE productos SET "
+                params = []
+                if nuevo_precio is not None:
+                    sql += "precio = %s, "
+                    params.append(nuevo_precio)
+                if nueva_categoria:
+                    sql += "categoria = %s, "
+                    params.append(nueva_categoria)
+                if nueva_cantidad is not None:
+                    sql += "cantidad = %s, "
+                    params.append(nueva_cantidad)
+                
+                sql = sql.rstrip(", ") + " WHERE nombre = %s"
+                params.append(nombre)
+                cursor.execute(sql, tuple(params))
+                self.connection.commit()
+            except Exception as e:
+                print(f"Error al obtener producto: {e}")
+                return []
+
+    def eliminar_producto(self, nombre):
+        if self.connection:
+            cursor=self.connection.cursor()
+            try:
+                sql = "DELETE FROM productos WHERE nombre = %s"
+                cursor.execute(sql, (nombre,))
+                self.connection.commit()
+
+            except Exception as e:
+                print(f"Error al eliminar producto: {e}")
                 return False
