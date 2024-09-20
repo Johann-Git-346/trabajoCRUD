@@ -15,37 +15,34 @@ class ModeloUsuario:
                 return []
 
             
-    def obtenerMasVendidos(self):
+    def obtenerMasYMenosVendidos(self):
         if self.connection:
             cursor = self.connection.cursor()
             try:
-                query = """
-                SELECT * FROM productos
-                ORDER BY cantidad DESC
-                LIMIT 3
-                """
-                cursor.execute(query)
-                mas_vendidos = cursor.fetchall()
-                return mas_vendidos
-            except Exception as e:
-                print(f"Error: {e}")
-                return []
-
-    def obtenerMenosVendidos(self):
-        if self.connection:
-            cursor = self.connection.cursor()
-            try:
+                # Obtener todos los productos ordenados por cantidad de ventas
                 query = """
                 SELECT * FROM productos
                 ORDER BY cantidad ASC
-                LIMIT 3
                 """
                 cursor.execute(query)
-                menos_vendidos = cursor.fetchall()
-                return menos_vendidos
+                productos = cursor.fetchall()
+                
+                # Si no hay productos, retornar listas vacías
+                if not productos:
+                    return [], []
+                
+                # Encontrar el punto medio
+                total_productos = len(productos)
+                punto_medio_index = total_productos // 2
+                
+                # Dividir los productos en más vendidos y menos vendidos
+                menos_vendidos = productos[:punto_medio_index]  # Productos con ventas menores
+                mas_vendidos = productos[punto_medio_index:]     # Productos con ventas mayores o iguales
+                
+                return mas_vendidos, menos_vendidos
             except Exception as e:
                 print(f"Error: {e}")
-                return []
+                return [], []
 
             
     def registrar_usuario(self, email, contrasena, rol):
@@ -163,3 +160,11 @@ class ModeloUsuario:
             except Exception as e:
                 print(f"Error al eliminar producto: {e}")
                 return False
+            
+    def guardarInforme(self, json_data):
+        try:
+            with open("informeProductos.txt", "w") as file:
+                file.write(json_data)
+            print("Informe generado exitosamente.")
+        except Exception as e:
+            print(f"Error al guardar el informe: {e}")
