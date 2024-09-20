@@ -61,7 +61,7 @@ class Davista:
 
     def create_sidebar_frame(self):
         self.frame_sidebar = tk.Frame(self.root, relief=tk.RAISED, borderwidth=1)
-=======
+
 
         self.rootProductos.mainloop()
         
@@ -118,7 +118,7 @@ class Davista:
 <<<<<<< HEAD
         sidebar_buttons = ["Apps", "Juegos", "Peliculas", "Libros", "Noticias"]
         sidebar_commands = [self.apps_command, self.games_command, self.movies_command, self.books_command, self.newspapers_command]
-=======
+
         # Añadir botones de la barra lateral
         sidebar_buttons = ["Agregar", "Modificar", "Eliminar", "Informe", "Cerrar Sesion"]
         sidebar_commands = [self.agregar, self.modificar, self.eliminar, self.informe, self.salir]
@@ -133,7 +133,6 @@ class Davista:
     def create_catalog_frame(self):
 <<<<<<< HEAD
         self.frame_catalog = tk.Frame(self.root)
-=======
         """ Crear el marco para las categorías y el catálogo. """
         self.frame_catalog = tk.Frame(self.rootProductos)
 >>>>>>> 0b2dfe525694170464f984a889026f185bc62103
@@ -142,7 +141,6 @@ class Davista:
 
 <<<<<<< HEAD
         self.frame_categories = tk.Frame(self.frame_catalog, relief=tk.RAISED, borderwidth=1)
-=======
         # Crear el marco de categorías
         self.frame_categories = tk.Frame(self.frame_catalog, relief=tk.RAISED,borderwidth=1)
 >>>>>>> 0b2dfe525694170464f984a889026f185bc62103
@@ -167,7 +165,7 @@ class Davista:
         self.catalog_title = tk.Label(self.frame_catalog, text="Telefonos", font=("Arial", 16),foreground="#FFFFFF")
         self.catalog_title.pack(side=tk.TOP, pady=10)
         self.catalog_title.config(background="#333333")
->>>>>>> 0b2dfe525694170464f984a889026f185bc62103
+>>>>>>> 0b2dfe525
 
         self.frame_products = tk.Frame(self.frame_catalog)
         self.frame_products.pack(fill=tk.BOTH, expand=True)
@@ -329,7 +327,6 @@ class Davista:
 root = tk.Tk()
 app = Davista(root)
 root.mainloop()
-=======
     def eliminar(self):
         print("eliminar button clicked")
 
@@ -361,4 +358,4 @@ root.mainloop()
     def cargador(self):
         print("cargador")
         self.catalogoCargador()
->>>>>>> 0b2dfe525694170464f984a889026f185bc62103
+
