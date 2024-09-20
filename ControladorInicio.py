@@ -4,7 +4,7 @@ from vista import VistaUsuario
 from vistaProductos import Davista
 from VistaTablas import VistaTablas1
 from VistaVendedor import Davista2
-
+import json
 class Controlador:
     def __init__(self, conexion,modelo):
         self.conexion=conexion
@@ -37,11 +37,8 @@ class Controlador:
         else:
             return None
         
-    def obtener_mas_vendidos(self):
-        return self.modelo.obtenerMasVendidos()
-    
-    def obtener_menos_vendidos(self):
-        return self.modelo.obtenerMenosVendidos()
+    def obtenerMasYMenosVendidos(self):
+        return self.modelo.obtenerMasYMenosVendidos()
     
     def modificar_producto(self, nombre,nuevo_precio=None, nueva_descripcion=None, nueva_cantidad=None):
         self.modelo.modificar_producto(nombre, nuevo_precio, nueva_descripcion, nueva_cantidad)
@@ -51,6 +48,14 @@ class Controlador:
 
     def obtener_producto_por_nombre(self, nombre):
         return self.modelo.obtener_producto_por_nombre(nombre)
+
+    def generarInforme(self, mas_vendidos, menos_vendidos):
+        data = {
+            "Mas Vendidos": mas_vendidos,
+            "Menos Vendidos": menos_vendidos
+        }
+        json_data = json.dumps(data, indent=4)
+        self.modelo.guardarInforme(json_data)
 
     def mostrar_vista_vendedor(self):
         vistaVendedor.iniciarVendedor()
