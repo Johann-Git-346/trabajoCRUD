@@ -14,10 +14,8 @@ class Davista2:
         self.rootVendedor.geometry("800x600")
 
         self.create_top_frame()
-        self.create_menu_frame()
         self.create_sidebar_frame()
         self.create_catalog_frame()
-
         self.rootVendedor.mainloop()
         
 
@@ -62,22 +60,7 @@ class Davista2:
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
 
-    def create_menu_frame(self):
-        """ Crear el marco para el menú de navegación. """
-        self.frame_menu = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
-        self.frame_menu.pack(side=tk.TOP, fill=tk.X)
-        self.frame_menu.config(background="#FFFFFF")
 
-        # Botones de navegación
-        menu_buttons = ["Informes","Cerrar Sesion"]
-        commands = [self.Informes, self.CerrarSesion]
-
-        for text, command in zip(menu_buttons, commands):
-            tk.Button(self.frame_menu, text=text,cursor="hand2",bg="#FFD700",foreground="black" ,command=command).grid(row=0, column=menu_buttons.index(text), padx=10, pady=5)
-
-        # Configurar las columnas para que se expandan igualmente
-        for i in range(len(menu_buttons)):
-            self.frame_menu.grid_columnconfigure(i, weight=1)
 
     def create_sidebar_frame(self):
         """ Crear el marco para la barra lateral izquierda y añadir botones. """
@@ -86,8 +69,8 @@ class Davista2:
         self.frame_sidebar.config(background="#FFFFFF")
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Agregar","Modificar", "Eliminar","Guardar"]
-        sidebar_commands = [ self.agregar_producto,self.agregar_imagen_a_bd, self.eliminar_command,self.guardarComando]
+        sidebar_buttons = ["Agregar","Modificar", "Eliminar","cerrar sesion"]
+        sidebar_commands = [ self.agregar_producto, self.guardarComando, self.eliminar_command, self.CerrarSesion]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
             tk.Button(self.frame_sidebar, cursor="hand2",bg="#FFD700",foreground="black",text=text, command=command).pack(fill=tk.X, padx=10, pady=20)
@@ -96,6 +79,10 @@ class Davista2:
         multimedia_frame = tk.Frame(self.frame_sidebar)
         multimedia_frame.pack(fill=tk.X, padx=10, pady=10)
 
+
+
+
+    #Dato
     def create_catalog_frame(self):
         """ Crear el marco para las categorías y el catálogo. """
         self.productos = self.objController.obtener_productos()
@@ -110,63 +97,106 @@ class Davista2:
         self.frame_categories.config(background="#FFFFFF")
 
         # Añadir botones de categorías
-        categories = ["Smartphones","Laptops",]
-        comandoCategoria=[lambda:self.telefono(self.productos),self.laptop]
-        for text, comandoCategoria in zip(categories,comandoCategoria):
-            tk.Button(self.frame_categories,cursor="hand2", bg="#333333",foreground="#FFFFFF",text=text,command=comandoCategoria).pack(side=tk.LEFT, padx=100, pady=5)
+        categories = ["Teléfonos", "Laptops"]
+        comandos_categoria = [self.telefono,self.laptop]
+
+        for text, comando in zip(categories, comandos_categoria):
+            tk.Button(self.frame_categories, cursor="hand2", bg="#333333", foreground="#FFFFFF", text=text, command=comando).pack(side=tk.LEFT, padx=100, pady=5)
 
         # Crear el título del catálogo
-        self.catalog_title = tk.Label(self.frame_catalog, text="Telefonos",foreground="#FFFFFF", font=("Arial", 16))
+        self.catalog_title = tk.Label(self.frame_catalog, text="Teléfonos", foreground="#FFFFFF", font=("Arial", 16))
         self.catalog_title.pack(side=tk.TOP, pady=10)
         self.catalog_title.config(background="#333333")
 
-
-
-        # Crear el marco para los self.productos
+        # Crear el marco para los productos
         self.frame_products = tk.Frame(self.frame_catalog)
         self.frame_products.pack(fill=tk.BOTH, expand=True)
         self.frame_products.config(background="#FFFFFF")
-        
-        self.imagenes_tk = []
-        self.labels_imagenes = []
 
-        for i in range(2):  # filas
+        # Inicialmente mostrar teléfonos
+        self.mostrar_productos_categoria("celular")
+    
+    #oreo dato
+    def mostrar_productos_categoria(self, categoria):
+        """ Muestra los productos filtrados por categoría. """
+        self.catalog_title.config(text=categoria)
+
+        # Filtrar productos por categoría
+        self.productos_filtrados = [p for p in self.productos if p[3] == categoria]
+
+        # Limpiar el marco de productos antes de agregar los productos filtrados
+        for widget in self.frame_products.winfo_children():
+            widget.destroy()
+
+        # Volver a crear los cuadros de productos filtrados
+        self.imagenes_tk = []  # Limpiar la lista de imágenes
+        self.labels_imagenes = []  # Limpiar la lista de etiquetas
+
+        filas = (len(self.productos_filtrados) // 3) + (1 if len(self.productos_filtrados) % 3 != 0 else 0)  # Calcular filas necesarias
+
+        for i in range(filas):  # Crear las filas necesarias
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
             row.config(background="#FFFFFF")
             
             for j in range(3):  # columnas
-                self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
-                self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
-                self.crear_cuadro_producto(row, self.productos, i, j)
+                img_index = (i * 3) + j
+                if img_index < len(self.productos_filtrados):  # Asegurarse de que el índice no sobrepase los productos filtrados
+                    self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
+                    self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
+                    self.crear_cuadro_producto(self.product_frame, self.productos_filtrados[img_index])
 
-    def crear_cuadro_producto(self, row, productos, i, j):
-        img_index = (i * 3) + j
-        if img_index < len(self.productos):
-            producto = self.productos[img_index]
-            self.rutaimagen = producto[5]  # Suponiendo que la ruta de la imagen está en la columna 5
-            categoria = producto[3]  # Suponiendo que la categoría está en la columna 6
-            
-            if not os.path.exists(self.rutaimagen):
-                print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
-                return
-            try:
-                imagen = Image.open(self.rutaimagen)
-                imagen = imagen.resize((110, 110))      
-                imagen_tk = ImageTk.PhotoImage(imagen)
-                self.imagenes_tk.append(imagen_tk)
-                etiqueta_imagen = tk.Label(self.product_frame, image=imagen_tk, width=130, height=100)
-                etiqueta_imagen.pack(pady=5)
-                self.labels_imagenes.append(etiqueta_imagen)
-            except Exception as e:
-                print(f"Error al abrir o procesar la imagen: {e}")
-        else:
-            etiqueta_imagen = tk.Label(self.product_frame, text="No Image", width=10, height=5)
+    def crear_cuadro_producto(self, product_frame, producto):
+        """ Crea un cuadro individual para un producto. """
+        self.rutaimagen = producto[5]  # Suponiendo que la ruta de la imagen está en la columna 5
+        
+        if not os.path.exists(self.rutaimagen):
+            print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
+            return
+        
+        try:
+            imagen = Image.open(self.rutaimagen)
+            imagen = imagen.resize((110, 110))      
+            imagen_tk = ImageTk.PhotoImage(imagen)
+            self.imagenes_tk.append(imagen_tk)  # Guardar referencia para evitar que la imagen sea recolectada por el GC
+            etiqueta_imagen = tk.Label(product_frame, image=imagen_tk, width=130, height=100)
             etiqueta_imagen.pack(pady=5)
-        if img_index < len(self.productos):
-            producto = self.productos[img_index]
-            info_label = tk.Label(self.product_frame, text=f"Nombre: {producto[1]}\nPrecio: {producto[2]}\nCantidad: {producto[4]}", justify=tk.LEFT)
-            info_label.pack()
+        except Exception as e:
+            print(f"Error al abrir o procesar la imagen: {e}")
+        
+        # Información del producto
+        info_label = tk.Label(product_frame, text=f"Nombre: {producto[1]}\nPrecio: {producto[2]}\nCantidad: {producto[4]}", justify=tk.LEFT)
+        info_label.pack()
+
+    def actualizar_catalogo(self,categoria):
+        self.productos = self.objController.obtener_productos()
+        """ Método para refrescar el catálogo de productos. """
+        self.productos_filtrados = [p for p in self.productos if p[3] == categoria]
+        # Limpiar el marco de productos antes de agregar los productos actualizados
+        for widget in self.frame_products.winfo_children():
+            widget.destroy()
+
+        # Volver a crear los cuadros de productos actualizados
+        self.imagenes_tk = []  # Limpiar la lista de imágenes
+
+        # Obtener productos actualizados desde el controlador
+        #self.productos = self.objController.obtener_productos()
+
+        filas = (len(self.productos_filtrados) // 3) + (1 if len(self.productos_filtrados) % 3 != 0 else 0)  # Calcular filas necesarias
+
+        for i in range(filas):  # Crear las filas necesarias
+            row = tk.Frame(self.frame_products)
+            row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
+            row.config(background="#FFFFFF")
+            
+            for j in range(3):  # columnas
+                img_index = (i * 3) + j
+                if img_index < len(self.productos_filtrados):
+                    self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
+                    self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
+                    self.crear_cuadro_producto(self.product_frame, self.productos_filtrados[img_index])
+
+        print("Catálogo actualizado.")
 
     def actualizar_imagenes(self, productos):
         for img_index, etiqueta_imagen in enumerate(self.labels_imagenes):
@@ -189,8 +219,6 @@ class Davista2:
                     etiqueta_imagen.config(text=f"Categoría: {categoria}")  # Mostrar la categoría
                 except Exception as e:
                     print(f"Error al abrir o procesar la imagen: {e}")
-
-
 
     def agregar_producto(self):
         self.ventanaAgregar=tk.Toplevel()
@@ -220,6 +248,7 @@ class Davista2:
         self.entryCantidad.pack(padx=10,pady=10)
         self.boton=tk.Button(self.contenedor2, text="agregar",command=lambda: self.agregarProducto(nombre,precio,categoria,cantidad))
         self.boton.pack(padx=10,pady=10)
+        #self.actualizar_catalogo()
 
     def agregarProducto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
         self.ventanaAgregar.destroy()
@@ -234,8 +263,6 @@ class Davista2:
 
         try:
             self.objController.agregar_productos(nombre,precio,categoria,cantidad)
-            self.agregar_imagen_a_bd()
-            messagebox.showinfo("Éxito", "Producto agregado correctamente")
             
         except ValueError:
             messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
@@ -255,6 +282,7 @@ class Davista2:
         self.boton.pack(padx=10,pady=10)
 
     def montarImagen(self,datoNombre):
+        self.agregarProducto2.destroy()
         nombre=datoNombre.get()
         # Abre el diálogo para seleccionar una imagen
         ruta_imagen = filedialog.askopenfilename(
@@ -267,9 +295,10 @@ class Davista2:
             return
         imagen=ruta_imagen
         self.objController.subirImagen(nombre,imagen)
+        messagebox.showinfo("Éxito", "Producto agregado correctamente")
         
     def catalogoTelefono(self,productos):
-        self.catalog_title.config(text="Smartphones")
+        self.catalog_title.config(text="Telefono")
         self.actualizar_imagenes(productos)
         #self.actualizar_imagenes(self.imagenes4)
 
@@ -306,6 +335,7 @@ class Davista2:
         self.entryCantidad.pack(padx=10,pady=10)
         self.boton=tk.Button(self.contenedor4, text="agregar",command=lambda: self.modificar_producto(nombre,precioNuevo,categoriaNueva,cantidadNueva))
         self.boton.pack(padx=10,pady=10)
+        #self.actualizar_catalogo()
 
     def modificar_producto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
         nombre = datoNombre.get()
@@ -343,6 +373,7 @@ class Davista2:
         self.entryEliminar.pack(padx=10,pady=10)
         self.botonEliminar=tk.Button(self.contenedor3, text="eliminar",command=lambda:self.eliminar_producto(nombreEliminar))
         self.botonEliminar.pack(padx=10,pady=10)
+        #self.actualizar_catalogo()
 
     def eliminar_producto(self,datoEliminar):
         nombre = datoEliminar.get()
@@ -383,10 +414,12 @@ class Davista2:
     def Informes(self):
         self.objController.vistaInformes()
 
-    def telefono(self,productos):
-        print("telfono")
-        self.catalogoTelefono(productos)
+    def telefono(self):
+        print("telefono")
+        self.mostrar_productos_categoria("Teléfonos")
+        self.actualizar_catalogo("Teléfonos")
 
     def laptop(self):
         print("laptop")
-        self.catalogoLaptop()
+        self.mostrar_productos_categoria("Laptop")
+        self.actualizar_catalogo("laptop")
