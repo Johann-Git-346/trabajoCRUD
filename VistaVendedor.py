@@ -7,7 +7,6 @@ class Davista2:
     def __init__(self,objController):
         self.objController=objController
     
-
     def iniciarVendedor(self):
         self.rootVendedor = tk.Tk()
         self.rootVendedor.title("ADMINISTRADOR")
@@ -18,7 +17,6 @@ class Davista2:
         self.create_catalog_frame()
         self.rootVendedor.mainloop()
         
-
     def create_top_frame(self):
         """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
         self.frame_top = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
@@ -39,7 +37,6 @@ class Davista2:
         spacer_right = tk.Frame(self.frame_top)
         spacer_right.pack(side=tk.RIGHT, expand=True)
             
-
         etiqueta = tk.Label(logo)
         etiqueta.pack(side=tk.RIGHT)
 
@@ -60,8 +57,6 @@ class Davista2:
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
 
-
-
     def create_sidebar_frame(self):
         """ Crear el marco para la barra lateral izquierda y añadir botones. """
         self.frame_sidebar = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
@@ -69,7 +64,7 @@ class Davista2:
         self.frame_sidebar.config(background="#FFFFFF")
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Agregar","Modificar", "Eliminar","cerrar sesion"]
+        sidebar_buttons = ["Agregar","Modificar", "Eliminar", "Cerrar sesion"]
         sidebar_commands = [ self.agregar_producto, self.guardarComando, self.eliminar_command, self.CerrarSesion]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
@@ -79,10 +74,6 @@ class Davista2:
         multimedia_frame = tk.Frame(self.frame_sidebar)
         multimedia_frame.pack(fill=tk.X, padx=10, pady=10)
 
-
-
-
-    #Dato
     def create_catalog_frame(self):
         """ Crear el marco para las categorías y el catálogo. """
         self.productos = self.objController.obtener_productos()
@@ -97,14 +88,14 @@ class Davista2:
         self.frame_categories.config(background="#FFFFFF")
 
         # Añadir botones de categorías
-        categories = ["Teléfonos", "Laptops"]
+        categories = ["Celular", "Laptops"]
         comandos_categoria = [self.telefono,self.laptop]
 
         for text, comando in zip(categories, comandos_categoria):
             tk.Button(self.frame_categories, cursor="hand2", bg="#333333", foreground="#FFFFFF", text=text, command=comando).pack(side=tk.LEFT, padx=100, pady=5)
 
         # Crear el título del catálogo
-        self.catalog_title = tk.Label(self.frame_catalog, text="Teléfonos", foreground="#FFFFFF", font=("Arial", 16))
+        self.catalog_title = tk.Label(self.frame_catalog, text="Celular", foreground="#FFFFFF", font=("Arial", 16))
         self.catalog_title.pack(side=tk.TOP, pady=10)
         self.catalog_title.config(background="#333333")
 
@@ -114,9 +105,8 @@ class Davista2:
         self.frame_products.config(background="#FFFFFF")
 
         # Inicialmente mostrar teléfonos
-        self.mostrar_productos_categoria("celular")
+        self.mostrar_productos_categoria("Celular")
     
-    #oreo dato
     def mostrar_productos_categoria(self, categoria):
         """ Muestra los productos filtrados por categoría. """
         self.catalog_title.config(text=categoria)
@@ -132,23 +122,23 @@ class Davista2:
         self.imagenes_tk = []  # Limpiar la lista de imágenes
         self.labels_imagenes = []  # Limpiar la lista de etiquetas
 
-        filas = (len(self.productos_filtrados) // 3) + (1 if len(self.productos_filtrados) % 3 != 0 else 0)  # Calcular filas necesarias
+        filas = (len(self.productos_filtrados) // 3) + (1 if len(self.productos_filtrados) % 3 != 0 else 0)  
 
-        for i in range(filas):  # Crear las filas necesarias
+        for i in range(filas):  # Crear las filas 
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
             row.config(background="#FFFFFF")
             
             for j in range(3):  # columnas
                 img_index = (i * 3) + j
-                if img_index < len(self.productos_filtrados):  # Asegurarse de que el índice no sobrepase los productos filtrados
+                if img_index < len(self.productos_filtrados):  
                     self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                     self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
                     self.crear_cuadro_producto(self.product_frame, self.productos_filtrados[img_index])
 
     def crear_cuadro_producto(self, product_frame, producto):
         """ Crea un cuadro individual para un producto. """
-        self.rutaimagen = producto[5]  # Suponiendo que la ruta de la imagen está en la columna 5
+        self.rutaimagen = producto[5]  
         
         if not os.path.exists(self.rutaimagen):
             print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
@@ -158,7 +148,7 @@ class Davista2:
             imagen = Image.open(self.rutaimagen)
             imagen = imagen.resize((110, 110))      
             imagen_tk = ImageTk.PhotoImage(imagen)
-            self.imagenes_tk.append(imagen_tk)  # Guardar referencia para evitar que la imagen sea recolectada por el GC
+            self.imagenes_tk.append(imagen_tk)  
             etiqueta_imagen = tk.Label(product_frame, image=imagen_tk, width=130, height=100)
             etiqueta_imagen.pack(pady=5)
         except Exception as e:
@@ -176,15 +166,11 @@ class Davista2:
         for widget in self.frame_products.winfo_children():
             widget.destroy()
 
-        # Volver a crear los cuadros de productos actualizados
-        self.imagenes_tk = []  # Limpiar la lista de imágenes
+        self.imagenes_tk = []  
 
-        # Obtener productos actualizados desde el controlador
-        #self.productos = self.objController.obtener_productos()
+        filas = (len(self.productos_filtrados) // 3) + (1 if len(self.productos_filtrados) % 3 != 0 else 0)  
 
-        filas = (len(self.productos_filtrados) // 3) + (1 if len(self.productos_filtrados) % 3 != 0 else 0)  # Calcular filas necesarias
-
-        for i in range(filas):  # Crear las filas necesarias
+        for i in range(filas): # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
             row.config(background="#FFFFFF")
@@ -202,8 +188,8 @@ class Davista2:
         for img_index, etiqueta_imagen in enumerate(self.labels_imagenes):
             if img_index < len(productos):
                 producto = productos[img_index]
-                self.rutaimagen = producto[5]  # Suponiendo que la ruta de la imagen está en la columna 5
-                categoria = producto[3]  # Suponiendo que la categoría está en la columna 6
+                self.rutaimagen = producto[5] 
+                categoria = producto[3]  
                 
                 if not os.path.exists(self.rutaimagen):
                     print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
@@ -212,11 +198,11 @@ class Davista2:
                 try:
                     imagen = Image.open(self.rutaimagen)
                     imagen = imagen.resize((100, 100))      
-                    imagen_tk = ImageTk.PhotoImage(imagen)  # Crear una nueva referencia a la imagen
-                    self.imagenes_tk[img_index] = imagen_tk  # Actualizar la referencia en la lista
+                    imagen_tk = ImageTk.PhotoImage(imagen)  
+                    self.imagenes_tk[img_index] = imagen_tk  
                     
                     etiqueta_imagen.config(image=imagen_tk)
-                    etiqueta_imagen.config(text=f"Categoría: {categoria}")  # Mostrar la categoría
+                    etiqueta_imagen.config(text=f"Categoría: {categoria}")  
                 except Exception as e:
                     print(f"Error al abrir o procesar la imagen: {e}")
 
@@ -248,7 +234,6 @@ class Davista2:
         self.entryCantidad.pack(padx=10,pady=10)
         self.boton=tk.Button(self.contenedor2, text="agregar",command=lambda: self.agregarProducto(nombre,precio,categoria,cantidad))
         self.boton.pack(padx=10,pady=10)
-        #self.actualizar_catalogo()
 
     def agregarProducto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
         self.ventanaAgregar.destroy()
@@ -284,7 +269,6 @@ class Davista2:
     def montarImagen(self,datoNombre):
         self.agregarProducto2.destroy()
         nombre=datoNombre.get()
-        # Abre el diálogo para seleccionar una imagen
         ruta_imagen = filedialog.askopenfilename(
             title="Selecciona una imagen",
             filetypes=(("Archivos de imagen", ".jpg;.jpeg;.png"), ("Todos los archivos", ".*"))
@@ -300,13 +284,10 @@ class Davista2:
     def catalogoTelefono(self,productos):
         self.catalog_title.config(text="Telefono")
         self.actualizar_imagenes(productos)
-        #self.actualizar_imagenes(self.imagenes4)
 
     def catalogoLaptop(self):
         self.catalog_title.config(text="Laptops")
-        #self.actualizar_imagenes(self.imagenes)
 
-    # Métodos de comando para los botones
     def guardarComando(self):
         self.ventanaModificar=tk.Toplevel()
         self.ventanaModificar.title("modificar producto")
@@ -335,7 +316,6 @@ class Davista2:
         self.entryCantidad.pack(padx=10,pady=10)
         self.boton=tk.Button(self.contenedor4, text="agregar",command=lambda: self.modificar_producto(nombre,precioNuevo,categoriaNueva,cantidadNueva))
         self.boton.pack(padx=10,pady=10)
-        #self.actualizar_catalogo()
 
     def modificar_producto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
         nombre = datoNombre.get()
@@ -415,9 +395,9 @@ class Davista2:
         self.objController.vistaInformes()
 
     def telefono(self):
-        print("telefono")
-        self.mostrar_productos_categoria("Teléfonos")
-        self.actualizar_catalogo("Teléfonos")
+        print("Celular")
+        self.mostrar_productos_categoria("Celular")
+        self.actualizar_catalogo("Celular")
 
     def laptop(self):
         print("laptop")
