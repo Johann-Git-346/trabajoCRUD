@@ -17,12 +17,12 @@ class ModeloUsuario:
             
     def obtenerMasVendidos(self):
         if self.connection:
-            cursor=self.connection.cursor()
+            cursor = self.connection.cursor()
             try:
                 query = """
                 SELECT * FROM productos
                 ORDER BY cantidad DESC
-                LIMIT 5
+                LIMIT 3
                 """
                 cursor.execute(query)
                 mas_vendidos = cursor.fetchall()
@@ -30,15 +30,15 @@ class ModeloUsuario:
             except Exception as e:
                 print(f"Error: {e}")
                 return []
-    
+
     def obtenerMenosVendidos(self):
         if self.connection:
-            cursor=self.connection.cursor()
+            cursor = self.connection.cursor()
             try:
                 query = """
                 SELECT * FROM productos
                 ORDER BY cantidad ASC
-                LIMIT 5
+                LIMIT 3
                 """
                 cursor.execute(query)
                 menos_vendidos = cursor.fetchall()
@@ -46,6 +46,7 @@ class ModeloUsuario:
             except Exception as e:
                 print(f"Error: {e}")
                 return []
+
             
     def registrar_usuario(self, email, contrasena, rol):
         if self.connection:
