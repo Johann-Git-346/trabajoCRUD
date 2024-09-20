@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os
-
+import json
 class VistaTablas1:
-    def __init__(self):
-        pass
+    def __init__(self,objController):
+        self.objController=objController
 
     def iniciarTablas(self):
         # Crear la ventana principal
@@ -22,8 +22,8 @@ class VistaTablas1:
         self.rootTablas.mainloop()
 
     def create_top_frame(self):
-        """ Crear el marco superior para el nombreTelefonos de la empresa y la imagen del logo. """
-        self.frame_top = tk.Frame(self.rootTablas, relief=tk.RAISED,borderwidth=1)
+        """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
+        self.frame_top = tk.Frame(self.rootTablas, relief=tk.RAISED, borderwidth=1)
         self.frame_top.pack(side=tk.TOP, fill=tk.X)
         self.frame_top.config(background="#333333")
 
@@ -31,41 +31,37 @@ class VistaTablas1:
         spacer_left = tk.Frame(self.frame_top)
         spacer_left.pack(side=tk.LEFT, expand=True)
 
-        company_name = tk.Label(self.frame_top, text="TecnoNube", foreground="#FFFFFF",font=("Arial", 24), anchor="center")
+        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24),foreground="#FFFFFF", anchor="center")
         company_name.pack(side=tk.LEFT, padx=10, pady=10)
         company_name.config(background="#333333")
 
-
-        logo = tk.Frame(self.frame_top)
-        logo.pack(side=tk.RIGHT, padx=20, pady=20)
-
+        logo = tk.Frame(self.frame_top,width=20,height=20)
+        logo.pack(side=tk.RIGHT, padx=10, pady=10)
         # Añadir un widget de Frame central vacío para centrar los otros widgets
         spacer_right = tk.Frame(self.frame_top)
         spacer_right.pack(side=tk.RIGHT, expand=True)
+            
 
         etiqueta = tk.Label(logo)
         etiqueta.pack(side=tk.RIGHT)
-        
-        self.rutaimagen = 'imagenes/LOGO.jpg'
-        
+
+        self.rutaimagen= "LOGO2.jpg"
+
         if not os.path.exists(self.rutaimagen):
             print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
             return
         
+
         try:
-            imagen = Image.open(self.rutaimagen)
-            imagen = imagen.resize((155, 130))
-            self.imagen_tk = ImageTk.PhotoImage(imagen)  # Mantén la referencia a la imagen
+            imagen2 = Image.open(self.rutaimagen)
+            imagen2 = imagen2.resize((155, 130))
+            self.imagen_tk2 = ImageTk.PhotoImage(imagen2) # Mantén la referencia a la imagen
             
-            etiqueta_imagen = tk.Label(logo, image=self.imagen_tk)
+            etiqueta_imagen = tk.Label(logo, image=self.imagen_tk2)
             etiqueta_imagen.pack()
-        
+
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
-
-        # Añadir un widget de Frame central vacío para centrar los otros widgets
-        spacer_right = tk.Frame(self.frame_top)
-        spacer_right.pack(side=tk.RIGHT, expand=True)
 
     def create_menu_frame(self):
         # Crear el marco para el menú de navegación
@@ -99,39 +95,89 @@ class VistaTablas1:
         frame_products = tk.Frame(frame_report)
         frame_products.pack(fill=tk.BOTH, expand=True)
 
+        # Supongamos que tienes un método en tu controlador para obtener los productos más vendidos y menos vendidos
+        self.mas_vendidos = self.objController.obtener_mas_vendidos()
+        self.menos_vendidos = self.objController.obtener_menos_vendidos()
+
         # Tabla de Más Vendidos
         frame_mas_vendidos = tk.Frame(frame_products)
         frame_mas_vendidos.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=5)
         frame_mas_vendidos.config(background="#333333")
 
-        mas_vendidos_title = tk.Label(frame_mas_vendidos, text="Más Vendidos", font=("Arial", 14),foreground="#FFFFFF")
+        mas_vendidos_title = tk.Label(frame_mas_vendidos, text="Más Vendidos", font=("Arial", 14), foreground="#FFFFFF")
         mas_vendidos_title.pack(side=tk.TOP, pady=5)
         mas_vendidos_title.config(background="#333333")
 
-        mas_vendidos_tree = ttk.Treeview(frame_mas_vendidos, columns=("Producto", "Cantidad" ,"Categoria"), show="headings")
-        mas_vendidos_tree.heading("Producto", text="Nombre Producto")
-        mas_vendidos_tree.heading("Cantidad", text="Cantidad")
-        mas_vendidos_tree.heading("Categoria", text="Categoria")
-        mas_vendidos_tree.pack(fill=tk.BOTH, expand=True)
+        self.mas_vendidos_tree = ttk.Treeview(frame_mas_vendidos, columns=("Producto", "Cantidad", "Categoria"), show="headings")
+        self.mas_vendidos_tree.heading("Producto", text="Nombre Producto")
+        self.mas_vendidos_tree.heading("Cantidad", text="Cantidad")
+        self.mas_vendidos_tree.heading("Categoria", text="Categoria")
+
+        # Insertar datos en la tabla de Más Vendidos
+        for producto in self.mas_vendidos:
+            self.mas_vendidos_tree.insert("", "end", values=(producto[1], producto[4], producto[3]))  # Ajusta los índices según tu estructura de datos
+
+        self.mas_vendidos_tree.pack(fill=tk.BOTH, expand=True)
 
         # Tabla de Menos Vendidos
         frame_menos_vendidos = tk.Frame(frame_products)
         frame_menos_vendidos.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=5)
         frame_menos_vendidos.config(background="#333333")
 
-        menos_vendidos_title = tk.Label(frame_menos_vendidos, text="Menos Vendidos", font=("Arial", 14),foreground="#FFFFFF")
+        menos_vendidos_title = tk.Label(frame_menos_vendidos, text="Menos Vendidos", font=("Arial", 14), foreground="#FFFFFF")
         menos_vendidos_title.pack(side=tk.TOP, pady=5)
         menos_vendidos_title.config(background="#333333")
 
-        menos_vendidos_tree = ttk.Treeview(frame_menos_vendidos, columns=("Producto", "Cantidad" ,"Categoria"), show="headings")
-        menos_vendidos_tree.heading("Producto", text="Nombre Producto")
-        menos_vendidos_tree.heading("Cantidad", text="Cantidad")
-        menos_vendidos_tree.heading("Categoria", text="Categoria")
-        menos_vendidos_tree.pack(fill=tk.BOTH, expand=True)
+        self.menos_vendidos_tree = ttk.Treeview(frame_menos_vendidos, columns=("Producto", "Cantidad", "Categoria"), show="headings")
+        self.menos_vendidos_tree.heading("Producto", text="Nombre Producto")
+        self.menos_vendidos_tree.heading("Cantidad", text="Cantidad")
+        self.menos_vendidos_tree.heading("Categoria", text="Categoria")
+
+        # Insertar datos en la tabla de Menos Vendidos
+        for producto in self.menos_vendidos:
+            self.menos_vendidos_tree.insert("", "end", values=(producto[1], producto[4], producto[3]))  # Ajusta los índices según tu estructura de datos
+
+        self.menos_vendidos_tree.pack(fill=tk.BOTH, expand=True)
 
         # Botón para generar el informe
-        generate_button = tk.Button(frame_report, text="Generar Informe",cursor="hand2",bg="#FFD700",foreground="black")
+        generate_button = tk.Button(frame_report, text="Generar Informe", cursor="hand2", bg="#FFD700", foreground="black",command=self.crearArchivo())
         generate_button.pack(side=tk.BOTTOM, pady=10)
+
+    def crearArchivo(self):
+        # Obtener datos de los Treeview
+        mas_vendidos = []
+        for item in self.mas_vendidos_tree.get_children():
+            producto = self.mas_vendidos_tree.item(item, "values")
+            mas_vendidos.append({
+                "Producto": producto[0],
+                "Cantidad": producto[1],
+                "Categoria": producto[2]
+            })
+
+        menos_vendidos = []
+        for item in self.menos_vendidos_tree.get_children():
+            producto = self.menos_vendidos_tree.item(item, "values")
+            menos_vendidos.append({
+                "Producto": producto[0],
+                "Cantidad": producto[1],
+                "Categoria": producto[2]
+            })
+
+        # Crear diccionario con los datos
+        data = {
+            "Mas Vendidos": mas_vendidos,
+            "Menos Vendidos": menos_vendidos
+        }
+
+        # Convertir a JSON
+        json_data = json.dumps(data, indent=4)
+
+        # Escribir en un archivo TXT
+        with open("informeProductos.txt", "w") as file:
+            file.write(json_data)
+
+        print("Informe generado exitosamente.")
+
 
     def crearMarcoInferior(self):
         # Crear el marco inferior para la barra de navegación
@@ -158,10 +204,8 @@ class VistaTablas1:
 
     def salirTodo(self):
         self.mensajeCerrrarSesion.destroy()
-        self.rootTablas.destroy()  
+        self.rootTablas.destroy()
+        self.objController.mostraLogin() 
 
     def inicio(self):
         self.rootTablas.destroy()
-
-x=VistaTablas1()
-x.iniciarTablas()
