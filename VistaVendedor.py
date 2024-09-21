@@ -218,7 +218,7 @@ class Davista2:
         self.labelCantidad.pack(padx=10,pady=10)
         self.entryCantidad=tk.Entry(self.contenedor2, textvariable=cantidad)
         self.entryCantidad.pack(padx=10,pady=10)
-        self.boton=tk.Button(self.contenedor2, text="agregar",command=lambda: self.agregarProducto(nombre,precio,categoria,cantidad),bg="lightgreen", font=("Arial", 12, "bold"))
+        self.boton=tk.Button(self.contenedor2, text="agregar",command=lambda: self.agregarProducto(nombre,precio,categoria,cantidad),bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
         self.boton.pack(padx=10,pady=10)
 
     def agregarProducto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
@@ -251,7 +251,7 @@ class Davista2:
         self.label.pack(padx=10,pady=10)
         self.entry=tk.Entry(contenedor5,textvariable=nombre)
         self.entry.pack(padx=10,pady=10)
-        self.boton=tk.Button(contenedor5,text="agregar imagen", command=lambda:self.montarImagen(nombre),bg="lightgreen", font=("Arial", 12, "bold"))
+        self.boton=tk.Button(contenedor5,text="agregar imagen", command=lambda:self.montarImagen(nombre),bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
         self.boton.pack(padx=10,pady=10)
 
     def montarImagen(self,datoNombre):
@@ -283,7 +283,7 @@ class Davista2:
         self.label.pack(padx=10,pady=10)
         self.entry=tk.Entry(contenedor6,textvariable=nombre)
         self.entry.pack(padx=10,pady=10)
-        self.boton=tk.Button(contenedor6,text="modificar imagen", command=lambda:self.montarImagenModificada(nombre),bg="lightgreen", font=("Arial", 12, "bold"))
+        self.boton=tk.Button(contenedor6,text="modificar imagen", command=lambda:self.montarImagenModificada(nombre),bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
         self.boton.pack(padx=10,pady=10)
 
     def montarImagenModificada(self,datoNombre):
@@ -339,9 +339,9 @@ class Davista2:
         self.labelCantidad.pack(padx=10,pady=10)
         self.entryCantidad=tk.Entry(self.contenedor4, textvariable=cantidadNueva)
         self.entryCantidad.pack(padx=10,pady=10)
-        self.botonModificarImagen=tk.Button(self.contenedor4,text="modificar imagen",command=self.modificarImagen,bg="lightgreen", font=("Arial", 12, "bold"))       
+        self.botonModificarImagen=tk.Button(self.contenedor4,text="modificar imagen",command=self.modificarImagen,bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")       
         self.botonModificarImagen.pack(padx=10,pady=10)
-        self.boton=tk.Button(self.contenedor4, text="modificar",command=lambda: self.modificar_producto(nombre,precioNuevo,categoriaNueva,cantidadNueva),bg="lightgreen", font=("Arial", 12, "bold"))
+        self.boton=tk.Button(self.contenedor4, text="modificar",cursor="hand2",command=lambda: self.modificar_producto(nombre,precioNuevo,categoriaNueva,cantidadNueva),bg="lightgreen", font=("Arial", 12, "bold"))
         self.boton.pack(padx=10,pady=10)
 
     def modificar_producto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
@@ -379,7 +379,7 @@ class Davista2:
         self.labelEliminar.pack(padx=10,pady=10)
         self.entryEliminar=tk.Entry(self.contenedor3, textvariable=nombreEliminar)
         self.entryEliminar.pack(padx=10,pady=10)
-        self.botonEliminar=tk.Button(self.contenedor3, text="eliminar",command=lambda:self.eliminar_producto(nombreEliminar),bg="lightgreen", font=("Arial", 12, "bold"))
+        self.botonEliminar=tk.Button(self.contenedor3, text="eliminar",cursor="hand2",command=lambda:self.eliminar_producto(nombreEliminar),bg="lightgreen", font=("Arial", 12, "bold"))
         self.botonEliminar.pack(padx=10,pady=10)
         
     def eliminar_producto(self,datoEliminar):
@@ -406,9 +406,9 @@ class Davista2:
         self.contenedorMensaje.pack()
         self.labelMensaje=tk.Label(self.contenedorMensaje,text="¿Esta seguro que desea cerrar sesion?",font=("Arial", 12,"bold"),bg="lightblue")
         self.labelMensaje.pack(padx=10,pady=10)
-        self.botonSi=tk.Button(self.contenedorMensaje,text="SI",command=self.salirTodo,bg="red",font=("Arial", 12, "bold"))
+        self.botonSi=tk.Button(self.contenedorMensaje,text="SI",command=self.salirTodo,bg="red",cursor="hand2", font=("Arial", 12, "bold"))
         self.botonSi.pack(padx=10,pady=10)
-        self.botonNo=tk.Button(self.contenedorMensaje,text="NO",command=self.destruirMensaje,bg="lightgreen", font=("Arial", 12, "bold"))
+        self.botonNo=tk.Button(self.contenedorMensaje,text="NO",command=self.destruirMensaje,cursor="hand2", bg="lightgreen", font=("Arial", 12, "bold"))
         self.botonNo.pack(padx=10,pady=10)
         
     def destruirMensaje(self):

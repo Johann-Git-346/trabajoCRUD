@@ -28,10 +28,10 @@ class VistaUsuario:
         self.entry_contrasena = tk.Entry(self.rootLogin, show="*", font=("Arial", 12))
         self.entry_contrasena.pack(pady=10)
 
-        self.boton_registrar = tk.Button(self.rootLogin, text="Registrarse", command=self.mostrar_ventana_registro, bg="lightgreen", font=("Arial", 12, "bold"))
+        self.boton_registrar = tk.Button(self.rootLogin, text="Registrarse", command=self.mostrar_ventana_registro, bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
         self.boton_registrar.pack(pady=10)
 
-        self.boton_iniciar_sesion = tk.Button(self.rootLogin, text="Iniciar Sesión", command=self.iniciar_sesion, bg="lightgreen", font=("Arial", 12, "bold"))
+        self.boton_iniciar_sesion = tk.Button(self.rootLogin, text="Iniciar Sesión", command=self.iniciar_sesion, bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
         self.boton_iniciar_sesion.pack(pady=10)
 
     def mostrar_ventana_registro(self):
@@ -78,7 +78,7 @@ class VistaUsuario:
 
             ventana_registro.destroy()
 
-        boton_confirmar_registro = tk.Button(ventana_registro, text="Registrar", command=registrar_usuario, bg="lightgreen", font=("Arial", 12, "bold"))
+        boton_confirmar_registro = tk.Button(ventana_registro, text="Registrar", command=registrar_usuario, bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
         boton_confirmar_registro.pack(pady=10)
 
     def iniciar_sesion(self):
