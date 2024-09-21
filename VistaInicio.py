@@ -4,34 +4,38 @@ from tkinter import messagebox
 class VistaUsuario:
     def __init__(self, controlador):
         self.controlador = controlador
-        self.root = tk.Tk()
-        self.root.title("Inicio de Sesión")
-        self.root.geometry("400x300")
-        self.root.configure(bg="lightblue")
+
+    def iniciarUsuario(self):
+        self.rootLogin = tk.Tk()
+        self.rootLogin.title("Inicio de Sesión")
+        self.rootLogin.geometry("400x300")
+        self.rootLogin.configure(bg="lightblue")
 
         self.Datos_de_inicio()
 
+        self.rootLogin.mainloop()
+
     def Datos_de_inicio(self):
-        self.label_email = tk.Label(self.root, text="Correo electrónico:", bg="lightblue", font=("Arial", 12, "bold"))
+        self.label_email = tk.Label(self.rootLogin, text="Correo electrónico:", bg="lightblue", font=("Arial", 12, "bold"))
         self.label_email.pack(pady=10)
 
-        self.entry_email = tk.Entry(self.root, font=("Arial", 12))
+        self.entry_email = tk.Entry(self.rootLogin, font=("Arial", 12))
         self.entry_email.pack(pady=10)
 
-        self.label_contrasena = tk.Label(self.root, text="Contraseña:", bg="lightblue", font=("Arial", 12, "bold"))
+        self.label_contrasena = tk.Label(self.rootLogin, text="Contraseña:", bg="lightblue", font=("Arial", 12, "bold"))
         self.label_contrasena.pack(pady=10)
 
-        self.entry_contrasena = tk.Entry(self.root, show="*", font=("Arial", 12))
+        self.entry_contrasena = tk.Entry(self.rootLogin, show="*", font=("Arial", 12))
         self.entry_contrasena.pack(pady=10)
 
-        self.boton_registrar = tk.Button(self.root, text="Registrarse", command=self.mostrar_ventana_registro, bg="lightgreen", font=("Arial", 12, "bold"))
+        self.boton_registrar = tk.Button(self.rootLogin, text="Registrarse", command=self.mostrar_ventana_registro, bg="lightgreen", font=("Arial", 12, "bold"))
         self.boton_registrar.pack(pady=10)
 
-        self.boton_iniciar_sesion = tk.Button(self.root, text="Iniciar Sesión", command=self.iniciar_sesion, bg="lightgreen", font=("Arial", 12, "bold"))
+        self.boton_iniciar_sesion = tk.Button(self.rootLogin, text="Iniciar Sesión", command=self.iniciar_sesion, bg="lightgreen", font=("Arial", 12, "bold"))
         self.boton_iniciar_sesion.pack(pady=10)
 
     def mostrar_ventana_registro(self):
-        ventana_registro = tk.Toplevel(self.root)
+        ventana_registro = tk.Toplevel(self.rootLogin)
         ventana_registro.title("Registro de Usuario")
         ventana_registro.geometry("400x350")
         ventana_registro.configure(bg="lightyellow")
@@ -59,9 +63,6 @@ class VistaUsuario:
         radio_vendedor = tk.Radiobutton(ventana_registro, text="Vendedor", variable=rol_var, value="Vendedor", bg="lightyellow", font=("Arial", 12))
         radio_vendedor.pack()
 
-        radio_Administrador = tk.Radiobutton(ventana_registro, text="Administrador", variable=rol_var, value="Administrador", bg="lightyellow", font=("Arial", 12))
-        radio_Administrador.pack() #<-- cuando ya coloque al admin predeterminado boora esto.
-
         def registrar_usuario():
             email = entry_email.get()
             contrasena = entry_contrasena.get()
@@ -86,5 +87,6 @@ class VistaUsuario:
         if not self.controlador.iniciar_sesion(email, contrasena):
             messagebox.showerror("Error", "Correo electrónico o contraseña incorrectos.")
 
-    def iniciar(self):
-        self.root.mainloop()
+    def destruir(self):
+        self.rootLogin.destroy()
+        
