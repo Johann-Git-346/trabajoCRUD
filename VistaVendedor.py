@@ -12,6 +12,8 @@ class Davista2:
         self.rootVendedor.title("ADMINISTRADOR")
         self.rootVendedor.geometry("800x600")
 
+        self.rootVendedor.state('zoomed')
+
         self.create_top_frame()
         self.create_sidebar_frame()
         self.create_catalog_frame()
