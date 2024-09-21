@@ -66,7 +66,7 @@ class Davista2:
         self.frame_sidebar.config(background="#FFFFFF")
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Agregar","Modificar", "Eliminar", "Cerrar sesion"]
+        sidebar_buttons = ["Agregar", "Modificar", "Eliminar", "Cerrar sesion"]
         sidebar_commands = [ self.agregar_producto, self.modificarProducto, self.eliminarProducto, self.CerrarSesion]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
@@ -90,10 +90,10 @@ class Davista2:
         self.frame_categories.config(background="#FFFFFF")
 
         # Añadir botones de categorías
-        categories = ["Smartphones","Laptops",]
+        categories = ["Celular","Laptops",]
         comandoCategoria=[self.catalogoTelefono,self.catalogoLaptop]
         for text, comandoCategoria in zip(categories,comandoCategoria):
-            tk.Button(self.frame_categories,cursor="hand2", bg="#333333",foreground="#FFFFFF",text=text,command=comandoCategoria).pack(side=tk.LEFT, padx=100, pady=5)
+            tk.Button(self.frame_categories,cursor="hand2", bg="#333333",foreground="#FFFFFF",text=text,command=comandoCategoria).pack(side=tk.LEFT, padx=320, pady=5)
 
         # Crear el título del catálogo
         self.catalog_title = tk.Label(self.frame_catalog, text="Telefonos",foreground="#FFFFFF", font=("Arial", 16))
@@ -299,7 +299,7 @@ class Davista2:
         messagebox.showinfo("Éxito", "Producto modificado con éxito")
 
     def catalogoTelefono(self):
-        self.catalog_title.config(text="Smartphones")
+        self.catalog_title.config(text="celular")
         self.mostrar_productos_categoria("celular")
         self.actualizar_catalogo("celular")
 
