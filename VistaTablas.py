@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
+import pandas as pd
 class VistaTablas1:
     def __init__(self,objController):
         self.objController=objController
@@ -32,20 +33,24 @@ class VistaTablas1:
         # Añadir un widget de Frame central vacío para centrar los otros widgets
         spacer_left = tk.Frame(self.frame_top)
         spacer_left.pack(side=tk.LEFT, expand=True)
+        spacer_left.config(background="#333333")
 
-        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24),foreground="#FFFFFF", anchor="center")
+        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24,"bold"),foreground="#FFFFFF", anchor="center")
         company_name.pack(side=tk.LEFT, padx=10, pady=10)
         company_name.config(background="#333333")
 
         logo = tk.Frame(self.frame_top,width=20,height=20)
         logo.pack(side=tk.RIGHT, padx=10, pady=10)
+        logo.config(background="#333333")
         # Añadir un widget de Frame central vacío para centrar los otros widgets
         spacer_right = tk.Frame(self.frame_top)
         spacer_right.pack(side=tk.RIGHT, expand=True)
+        spacer_right.config(background="#333333")
             
 
         etiqueta = tk.Label(logo)
         etiqueta.pack(side=tk.RIGHT)
+        etiqueta.config(background="#333333")
 
         self.rutaimagen= "LOGO2.jpg"
 
@@ -69,14 +74,14 @@ class VistaTablas1:
         # Crear el marco para el menú de navegación
         frame_menu = tk.Frame(self.rootTablas, relief=tk.RAISED, borderwidth=0.5)
         frame_menu.pack(side=tk.TOP, fill=tk.X)
-        frame_menu.config(background="#FFFFFF")
+        frame_menu.config(background="#f5f5f5")
 
         # Botones de navegación
         menu_buttons = ["Cerrar Sesion"]
         commands = [self.CerrarSesion]
 
         for text, command in zip(menu_buttons, commands):
-            tk.Button(frame_menu, text=text,cursor="hand2",bg="#333333",foreground="#FFFFFF" ,command=command).grid(row=0, column=menu_buttons.index(text), padx=10, pady=5)
+            tk.Button(frame_menu, text=text,cursor="hand2",bg="#333333",foreground="#FFFFFF",font=("Arial", 10,"bold") ,command=command).grid(row=0, column=menu_buttons.index(text), padx=10, pady=5)
 
         # Configurar las columnas para que se expandan igualmente
         for i in range(len(menu_buttons)):
@@ -86,10 +91,10 @@ class VistaTablas1:
         # Crear el marco para las categorías y el informe de productos
         frame_report = tk.Frame(self.rootTablas)
         frame_report.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-        frame_report.config(background="#FFFFFF")
+        frame_report.config(background="#f5f5f5")
 
         # Crear el título del informe
-        report_title = tk.Label(frame_report, text="Informe de Productos", font=("Arial", 16),foreground="#FFFFFF")
+        report_title = tk.Label(frame_report, text="Informe de Productos", font=("Arial", 16,"bold"),foreground="#FFFFFF")
         report_title.pack(side=tk.TOP, pady=10)
         report_title.config(background="#333333")
 

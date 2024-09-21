@@ -28,19 +28,23 @@ class Davista2:
         # Añadir un widget de Frame central vacío para centrar los otros widgets
         spacer_left = tk.Frame(self.frame_top)
         spacer_left.pack(side=tk.LEFT, expand=True)
+        spacer_left.config(background="#333333")
 
-        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24),foreground="#FFFFFF", anchor="center")
+        company_name = tk.Label(self.frame_top, text="TecnoNube", font=("Arial", 24,"bold"),foreground="#FFFFFF", anchor="center")
         company_name.pack(side=tk.LEFT, padx=10, pady=10)
         company_name.config(background="#333333")
 
         logo = tk.Frame(self.frame_top,width=20,height=20)
         logo.pack(side=tk.RIGHT, padx=10, pady=10)
+        logo.config(background="#333333")
         # Añadir un widget de Frame central vacío para centrar los otros widgets
         spacer_right = tk.Frame(self.frame_top)
         spacer_right.pack(side=tk.RIGHT, expand=True)
+        spacer_right.config(background="#333333")
             
         etiqueta = tk.Label(logo)
         etiqueta.pack(side=tk.RIGHT)
+        etiqueta.config(background="#333333")
 
         self.rutaimagen2= "imagenes/LOGO.jpg"
 
@@ -63,14 +67,14 @@ class Davista2:
         """ Crear el marco para la barra lateral izquierda y añadir botones. """
         self.frame_sidebar = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
-        self.frame_sidebar.config(background="#FFFFFF")
+        self.frame_sidebar.config(background="#f5f5f5")
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Agregar", "Modificar", "Eliminar", "Cerrar sesion"]
+        sidebar_buttons = ["Agregar","Modificar", "Eliminar", "Cerrar sesion"]
         sidebar_commands = [ self.agregar_producto, self.modificarProducto, self.eliminarProducto, self.CerrarSesion]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
-            tk.Button(self.frame_sidebar, cursor="hand2",bg="#FFD700",foreground="black",text=text, command=command).pack(fill=tk.X, padx=10, pady=20)
+            tk.Button(self.frame_sidebar, cursor="hand2",bg="#FFD700",foreground="black",font=("Arial", 10,"bold"),text=text, command=command).pack(fill=tk.X, padx=10, pady=20)
 
         # Controles multimedia (espacios reservados)
         multimedia_frame = tk.Frame(self.frame_sidebar)
@@ -82,21 +86,21 @@ class Davista2:
 
         self.frame_catalog = tk.Frame(self.rootVendedor)
         self.frame_catalog.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-        self.frame_catalog.config(background="#FFFFFF")
+        self.frame_catalog.config(background="#f5f5f5")
 
         # Crear el marco de categorías
         self.frame_categories = tk.Frame(self.frame_catalog, relief=tk.RAISED, borderwidth=1)
         self.frame_categories.pack(side=tk.TOP, fill=tk.X)
-        self.frame_categories.config(background="#FFFFFF")
+        self.frame_categories.config(background="#f5f5f5")
 
         # Añadir botones de categorías
-        categories = ["Celular","Laptops",]
+        categories = ["Celular","Laptops"]
         comandoCategoria=[self.catalogoTelefono,self.catalogoLaptop]
         for text, comandoCategoria in zip(categories,comandoCategoria):
-            tk.Button(self.frame_categories,cursor="hand2", bg="#333333",foreground="#FFFFFF",text=text,command=comandoCategoria).pack(side=tk.LEFT, padx=320, pady=5)
+            tk.Button(self.frame_categories,cursor="hand2", bg="#333333",font=("Arial", 10,"bold"),foreground="#FFFFFF",text=text,command=comandoCategoria).pack(side=tk.LEFT, padx=280, pady=5)
 
         # Crear el título del catálogo
-        self.catalog_title = tk.Label(self.frame_catalog, text="Telefonos",foreground="#FFFFFF", font=("Arial", 16))
+        self.catalog_title = tk.Label(self.frame_catalog, text="Telefonos",foreground="#FFFFFF", font=("Arial", 16,"bold"))
         self.catalog_title.pack(side=tk.TOP, pady=10)
         self.catalog_title.config(background="#333333")
 
@@ -105,7 +109,7 @@ class Davista2:
         # Crear el marco para los self.productos
         self.frame_products = tk.Frame(self.frame_catalog)
         self.frame_products.pack(fill=tk.BOTH, expand=True)
-        self.frame_products.config(background="#FFFFFF")
+        self.frame_products.config(background="#f5f5f5")
         
         # Inicialmente mostrar teléfonos
         self.mostrar_productos_categoria("celular")
@@ -130,7 +134,7 @@ class Davista2:
         for i in range(filas):  # Crear las filas 
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            row.config(background="#FFFFFF")
+            row.config(background="#f5f5f5")
             
             for j in range(7):  # columnas
                 img_index = (i * 7) + j
@@ -176,7 +180,7 @@ class Davista2:
         for i in range(filas): # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            row.config(background="#FFFFFF")
+            row.config(background="#f5f5f5")
             
             for j in range(7):  # columnas
                 img_index = (i * 7) + j
@@ -198,19 +202,19 @@ class Davista2:
         precio=tk.DoubleVar()
         categoria=tk.StringVar()
         cantidad=tk.IntVar()
-        self.labelNombre=tk.Label(self.contenedor2, text="ingrese el nombre del producto",bg="lightblue")
+        self.labelNombre=tk.Label(self.contenedor2, text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
         self.labelNombre.pack(padx=10,pady=10)
         self.entryNombre=tk.Entry(self.contenedor2,textvariable=nombre)
         self.entryNombre.pack(padx=10,pady=10)
-        self.labelPrecio=tk.Label(self.contenedor2, text="ingrese el precio del producto",bg="lightblue")
+        self.labelPrecio=tk.Label(self.contenedor2, text="ingrese el precio del producto",bg="lightblue",font=("Arial", 12,"bold"))
         self.labelPrecio.pack(padx=10,pady=10)
         self.entryPrecio=tk.Entry(self.contenedor2, textvariable=precio)
         self.entryPrecio.pack(padx=10,pady=10)
-        self.labeCategoria=tk.Label(self.contenedor2, text="ingrese la categoria",bg="lightblue")
+        self.labeCategoria=tk.Label(self.contenedor2, text="ingrese la categoria",bg="lightblue",font=("Arial", 12,"bold"))
         self.labeCategoria.pack(padx=10,pady=10)
         self.entryCategoria=tk.Entry(self.contenedor2, textvariable=categoria)
         self.entryCategoria.pack(padx=10,pady=10)
-        self.labelCantidad=tk.Label(self.contenedor2, text="ingrese la cantidad del producto",bg="lightblue")
+        self.labelCantidad=tk.Label(self.contenedor2, text="ingrese la cantidad del producto",bg="lightblue",font=("Arial", 12,"bold"))
         self.labelCantidad.pack(padx=10,pady=10)
         self.entryCantidad=tk.Entry(self.contenedor2, textvariable=cantidad)
         self.entryCantidad.pack(padx=10,pady=10)
@@ -243,7 +247,7 @@ class Davista2:
         nombre=tk.StringVar()
         contenedor5=tk.Frame(self.agregarProducto2,bg="lightblue")
         contenedor5.pack()
-        self.label=tk.Label(contenedor5,text="ingrese el nombre del producto",bg="lightblue")
+        self.label=tk.Label(contenedor5,text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
         self.label.pack(padx=10,pady=10)
         self.entry=tk.Entry(contenedor5,textvariable=nombre)
         self.entry.pack(padx=10,pady=10)
@@ -275,7 +279,7 @@ class Davista2:
         nombre=tk.StringVar()
         contenedor6=tk.Frame(self.agregarProducto3,bg="lightblue")
         contenedor6.pack()
-        self.label=tk.Label(contenedor6,text="ingrese el nombre del producto",bg="lightblue")
+        self.label=tk.Label(contenedor6,text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
         self.label.pack(padx=10,pady=10)
         self.entry=tk.Entry(contenedor6,textvariable=nombre)
         self.entry.pack(padx=10,pady=10)
@@ -299,7 +303,7 @@ class Davista2:
         messagebox.showinfo("Éxito", "Producto modificado con éxito")
 
     def catalogoTelefono(self):
-        self.catalog_title.config(text="celular")
+        self.catalog_title.config(text="Smartphones")
         self.mostrar_productos_categoria("celular")
         self.actualizar_catalogo("celular")
 
@@ -319,19 +323,19 @@ class Davista2:
         precioNuevo=tk.DoubleVar()
         categoriaNueva=tk.StringVar()
         cantidadNueva=tk.IntVar()
-        self.labelNombre=tk.Label(self.contenedor4, text="ingrese el nombre del producto",bg="lightblue")
+        self.labelNombre=tk.Label(self.contenedor4, text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
         self.labelNombre.pack(padx=10,pady=10)
         self.entryNombre=tk.Entry(self.contenedor4,textvariable=nombre)
         self.entryNombre.pack(padx=10,pady=10)
-        self.labelPrecio=tk.Label(self.contenedor4, text="ingrese el precio del producto",bg="lightblue")
+        self.labelPrecio=tk.Label(self.contenedor4, text="ingrese el precio del producto",bg="lightblue",font=("Arial", 12,"bold"))
         self.labelPrecio.pack(padx=10,pady=10)
         self.entryPrecio=tk.Entry(self.contenedor4, textvariable=precioNuevo)
         self.entryPrecio.pack(padx=10,pady=10)
-        self.labeCategoria=tk.Label(self.contenedor4, text="ingrese la categoria",bg="lightblue")
+        self.labeCategoria=tk.Label(self.contenedor4, text="ingrese la categoria",bg="lightblue",font=("Arial", 12,"bold"))
         self.labeCategoria.pack(padx=10,pady=10)
         self.entryCategoria=tk.Entry(self.contenedor4, textvariable=categoriaNueva)
         self.entryCategoria.pack(padx=10,pady=10)
-        self.labelCantidad=tk.Label(self.contenedor4, text="ingrese la cantidad del producto",bg="lightblue")
+        self.labelCantidad=tk.Label(self.contenedor4, text="ingrese la cantidad del producto",bg="lightblue",font=("Arial", 12,"bold"))
         self.labelCantidad.pack(padx=10,pady=10)
         self.entryCantidad=tk.Entry(self.contenedor4, textvariable=cantidadNueva)
         self.entryCantidad.pack(padx=10,pady=10)
@@ -357,6 +361,7 @@ class Davista2:
             producto = self.objController.obtener_producto_por_nombre(nombre)
             if producto:
                 self.objController.modificar_producto(nombre, nuevo_precio, nueva_categoria, nueva_cantidad)
+                messagebox.showinfo("Éxito", "Producto modificado con éxito")
             else:
                 messagebox.showerror("Error", "Producto no encontrado")
         except ValueError:
@@ -365,12 +370,12 @@ class Davista2:
     def eliminarProducto(self):
         self.ventanaEliminar=tk.Toplevel()
         self.ventanaEliminar.title("eliminar producto")
-        self.ventanaEliminar.geometry("300x300")
+        self.ventanaEliminar.geometry("400x200")
         self.ventanaEliminar.config(bg="lightblue")
         self.contenedor3=tk.Frame(self.ventanaEliminar,bg="lightblue")
         self.contenedor3.pack(padx=10,pady=10)
         nombreEliminar=tk.StringVar()
-        self.labelEliminar=tk.Label(self.contenedor3,text="ingrese el nombre del producto a eliminar")
+        self.labelEliminar=tk.Label(self.contenedor3,text="ingrese el nombre del producto a eliminar",bg="lightblue",font=("Arial", 12,"bold"))
         self.labelEliminar.pack(padx=10,pady=10)
         self.entryEliminar=tk.Entry(self.contenedor3, textvariable=nombreEliminar)
         self.entryEliminar.pack(padx=10,pady=10)
