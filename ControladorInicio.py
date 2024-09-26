@@ -5,15 +5,15 @@ from vistaProductos import Davista
 from VistaTablas import VistaTablas1
 from VistaVendedor import Davista2
 import json
+
 class Controlador:
     def __init__(self, conexion,modelo):
         self.conexion=conexion
         self.modelo = modelo
         
-
     def obtener_productos(self):
         return self.modelo.obtener_productos()
-    
+        
     def agregar_productos(self,nombre,precio,categoria,cantidad):
         return self.modelo.agregar_producto(nombre,precio,categoria,cantidad)
     
@@ -26,9 +26,9 @@ class Controlador:
     def iniciar_sesion(self, email, contrasena):
         rol = self.modelo.autenticar_usuario(email, contrasena)
         if rol:
-            #si quiere que le sirva cambie lo que esta en las comillas por lo que tiene en la base de datos
+            vistaUsuario.destruir()
             if rol == 'ADMINISTRA':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
-                self.mostrar_vista_vendedor()
+                self.vistaInformes()  
             elif rol == 'VENDEDOR':
                 self.mostrar_vista_vendedor()
             elif rol == 'CLIENTE':
@@ -40,22 +40,22 @@ class Controlador:
     def obtenerMasYMenosVendidos(self):
         return self.modelo.obtenerMasYMenosVendidos()
     
-    def modificar_producto(self, nombre,nuevo_precio=None, nueva_descripcion=None, nueva_cantidad=None):
-        self.modelo.modificar_producto(nombre, nuevo_precio, nueva_descripcion, nueva_cantidad)
-
-    def eliminar_producto(self, nombre):
-        self.modelo.eliminar_producto(nombre)
-
-    def obtener_producto_por_nombre(self, nombre):
-        return self.modelo.obtener_producto_por_nombre(nombre)
-
     def generarInforme(self, mas_vendidos, menos_vendidos):
         data = {
             "Mas Vendidos": mas_vendidos,
             "Menos Vendidos": menos_vendidos
         }
         json_data = json.dumps(data, indent=4)
-        self.modelo.guardarInforme(json_data)
+        self.modelo.setInforme(json_data)
+    
+    def modificar_producto(self, nombre,nuevoNombre=None,nuevo_precio=None, nueva_descripcion=None, nueva_cantidad=None):
+        self.modelo.modificar_producto(nombre,nuevoNombre, nuevo_precio, nueva_descripcion, nueva_cantidad)
+
+    def eliminar_producto(self, nombre):
+        self.modelo.eliminar_producto(nombre)
+
+    def obtener_producto_por_nombre(self, nombre):
+        return self.modelo.obtener_producto_por_nombre(nombre)
 
     def mostrar_vista_vendedor(self):
         vistaVendedor.iniciarVendedor()
