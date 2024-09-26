@@ -9,7 +9,7 @@ class Davista2:
     
     def iniciarVendedor(self):
         self.rootVendedor = tk.Tk()
-        self.rootVendedor.title("ADMINISTRADOR")
+        self.rootVendedor.title("VENDEDOR")
         self.rootVendedor.geometry("800x600")
 
         self.rootVendedor.state('zoomed')
@@ -59,6 +59,7 @@ class Davista2:
             
             etiqueta_imagen = tk.Label(logo, image=self.imagen_tk2)
             etiqueta_imagen.pack()
+            etiqueta_imagen.config(bg="#333333")
 
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
@@ -67,14 +68,14 @@ class Davista2:
         """ Crear el marco para la barra lateral izquierda y añadir botones. """
         self.frame_sidebar = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
-        self.frame_sidebar.config(background="#f5f5f5")
+        self.frame_sidebar.config(background="#D3D3D3")
 
         # Añadir botones de la barra lateral
         sidebar_buttons = ["Agregar","Modificar", "Eliminar", "Cerrar sesion"]
-        sidebar_commands = [ self.agregar_producto, self.modificarProducto, self.eliminarProducto, self.CerrarSesion]
+        sidebar_commands = [ self.agregar_producto, self.BuscarModificar, self.eliminarProducto, self.CerrarSesion]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
-            tk.Button(self.frame_sidebar, cursor="hand2",bg="#FFD700",foreground="black",font=("Arial", 10,"bold"),text=text, command=command).pack(fill=tk.X, padx=10, pady=20)
+            tk.Button(self.frame_sidebar, cursor="hand2",bg="#87CEEB",foreground="black",font=("Arial", 10,"bold"),text=text, command=command).pack(fill=tk.X, padx=10, pady=20)
 
         # Controles multimedia (espacios reservados)
         multimedia_frame = tk.Frame(self.frame_sidebar)
@@ -86,30 +87,28 @@ class Davista2:
 
         self.frame_catalog = tk.Frame(self.rootVendedor)
         self.frame_catalog.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-        self.frame_catalog.config(background="#f5f5f5")
+        self.frame_catalog.config(background="#D3D3D3")
 
         # Crear el marco de categorías
         self.frame_categories = tk.Frame(self.frame_catalog, relief=tk.RAISED, borderwidth=1)
         self.frame_categories.pack(side=tk.TOP, fill=tk.X)
-        self.frame_categories.config(background="#f5f5f5")
+        self.frame_categories.config(background="#D3D3D3")
 
         # Añadir botones de categorías
         categories = ["Celular","Laptops"]
         comandoCategoria=[self.catalogoTelefono,self.catalogoLaptop]
         for text, comandoCategoria in zip(categories,comandoCategoria):
-            tk.Button(self.frame_categories,cursor="hand2", bg="#333333",font=("Arial", 10,"bold"),foreground="#FFFFFF",text=text,command=comandoCategoria).pack(side=tk.LEFT, padx=280, pady=5)
+            tk.Button(self.frame_categories,cursor="hand2", bg="#ADD8E6",font=("Arial", 10,"bold"),foreground="black",text=text,command=comandoCategoria).pack(side=tk.LEFT, padx=280, pady=5)
 
         # Crear el título del catálogo
-        self.catalog_title = tk.Label(self.frame_catalog, text="Telefonos",foreground="#FFFFFF", font=("Arial", 16,"bold"))
+        self.catalog_title = tk.Label(self.frame_catalog, text="Celular",foreground="#000000", font=("Arial", 16,"bold"),relief=tk.GROOVE, borderwidth=2)
         self.catalog_title.pack(side=tk.TOP, pady=10)
-        self.catalog_title.config(background="#333333")
-
-
+        self.catalog_title.config(background="#B0E0E6")
 
         # Crear el marco para los self.productos
         self.frame_products = tk.Frame(self.frame_catalog)
         self.frame_products.pack(fill=tk.BOTH, expand=True)
-        self.frame_products.config(background="#f5f5f5")
+        self.frame_products.config(background="#D3D3D3")
         
         # Inicialmente mostrar teléfonos
         self.mostrar_productos_categoria("celular")
@@ -134,13 +133,14 @@ class Davista2:
         for i in range(filas):  # Crear las filas 
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            row.config(background="#f5f5f5")
+            row.config(background="#D3D3D3")
             
             for j in range(7):  # columnas
                 img_index = (i * 7) + j
                 if img_index < len(self.productos_filtrados):  
                     self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                     self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
+                    self.product_frame.config(bg="#B0E0E6")
                     self.crear_cuadro_producto(self.product_frame, self.productos_filtrados[img_index])
 
     def crear_cuadro_producto(self, product_frame, producto):
@@ -158,12 +158,14 @@ class Davista2:
             self.imagenes_tk.append(imagen_tk)  
             etiqueta_imagen = tk.Label(product_frame, image=imagen_tk, width=130, height=100)
             etiqueta_imagen.pack(pady=5)
+            etiqueta_imagen.config(bg="#B0E0E6")
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
         
         # Información del producto
         info_label = tk.Label(product_frame, text=f"Nombre: {producto[1]}\nPrecio: {producto[2]}\nCantidad: {producto[4]}", justify=tk.LEFT)
         info_label.pack()
+        info_label.config(bg="#B0E0E6",font=("Arial", 10,"bold"),foreground="#000000",)
 
     def actualizar_catalogo(self,categoria):
         self.productos = self.objController.obtener_productos()
@@ -180,13 +182,14 @@ class Davista2:
         for i in range(filas): # filas
             row = tk.Frame(self.frame_products)
             row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            row.config(background="#f5f5f5")
+            row.config(background="#D3D3D3")
             
             for j in range(7):  # columnas
                 img_index = (i * 7) + j
                 if img_index < len(self.productos_filtrados):
                     self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
                     self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
+                    self.product_frame.config(bg="#B0E0E6")
                     self.crear_cuadro_producto(self.product_frame, self.productos_filtrados[img_index])
 
         print("Catálogo actualizado.")
@@ -234,29 +237,12 @@ class Davista2:
 
         try:
             self.objController.agregar_productos(nombre,precio,categoria,cantidad)
-            self.agregar_imagen_a_bd()
+            self.montarImagen(nombre)
 
         except ValueError:
             messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
 
-    def agregar_imagen_a_bd(self):
-        self.agregarProducto2=tk.Toplevel()
-        self.agregarProducto2.title("Agregando imagen")
-        self.agregarProducto2.geometry("400x400")
-        self.agregarProducto2.config(bg="lightblue")
-        nombre=tk.StringVar()
-        contenedor5=tk.Frame(self.agregarProducto2,bg="lightblue")
-        contenedor5.pack()
-        self.label=tk.Label(contenedor5,text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
-        self.label.pack(padx=10,pady=10)
-        self.entry=tk.Entry(contenedor5,textvariable=nombre)
-        self.entry.pack(padx=10,pady=10)
-        self.boton=tk.Button(contenedor5,text="agregar imagen", command=lambda:self.montarImagen(nombre),bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
-        self.boton.pack(padx=10,pady=10)
-
-    def montarImagen(self,datoNombre):
-        self.agregarProducto2.destroy()
-        nombre=datoNombre.get()
+    def montarImagen(self,nombre):
         # Abre el diálogo para seleccionar una imagen
         ruta_imagen = filedialog.askopenfilename(
             title="Selecciona una imagen",
@@ -270,25 +256,88 @@ class Davista2:
         self.objController.subirImagen(nombre,imagen)
         messagebox.showinfo("Éxito", "Producto agregado correctamente")
 
-    def modificarImagen(self):
-        self.ventanaModificar.destroy()
-        self.agregarProducto3=tk.Toplevel()
-        self.agregarProducto3.title("modificando imagen")
-        self.agregarProducto3.geometry("400x400")
-        self.agregarProducto3.config(bg="lightblue")
-        nombre=tk.StringVar()
-        contenedor6=tk.Frame(self.agregarProducto3,bg="lightblue")
-        contenedor6.pack()
-        self.label=tk.Label(contenedor6,text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
-        self.label.pack(padx=10,pady=10)
-        self.entry=tk.Entry(contenedor6,textvariable=nombre)
-        self.entry.pack(padx=10,pady=10)
-        self.boton=tk.Button(contenedor6,text="modificar imagen", command=lambda:self.montarImagenModificada(nombre),bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
-        self.boton.pack(padx=10,pady=10)
+    def catalogoTelefono(self):
+        self.catalog_title.config(text="celulares")
+        self.mostrar_productos_categoria("celular")
+        self.actualizar_catalogo("celular")
 
-    def montarImagenModificada(self,datoNombre):
-        self.agregarProducto3.destroy()
-        nombre=datoNombre.get()
+    def catalogoLaptop(self):
+        self.catalog_title.config(text="Laptops")
+        self.mostrar_productos_categoria("laptop")
+        self.actualizar_catalogo("laptop")
+
+    def BuscarModificar(self):
+        self.ventanaBuscarModificar=tk.Toplevel()
+        self.ventanaBuscarModificar.title("buscar producto")
+        self.ventanaBuscarModificar.geometry("400x200")
+        self.ventanaBuscarModificar.config(bg="lightblue")
+        self.contenedor7=tk.Frame(self.ventanaBuscarModificar,bg="lightblue")
+        self.contenedor7.pack(padx=10,pady=10)
+        nombreBuscar=tk.StringVar()
+        self.labelEliminar=tk.Label(self.contenedor7,text="ingrese el nombre del producto a modificar",bg="lightblue",font=("Arial", 12,"bold"))
+        self.labelEliminar.pack(padx=10,pady=10)
+        self.entryEliminar=tk.Entry(self.contenedor7, textvariable=nombreBuscar)
+        self.entryEliminar.pack(padx=10,pady=10)
+        self.botonEliminar=tk.Button(self.contenedor7, text="buscar",cursor="hand2",command=lambda:self.buscarProducto(nombreBuscar),bg="lightgreen", font=("Arial", 12, "bold"))
+        self.botonEliminar.pack(padx=10,pady=10)
+
+    def buscarProducto(self,datoNombreBuscar):
+        self.ventanaBuscarModificar.destroy()
+        self.nombre=datoNombreBuscar.get()
+        try:
+            producto = self.objController.obtener_producto_por_nombre(self.nombre)
+            if producto:
+                self.ventanaModificar=tk.Toplevel()
+                self.ventanaModificar.title("modificar producto")
+                self.ventanaModificar.geometry("500x500")
+                self.ventanaModificar.config(bg="lightblue")
+                self.contenedor4=tk.Frame(self.ventanaModificar,bg="lightblue")
+                self.contenedor4.pack(padx=10,pady=10)
+                nombreNuevo=tk.StringVar()
+                precioNuevo=tk.DoubleVar()
+                categoriaNueva=tk.StringVar()
+                cantidadNueva=tk.IntVar()
+                self.labelNombre=tk.Label(self.contenedor4, text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
+                self.labelNombre.pack(padx=10,pady=10)
+                self.entryNombre=tk.Entry(self.contenedor4,textvariable=nombreNuevo)
+                self.entryNombre.pack(padx=10,pady=10)
+                self.labelPrecio=tk.Label(self.contenedor4, text="ingrese el precio del producto",bg="lightblue",font=("Arial", 12,"bold"))
+                self.labelPrecio.pack(padx=10,pady=10)
+                self.entryPrecio=tk.Entry(self.contenedor4, textvariable=precioNuevo)
+                self.entryPrecio.pack(padx=10,pady=10)
+                self.labeCategoria=tk.Label(self.contenedor4, text="ingrese la categoria",bg="lightblue",font=("Arial", 12,"bold"))
+                self.labeCategoria.pack(padx=10,pady=10)
+                self.entryCategoria=tk.Entry(self.contenedor4, textvariable=categoriaNueva)
+                self.entryCategoria.pack(padx=10,pady=10)
+                self.labelCantidad=tk.Label(self.contenedor4, text="ingrese la cantidad del producto",bg="lightblue",font=("Arial", 12,"bold"))
+                self.labelCantidad.pack(padx=10,pady=10)
+                self.entryCantidad=tk.Entry(self.contenedor4, textvariable=cantidadNueva)
+                self.entryCantidad.pack(padx=10,pady=10)
+                self.botonModificarImagen=tk.Button(self.contenedor4,text="modificar imagen",command=self.ImagenModificada,bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")       
+                self.botonModificarImagen.pack(padx=10,pady=10)
+                self.boton=tk.Button(self.contenedor4, text="modificar",cursor="hand2",command=lambda: self.modificar_producto(nombreNuevo,precioNuevo,categoriaNueva,cantidadNueva),bg="lightgreen", font=("Arial", 12, "bold"))
+                self.boton.pack(padx=10,pady=10)
+            else:
+                messagebox.showerror("Error", "Producto no encontrado")
+        except ValueError:
+            messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
+
+    def modificar_producto(self, datoNuevoNombre, datoPrecio, datoCategoria, datoCantidad):
+        self.ventanaModificar.destroy()
+        nuevo_nombre = datoNuevoNombre.get()
+        nuevo_precio = datoPrecio.get()
+        nueva_categoria = datoCategoria.get()
+        nueva_cantidad = datoCantidad.get()
+
+        try:
+            nuevo_precio = float(nuevo_precio) if nuevo_precio else None
+            nueva_cantidad = int(nueva_cantidad) if nueva_cantidad else None
+            self.objController.modificar_producto(self.nombre, nuevo_nombre, nuevo_precio, nueva_categoria, nueva_cantidad)
+            messagebox.showinfo("Éxito", "Producto modificado con éxito")
+        except ValueError:
+            messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
+
+    def ImagenModificada(self):
         # Abre el diálogo para seleccionar una imagen
         ruta_imagen = filedialog.askopenfilename(
             title="Selecciona una imagen",
@@ -299,73 +348,8 @@ class Davista2:
             print("No se seleccionó ninguna imagen")
             return
         imagen=ruta_imagen
-        self.objController.subirImagen(nombre,imagen)
+        self.objController.subirImagen(self.nombre,imagen)
         messagebox.showinfo("Éxito", "Producto modificado con éxito")
-
-    def catalogoTelefono(self):
-        self.catalog_title.config(text="Smartphones")
-        self.mostrar_productos_categoria("celular")
-        self.actualizar_catalogo("celular")
-
-    def catalogoLaptop(self):
-        self.catalog_title.config(text="Laptops")
-        self.mostrar_productos_categoria("laptop")
-        self.actualizar_catalogo("laptop")
-
-    def modificarProducto(self):
-        self.ventanaModificar=tk.Toplevel()
-        self.ventanaModificar.title("modificar producto")
-        self.ventanaModificar.geometry("500x500")
-        self.ventanaModificar.config(bg="lightblue")
-        self.contenedor4=tk.Frame(self.ventanaModificar,bg="lightblue")
-        self.contenedor4.pack(padx=10,pady=10)
-        nombre=tk.StringVar()
-        precioNuevo=tk.DoubleVar()
-        categoriaNueva=tk.StringVar()
-        cantidadNueva=tk.IntVar()
-        self.labelNombre=tk.Label(self.contenedor4, text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
-        self.labelNombre.pack(padx=10,pady=10)
-        self.entryNombre=tk.Entry(self.contenedor4,textvariable=nombre)
-        self.entryNombre.pack(padx=10,pady=10)
-        self.labelPrecio=tk.Label(self.contenedor4, text="ingrese el precio del producto",bg="lightblue",font=("Arial", 12,"bold"))
-        self.labelPrecio.pack(padx=10,pady=10)
-        self.entryPrecio=tk.Entry(self.contenedor4, textvariable=precioNuevo)
-        self.entryPrecio.pack(padx=10,pady=10)
-        self.labeCategoria=tk.Label(self.contenedor4, text="ingrese la categoria",bg="lightblue",font=("Arial", 12,"bold"))
-        self.labeCategoria.pack(padx=10,pady=10)
-        self.entryCategoria=tk.Entry(self.contenedor4, textvariable=categoriaNueva)
-        self.entryCategoria.pack(padx=10,pady=10)
-        self.labelCantidad=tk.Label(self.contenedor4, text="ingrese la cantidad del producto",bg="lightblue",font=("Arial", 12,"bold"))
-        self.labelCantidad.pack(padx=10,pady=10)
-        self.entryCantidad=tk.Entry(self.contenedor4, textvariable=cantidadNueva)
-        self.entryCantidad.pack(padx=10,pady=10)
-        self.botonModificarImagen=tk.Button(self.contenedor4,text="modificar imagen",command=self.modificarImagen,bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")       
-        self.botonModificarImagen.pack(padx=10,pady=10)
-        self.boton=tk.Button(self.contenedor4, text="modificar",cursor="hand2",command=lambda: self.modificar_producto(nombre,precioNuevo,categoriaNueva,cantidadNueva),bg="lightgreen", font=("Arial", 12, "bold"))
-        self.boton.pack(padx=10,pady=10)
-
-    def modificar_producto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
-        self.ventanaModificar.destroy()
-        nombre = datoNombre.get()
-        nuevo_precio = datoPrecio.get()
-        nueva_categoria = datoCategoria.get()
-        nueva_cantidad = datoCantidad.get()
-
-        if not nombre:
-            messagebox.showerror("Error", "El nombre del producto es obligatorio para modificarlo")
-            return
-
-        try:
-            nuevo_precio = float(nuevo_precio) if nuevo_precio else None
-            nueva_cantidad = int(nueva_cantidad) if nueva_cantidad else None
-            producto = self.objController.obtener_producto_por_nombre(nombre)
-            if producto:
-                self.objController.modificar_producto(nombre, nuevo_precio, nueva_categoria, nueva_cantidad)
-                messagebox.showinfo("Éxito", "Producto modificado con éxito")
-            else:
-                messagebox.showerror("Error", "Producto no encontrado")
-        except ValueError:
-            messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
 
     def eliminarProducto(self):
         self.ventanaEliminar=tk.Toplevel()

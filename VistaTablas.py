@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
+import pandas as pd
 class VistaTablas1:
     def __init__(self,objController):
         self.objController=objController
@@ -10,16 +11,14 @@ class VistaTablas1:
     def iniciarTablas(self):
         # Crear la ventana principal
         self.rootTablas = tk.Tk()
-        self.rootTablas.title("TecnoNube")
+        self.rootTablas.title("ADMINISTRADOR")
         self.rootTablas.geometry("800x600")
 
         self.rootTablas.state('zoomed')
 
         self.create_top_frame()
         self.create_menu_frame()
-        """self.create_sidebar_frame()"""
         self.create_catalog_frame()
-        self.crearMarcoInferior()
 
         self.rootTablas.mainloop()
 
@@ -65,6 +64,7 @@ class VistaTablas1:
             
             etiqueta_imagen = tk.Label(logo, image=self.imagen_tk2)
             etiqueta_imagen.pack()
+            etiqueta_imagen.config(bg="#333333")
 
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
@@ -73,14 +73,14 @@ class VistaTablas1:
         # Crear el marco para el menú de navegación
         frame_menu = tk.Frame(self.rootTablas, relief=tk.RAISED, borderwidth=0.5)
         frame_menu.pack(side=tk.TOP, fill=tk.X)
-        frame_menu.config(background="#f5f5f5")
+        frame_menu.config(background="#D3D3D3")
 
         # Botones de navegación
         menu_buttons = ["Cerrar Sesion"]
         commands = [self.CerrarSesion]
 
         for text, command in zip(menu_buttons, commands):
-            tk.Button(frame_menu, text=text,cursor="hand2",bg="#333333",foreground="#FFFFFF",font=("Arial", 10,"bold") ,command=command).grid(row=0, column=menu_buttons.index(text), padx=10, pady=5)
+            tk.Button(frame_menu, text=text,cursor="hand2",bg="#87CEEB",foreground="#000000",font=("Arial", 10,"bold") ,command=command).grid(row=0, column=menu_buttons.index(text), padx=10, pady=5)
 
         # Configurar las columnas para que se expandan igualmente
         for i in range(len(menu_buttons)):
@@ -90,29 +90,28 @@ class VistaTablas1:
         # Crear el marco para las categorías y el informe de productos
         frame_report = tk.Frame(self.rootTablas)
         frame_report.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-        frame_report.config(background="#f5f5f5")
+        frame_report.config(background="#D3D3D3")
 
         # Crear el título del informe
-        report_title = tk.Label(frame_report, text="Informe de Productos", font=("Arial", 16,"bold"),foreground="#FFFFFF")
+        report_title = tk.Label(frame_report, text="Informe de Productos", font=("Arial", 16,"bold"),foreground="#000000",relief=tk.GROOVE, borderwidth=2)
         report_title.pack(side=tk.TOP, pady=10)
-        report_title.config(background="#333333")
+        report_title.config(background="#B0E0E6")
 
         # Crear el marco para los informes de más vendidos y menos vendidos
         frame_products = tk.Frame(frame_report)
         frame_products.pack(fill=tk.BOTH, expand=True)
+        frame_products.config(bg="#D3D3D3")
 
-        # Supongamos que tienes un método en tu controlador para obtener los productos más vendidos y menos vendidos
         self.mas_vendidos, self.menos_vendidos = self.objController.obtenerMasYMenosVendidos()
 
-
         # Tabla de Más Vendidos
-        frame_mas_vendidos = tk.Frame(frame_products)
+        frame_mas_vendidos = tk.Frame(frame_products,relief=tk.SOLID, borderwidth=1)
         frame_mas_vendidos.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=5)
-        frame_mas_vendidos.config(background="#333333")
+        frame_mas_vendidos.config(background="#ADD8E6")
 
-        mas_vendidos_title = tk.Label(frame_mas_vendidos, text="Más Vendidos", font=("Arial", 14), foreground="#FFFFFF")
+        mas_vendidos_title = tk.Label(frame_mas_vendidos, text="Más Vendidos", font=("Arial", 14), foreground="#000000")
         mas_vendidos_title.pack(side=tk.TOP, pady=5)
-        mas_vendidos_title.config(background="#333333")
+        mas_vendidos_title.config(background="#ADD8E6")
 
         self.mas_vendidos_tree = ttk.Treeview(frame_mas_vendidos, columns=("Producto", "Cantidad", "Categoria"), show="headings")
         self.mas_vendidos_tree.heading("Producto", text="Nombre Producto")
@@ -126,13 +125,13 @@ class VistaTablas1:
         self.mas_vendidos_tree.pack(fill=tk.BOTH, expand=True)
 
         # Tabla de Menos Vendidos
-        frame_menos_vendidos = tk.Frame(frame_products)
+        frame_menos_vendidos = tk.Frame(frame_products,relief=tk.SOLID, borderwidth=1)
         frame_menos_vendidos.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=5)
-        frame_menos_vendidos.config(background="#333333")
+        frame_menos_vendidos.config(background="#ADD8E6")
 
-        menos_vendidos_title = tk.Label(frame_menos_vendidos, text="Menos Vendidos", font=("Arial", 14), foreground="#FFFFFF")
+        menos_vendidos_title = tk.Label(frame_menos_vendidos, text="Menos Vendidos", font=("Arial", 14), foreground="#000000")
         menos_vendidos_title.pack(side=tk.TOP, pady=5)
-        menos_vendidos_title.config(background="#333333")
+        menos_vendidos_title.config(background="#ADD8E6")
 
         self.menos_vendidos_tree = ttk.Treeview(frame_menos_vendidos, columns=("Producto", "Cantidad", "Categoria"), show="headings")
         self.menos_vendidos_tree.heading("Producto", text="Nombre Producto")
@@ -146,7 +145,7 @@ class VistaTablas1:
         self.menos_vendidos_tree.pack(fill=tk.BOTH, expand=True)
 
         # Botón para generar el informe
-        generate_button = tk.Button(frame_report, text="Generar Informe", cursor="hand2", bg="#FFD700", foreground="black",command=self.crearArchivo)
+        generate_button = tk.Button(frame_report, text="Generar Informe", cursor="hand2",font=("Arial", 12,"bold"), bg="#87CEEB", foreground="black",command=self.crearArchivo)
         generate_button.pack(side=tk.BOTTOM, pady=10)
 
     def crearArchivo(self):
@@ -172,13 +171,6 @@ class VistaTablas1:
         self.objController.generarInforme(mas_vendidos, menos_vendidos)
         messagebox.showinfo("Informe listo","informe creado con exito")
 
-
-    def crearMarcoInferior(self):
-        # Crear el marco inferior para la barra de navegación
-        frame_bottom = tk.Frame(self.rootTablas, relief=tk.RAISED, borderwidth=1)
-        frame_bottom.pack(side=tk.BOTTOM, fill=tk.X)
-
-
     def CerrarSesion(self):
         self.mensajeCerrrarSesion=tk.Toplevel()
         self.mensajeCerrrarSesion.title("¿seguro?")
@@ -201,4 +193,3 @@ class VistaTablas1:
         self.mensajeCerrrarSesion.destroy()
         self.rootTablas.destroy()
         self.objController.mostrarLogin() 
-
