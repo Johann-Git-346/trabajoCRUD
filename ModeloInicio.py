@@ -1,6 +1,14 @@
 class ModeloUsuario:
     def __init__(self, conexion):
         self.connection = conexion
+        self.informe=None
+
+    def getInforme(self):
+        return self.informe
+    
+    def setInforme(self,informe):
+        self.informe=informe
+        self.guardarInforme()
 
     def obtener_productos(self):
         if self.connection:
@@ -13,8 +21,7 @@ class ModeloUsuario:
             except Exception as e:
                 print(f"Error al obtener producto: {e}")
                 return []
-
-            
+       
     def obtenerMasYMenosVendidos(self):
         if self.connection:
             cursor = self.connection.cursor()
@@ -22,7 +29,7 @@ class ModeloUsuario:
                 # Obtener todos los productos ordenados por cantidad de ventas
                 query = """
                 SELECT * FROM productos
-                ORDER BY cantidad ASC
+                ORDER BY cantidad DESC
                 """
                 cursor.execute(query)
                 productos = cursor.fetchall()
@@ -36,15 +43,14 @@ class ModeloUsuario:
                 punto_medio_index = total_productos // 2
                 
                 # Dividir los productos en más vendidos y menos vendidos
-                menos_vendidos = productos[:punto_medio_index]  # Productos con ventas menores
-                mas_vendidos = productos[punto_medio_index:]     # Productos con ventas mayores o iguales
+                menos_vendidos = productos[punto_medio_index:]  # Productos con ventas menores
+                mas_vendidos = productos[:punto_medio_index]    # Productos con ventas mayores o iguales
                 
                 return mas_vendidos, menos_vendidos
             except Exception as e:
                 print(f"Error: {e}")
                 return [], []
-
-            
+      
     def registrar_usuario(self, email, contrasena, rol):
         if self.connection:
             cursor = self.connection.cursor()
@@ -56,9 +62,6 @@ class ModeloUsuario:
 
                 # Asigna el rol según la selección del usuario
                 rol_id = 1 if rol == 'Administrador' else (2 if rol == 'Vendedor' else 3) #<-- lo hice para ver si servia lo de la vista administrador
-                #si va a usar el suyo no elimine el mio comentelo como yo estoy haciendo.
-                # Y NO CREE OTRO ARCHIVO CON EL MISMO NOMBRE....
-                #rol_id = 2 if rol == 'Vendedor' else 3  # 2 para Vendedor, 3 para Usuario <-- este es el suyo JULIAN
 
                 cursor.execute("INSERT INTO usuario (email, password, rol_id) VALUES (%s, %s, %s)", 
                                (email, contrasena, rol_id))
@@ -125,12 +128,15 @@ class ModeloUsuario:
                 print(f"Error al obtener producto: {e}")
                 return []
 
-    def modificar_producto(self, nombre, nuevo_precio=None, nueva_categoria=None, nueva_cantidad=None):
+    def modificar_producto(self, nombre, nuevo_nombre=None, nuevo_precio=None, nueva_categoria=None, nueva_cantidad=None):
         if self.connection:
-            cursor=self.connection.cursor()
+            cursor = self.connection.cursor()
             try:
                 sql = "UPDATE productos SET "
                 params = []
+                if nuevo_nombre:
+                    sql += "nombre = %s, "
+                    params.append(nuevo_nombre)
                 if nuevo_precio is not None:
                     sql += "precio = %s, "
                     params.append(nuevo_precio)
@@ -146,7 +152,7 @@ class ModeloUsuario:
                 cursor.execute(sql, tuple(params))
                 self.connection.commit()
             except Exception as e:
-                print(f"Error al obtener producto: {e}")
+                print(f"Error al modificar producto: {e}")
                 return []
 
     def eliminar_producto(self, nombre):
@@ -161,10 +167,10 @@ class ModeloUsuario:
                 print(f"Error al eliminar producto: {e}")
                 return False
             
-    def guardarInforme(self, json_data):
+    def guardarInforme(self):
         try:
             with open("informeProductos.txt", "w") as file:
-                file.write(json_data)
+                file.write(self.informe)
             print("Informe generado exitosamente.")
         except Exception as e:
             print(f"Error al guardar el informe: {e}")
