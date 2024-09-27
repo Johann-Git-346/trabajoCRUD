@@ -16,11 +16,11 @@ class VistaUsuario:
         self.rootLogin.mainloop()
 
     def Datos_de_inicio(self):
-        self.label_email = tk.Label(self.rootLogin, text="Correo electrónico:", bg="lightblue", font=("Arial", 12, "bold"))
-        self.label_email.pack(pady=10)
+        self.label_usuario = tk.Label(self.rootLogin, text="Correo electrónico:", bg="lightblue", font=("Arial", 12, "bold"))
+        self.label_usuario.pack(pady=10)
 
-        self.entry_email = tk.Entry(self.rootLogin, font=("Arial", 12))
-        self.entry_email.pack(pady=10)
+        self.entry_usuario = tk.Entry(self.rootLogin, font=("Arial", 12))
+        self.entry_usuario.pack(pady=10)
 
         self.label_contrasena = tk.Label(self.rootLogin, text="Contraseña:", bg="lightblue", font=("Arial", 12, "bold"))
         self.label_contrasena.pack(pady=10)
@@ -40,11 +40,11 @@ class VistaUsuario:
         ventana_registro.geometry("400x350")
         ventana_registro.configure(bg="lightyellow")
 
-        label_email = tk.Label(ventana_registro, text="Correo electrónico:", bg="lightyellow", font=("Arial", 12, "bold"))
-        label_email.pack(pady=10)
+        label_usuario = tk.Label(ventana_registro, text="Usuario:", bg="lightyellow", font=("Arial", 12, "bold"))
+        label_usuario.pack(pady=10)
 
-        entry_email = tk.Entry(ventana_registro, font=("Arial", 12))
-        entry_email.pack(pady=10)
+        entry_usuario = tk.Entry(ventana_registro, font=("Arial", 12))
+        entry_usuario.pack(pady=10)
 
         label_contrasena = tk.Label(ventana_registro, text="Contraseña:", bg="lightyellow", font=("Arial", 12, "bold"))
         label_contrasena.pack(pady=10)
@@ -64,12 +64,12 @@ class VistaUsuario:
         radio_vendedor.pack()
 
         def registrar_usuario():
-            email = entry_email.get()
+            usuario = entry_usuario.get()
             contrasena = entry_contrasena.get()
             rol = rol_var.get()  # Obtener el rol seleccionado
 
-            if email and contrasena:
-                if self.controlador.registrar(email, contrasena, rol):
+            if usuario and contrasena:
+                if self.controlador.registrar(usuario, contrasena, rol):
                     messagebox.showinfo("Éxito", "Registro exitoso.")
                 else:
                     messagebox.showerror("Error", "El correo ya está registrado o ocurrió un error.")
@@ -82,9 +82,9 @@ class VistaUsuario:
         boton_confirmar_registro.pack(pady=10)
 
     def iniciar_sesion(self):
-        email = self.entry_email.get()
+        usuario = self.entry_usuario.get()
         contrasena = self.entry_contrasena.get()
-        if not self.controlador.iniciar_sesion(email, contrasena):
+        if not self.controlador.iniciar_sesion(usuario, contrasena):
             messagebox.showerror("Error", "Correo electrónico o contraseña incorrectos.")
 
     def destruir(self):
