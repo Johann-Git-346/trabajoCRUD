@@ -63,10 +63,10 @@ class ModeloUsuario:
                 # Asigna el rol según la selección del usuario
                 rol_id = 1 if rol == 'Administrador' else (2 if rol == 'Vendedor' else 3) #<-- lo hice para ver si servia lo de la vista administrador
 
-                cursor.execute("INSERT INTO usuario (email, password, rol_id) VALUES (%s, %s, %s)", 
+                cursor.execute("INSERT INTO usuario (email, password, Id_rol) VALUES (%s, %s, %s)", 
                                (email, contrasena, rol_id))
                 rol_id = 1 if rol == 'Administrador' else 2 if rol == 'Vendedor' else 3
-                cursor.execute("INSERT INTO usuario (email, password, rol_id) VALUES (%s, %s, %s)", (email, contrasena, rol_id))
+                cursor.execute("INSERT INTO usuario (email, password, Id_rol) VALUES (%s, %s, %s)", (email, contrasena, rol_id))
                 self.connection.commit()
                 cursor.close()
                 return True
@@ -83,7 +83,7 @@ class ModeloUsuario:
             cursor = self.connection.cursor()
             cursor.execute("""
                 SELECT r.nombre FROM usuario u
-                JOIN rol r ON u.rol_id = r.id
+                JOIN rol r ON u.Id_rol = r.id
                 WHERE u.email = %s AND u.password = %s
 
             """, (email, contrasena))
