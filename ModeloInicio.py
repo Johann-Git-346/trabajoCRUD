@@ -84,7 +84,7 @@ class ModeloUsuario:
             cursor.close()
             if resultado:
                 return resultado[0]
-        return None
+        return None  
 
     
     def imagenABaseDatos(self, nombreProducto, imagen):
