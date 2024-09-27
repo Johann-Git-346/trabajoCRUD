@@ -8,7 +8,7 @@ class Crear_Conexion:
                 host="localhost",
                 user="root",
                 password="",
-                database="principal"
+                database="usuarios"
             )
             print("Conexión correcta")
             return conexion
