@@ -55,15 +55,16 @@ class ModeloUsuario:
         if self.connection:
             cursor = self.connection.cursor()
             try:
-                cursor.execute("SELECT * FROM usuario WHERE email = %s", (email))
+                cursor.execute("SELECT * FROM usuario WHERE email = %s", (email,))
                 if cursor.fetchone():
                     cursor.close()
-                    return False
+                    return False  # El correo ya está registrado
 
                 # Asigna el rol según la selección del usuario
                 rol_id = 1 if rol == 'Administrador' else (2 if rol == 'Vendedor' else 3) #<-- lo hice para ver si servia lo de la vista administrador
 
-                cursor.execute("INSERT INTO usuario (email, password, Id_rol) VALUES (%s, %s, %s)", (email, contrasena, rol_id))
+                cursor.execute("INSERT INTO usuario (email, password, Id_rol) VALUES (%s, %s, %s)", 
+                               (email, contrasena, rol_id))
                 self.connection.commit()
                 cursor.close()
                 return True
