@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
-import pandas as pd
+#import pandas as pd
 
 class VistaTablas1:
     def __init__(self,objController):

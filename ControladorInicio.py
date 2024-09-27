@@ -22,13 +22,13 @@ class Controlador:
     def registrar(self, usuario, contrasena, rol):
         return self.modelo.registrar_usuario(usuario, contrasena, rol)
 
-    def iniciar_sesion(self, usuario, contrasena):
-        rol = self.modelo.autenticar_usuario(usuario, contrasena)
+    def iniciar_sesion(self, correo, contrasena):
+        rol = self.modelo.autenticar_usuario(correo, contrasena)
         if rol:
             vistaUsuario.destruir()
-            if rol == 'ADMINISTRADOR':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
+            if rol == 'Administrador':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
                 self.vistaInformes()  
-            elif rol == 'VENDEDOR':
+            elif rol == "Vendedor":
                 self.mostrar_vista_vendedor()
             #elif rol == 'CLIENTE':
                 #self.mostrar_vista_cliente()
