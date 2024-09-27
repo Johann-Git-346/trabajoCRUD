@@ -6,18 +6,18 @@ from VistaVendedor import Davista2
 import json
 
 class Controlador:
-    def __init__(self, conexion,modelo):
+    def __init__(self, conexion, modelo):
         self.conexion=conexion
         self.modelo = modelo
         
     def obtener_productos(self):
         return self.modelo.obtener_productos()
         
-    def agregar_productos(self,nombre,precio,categoria,cantidad):
-        return self.modelo.agregar_producto(nombre,precio,categoria,cantidad)
+    def agregar_productos(self, nombre, precio, categoria, cantidad):
+        return self.modelo.agregar_producto(nombre, precio, categoria, cantidad)
     
     def subirImagen(self,nombre,imagen):
-        return self.modelo.imagenABaseDatos(nombre, imagen )
+        return self.modelo.imagenABaseDatos(nombre, imagen)
 
     def registrar(self, usuario, contrasena, rol):
         return self.modelo.registrar_usuario(usuario, contrasena, rol)
