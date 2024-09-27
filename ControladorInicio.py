@@ -1,7 +1,7 @@
-from baseDatos import Crear_Conexion
-from modelo import ModeloUsuario
-from vista import VistaUsuario
-from vistaProductos import Davista
+from BaseInicio import Crear_Conexion
+from ModeloInicio import ModeloUsuario
+from VistaInicio import VistaUsuario
+#from vistaProductos import Davista
 from VistaTablas import VistaTablas1
 from VistaVendedor import Davista2
 import json
@@ -60,8 +60,8 @@ class Controlador:
     def mostrar_vista_vendedor(self):
         vistaVendedor.iniciarVendedor()
 
-    def mostrar_vista_cliente(self):
-        vistaProductos.iniciarProductos()
+    #def mostrar_vista_cliente(self):
+    #    vistaProductos.iniciarProductos()
 
     def vistaInformes(self):
         vistaTablas.iniciarTablas()
@@ -74,7 +74,7 @@ conexion = Crear_Conexion.conexionBaseDeDatos()
 if conexion:
     modelo=ModeloUsuario(conexion)    
     controlador = Controlador(conexion,modelo)
-    vistaProductos=Davista(controlador)
+    #vistaProductos=Davista(controlador)
     vistaTablas=VistaTablas1(controlador)
     vistaVendedor=Davista2(controlador)
     vistaUsuario=VistaUsuario(controlador)
