@@ -26,12 +26,12 @@ class Controlador:
         rol = self.modelo.autenticar_usuario(correo, contrasena)
         if rol:
             vistaUsuario.destruir()
-            if rol == 'Administrador':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
+            if rol == 'administra':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
                 self.vistaInformes()  
-            elif rol == "Vendedor":
+            elif rol == "vendedor":
                 self.mostrar_vista_vendedor()
-            #elif rol == 'CLIENTE':
-                #self.mostrar_vista_cliente()
+            elif rol == 'CLIENTE':
+                self.mostrar_vista_cliente()
             return rol
         else:
             return None
