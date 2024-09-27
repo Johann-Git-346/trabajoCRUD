@@ -50,18 +50,23 @@ class ModeloUsuario:
             except Exception as e:
                 print(f"Error: {e}")
                 return [], []
-      
-    def registrar_usuario(self, correo, contrasena, rol):
+
+    def registrar_usuario(self, email, contrasena, rol):
         if self.connection:
             cursor = self.connection.cursor()
             try:
-                cursor.execute("SELECT * FROM usuario WHERE email = %s", (correo,))
+                cursor.execute("SELECT * FROM usuario WHERE email = %s", (email,))
                 if cursor.fetchone():
                     cursor.close()
                     return False
 
+                # Asigna el rol según la selección del usuario
+                rol_id = 1 if rol == 'Administrador' else (2 if rol == 'Vendedor' else 3) #<-- lo hice para ver si servia lo de la vista administrador
+
+                cursor.execute("INSERT INTO usuario (email, password, Id_rol) VALUES (%s, %s, %s)", 
+                               (email, contrasena, rol_id))
                 rol_id = 1 if rol == 'Administrador' else 2 if rol == 'Vendedor' else 3
-                cursor.execute("INSERT INTO usuario (email, password, rol_id) VALUES (%s, %s, %s)", (correo, contrasena, rol_id))
+                cursor.execute("INSERT INTO usuario (email, password, Id_rol) VALUES (%s, %s, %s)", (email, contrasena, rol_id))
                 self.connection.commit()
                 cursor.close()
                 return True
@@ -72,19 +77,21 @@ class ModeloUsuario:
             print("No hay conexión con la base de datos.")
             return False
 
-    def autenticar_usuario(self, correo, contrasena):
+
+    def autenticar_usuario(self, email, contrasena):
         if self.connection:
             cursor = self.connection.cursor()
             cursor.execute("""
                 SELECT r.nombre FROM usuario u
                 JOIN rol r ON u.Id_rol = r.Id
+                JOIN rol r ON u.Id_rol = r.id
                 WHERE u.email = %s AND u.password = %s
-            """, (correo, contrasena))
+            """, (email, contrasena))
             resultado = cursor.fetchone()
             cursor.close()
             if resultado:
                 return resultado[0]
-        return None
+        return None  
 
     
     def imagenABaseDatos(self, nombreProducto, imagen):
