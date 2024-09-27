@@ -51,7 +51,7 @@ class VistaTablas1:
         etiqueta.pack(side=tk.RIGHT)
         etiqueta.config(background="#333333")
 
-        self.rutaimagen= "imagenes/LOGO2.jpg"
+        self.rutaimagen= "LOGO2.jpg"
 
         if not os.path.exists(self.rutaimagen):
             print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
