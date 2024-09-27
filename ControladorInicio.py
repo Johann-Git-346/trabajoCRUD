@@ -1,7 +1,6 @@
 from BaseInicio import Crear_Conexion
 from ModeloInicio import ModeloUsuario
 from VistaInicio import VistaUsuario
-#from vistaProductos import Davista
 from VistaTablas import VistaTablas1
 from VistaVendedor import Davista2
 import json
@@ -20,19 +19,19 @@ class Controlador:
     def subirImagen(self,nombre,imagen):
         return self.modelo.imagenABaseDatos(nombre, imagen )
 
-    def registrar(self, email, contrasena, rol):
-        return self.modelo.registrar_usuario(email, contrasena, rol)
+    def registrar(self, usuario, contrasena, rol):
+        return self.modelo.registrar_usuario(usuario, contrasena, rol)
 
-    def iniciar_sesion(self, email, contrasena):
-        rol = self.modelo.autenticar_usuario(email, contrasena)
+    def iniciar_sesion(self, correo, contrasena):
+        rol = self.modelo.autenticar_usuario(correo, contrasena)
         if rol:
             vistaUsuario.destruir()
-            if rol == 'ADMINISTRA':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
+            if rol == 'Administrador':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
                 self.vistaInformes()  
-            elif rol == 'VENDEDOR':
+            elif rol == "Vendedor":
                 self.mostrar_vista_vendedor()
-            elif rol == 'CLIENTE':
-                self.mostrar_vista_cliente()
+            #elif rol == 'CLIENTE':
+                #self.mostrar_vista_cliente()
             return rol
         else:
             return None
@@ -60,9 +59,6 @@ class Controlador:
     def mostrar_vista_vendedor(self):
         vistaVendedor.iniciarVendedor()
 
-    #def mostrar_vista_cliente(self):
-    #    vistaProductos.iniciarProductos()
-
     def vistaInformes(self):
         vistaTablas.iniciarTablas()
 
@@ -74,7 +70,6 @@ conexion = Crear_Conexion.conexionBaseDeDatos()
 if conexion:
     modelo=ModeloUsuario(conexion)    
     controlador = Controlador(conexion,modelo)
-    #vistaProductos=Davista(controlador)
     vistaTablas=VistaTablas1(controlador)
     vistaVendedor=Davista2(controlador)
     vistaUsuario=VistaUsuario(controlador)

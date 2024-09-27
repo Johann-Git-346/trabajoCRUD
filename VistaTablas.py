@@ -3,7 +3,8 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
-import pandas as pd
+#import pandas as pd
+
 class VistaTablas1:
     def __init__(self,objController):
         self.objController=objController
@@ -56,7 +57,6 @@ class VistaTablas1:
             print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
             return
         
-
         try:
             imagen2 = Image.open(self.rutaimagen)
             imagen2 = imagen2.resize((155, 130))
@@ -120,7 +120,7 @@ class VistaTablas1:
 
         # Insertar datos en la tabla de Más Vendidos
         for producto in self.mas_vendidos:
-            self.mas_vendidos_tree.insert("", "end", values=(producto[1], producto[4], producto[3]))  # Ajusta los índices según tu estructura de datos
+            self.mas_vendidos_tree.insert("", "end", values=(producto[1], producto[4], producto[3]))  # Ajusta los índices según la estructura de datos
 
         self.mas_vendidos_tree.pack(fill=tk.BOTH, expand=True)
 
@@ -140,7 +140,7 @@ class VistaTablas1:
 
         # Insertar datos en la tabla de Menos Vendidos
         for producto in self.menos_vendidos:
-            self.menos_vendidos_tree.insert("", "end", values=(producto[1], producto[4], producto[3]))  # Ajusta los índices según tu estructura de datos
+            self.menos_vendidos_tree.insert("", "end", values=(producto[1], producto[4], producto[3]))  # Ajusta los índices según la estructura de datos
 
         self.menos_vendidos_tree.pack(fill=tk.BOTH, expand=True)
 

@@ -16,11 +16,19 @@ class VistaUsuario:
         self.rootLogin.mainloop()
 
     def Datos_de_inicio(self):
+<<<<<<< HEAD
         self.label_email = tk.Label(self.rootLogin, text="Correo electrónico:", bg="lightblue", font=("Arial", 12, "bold"))
         self.label_email.pack(pady=10)
 
         self.entry_email = tk.Entry(self.rootLogin, font=("Arial", 12))
         self.entry_email.pack(pady=10)
+=======
+        self.label_correo = tk.Label(self.rootLogin, text="Correo electrónico:", bg="lightblue", font=("Arial", 12, "bold"))
+        self.label_correo.pack(pady=10)
+
+        self.entry_correo = tk.Entry(self.rootLogin, font=("Arial", 12))
+        self.entry_correo.pack(pady=10)
+>>>>>>> 61792bf4a8fe34d1e373eb3924af351434b6e9da
 
         self.label_contrasena = tk.Label(self.rootLogin, text="Contraseña:", bg="lightblue", font=("Arial", 12, "bold"))
         self.label_contrasena.pack(pady=10)
@@ -28,10 +36,10 @@ class VistaUsuario:
         self.entry_contrasena = tk.Entry(self.rootLogin, show="*", font=("Arial", 12))
         self.entry_contrasena.pack(pady=10)
 
-        self.boton_registrar = tk.Button(self.rootLogin, text="Registrarse", command=self.mostrar_ventana_registro, bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
+        self.boton_registrar = tk.Button(self.rootLogin, text="Registrarse", command=self.mostrar_ventana_registro, bg="lightgreen", font=("Arial", 12, "bold"), cursor="hand2")
         self.boton_registrar.pack(pady=10)
 
-        self.boton_iniciar_sesion = tk.Button(self.rootLogin, text="Iniciar Sesión", command=self.iniciar_sesion, bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
+        self.boton_iniciar_sesion = tk.Button(self.rootLogin, text="Iniciar Sesión", command=self.iniciar_sesion, bg="lightgreen", font=("Arial", 12, "bold"), cursor="hand2")
         self.boton_iniciar_sesion.pack(pady=10)
 
     def mostrar_ventana_registro(self):
@@ -40,11 +48,19 @@ class VistaUsuario:
         ventana_registro.geometry("400x350")
         ventana_registro.configure(bg="lightyellow")
 
+<<<<<<< HEAD
         label_email = tk.Label(ventana_registro, text="Correo electrónico:", bg="lightyellow", font=("Arial", 12, "bold"))
         label_email.pack(pady=10)
 
         entry_email = tk.Entry(ventana_registro, font=("Arial", 12))
         entry_email.pack(pady=10)
+=======
+        label_correo = tk.Label(ventana_registro, text="Correo electrónico:", bg="lightyellow", font=("Arial", 12, "bold"))
+        label_correo.pack(pady=10)
+
+        entry_correo = tk.Entry(ventana_registro, font=("Arial", 12))
+        entry_correo.pack(pady=10)
+>>>>>>> 61792bf4a8fe34d1e373eb3924af351434b6e9da
 
         label_contrasena = tk.Label(ventana_registro, text="Contraseña:", bg="lightyellow", font=("Arial", 12, "bold"))
         label_contrasena.pack(pady=10)
@@ -52,10 +68,10 @@ class VistaUsuario:
         entry_contrasena = tk.Entry(ventana_registro, show="*", font=("Arial", 12))
         entry_contrasena.pack(pady=10)
 
-        label_rol = tk.Label(ventana_registro, text="Seleccione Para Que Desea su Cuenta:", bg="lightyellow", font=("Arial", 12, "bold"))
+        label_rol = tk.Label(ventana_registro, text="Seleccione Para Qué Desea su Cuenta:", bg="lightyellow", font=("Arial", 12, "bold"))
         label_rol.pack(pady=10)
 
-        rol_var = tk.StringVar(value="Usuario")  # Valor por defecto
+        rol_var = tk.StringVar(value="Usuario")
 
         radio_usuario = tk.Radiobutton(ventana_registro, text="Usuario", variable=rol_var, value="Usuario", bg="lightyellow", font=("Arial", 12))
         radio_usuario.pack()
@@ -64,12 +80,25 @@ class VistaUsuario:
         radio_vendedor.pack()
 
         def registrar_usuario():
+<<<<<<< HEAD
             email = entry_email.get()
+=======
+            correo = entry_correo.get()
+>>>>>>> 61792bf4a8fe34d1e373eb3924af351434b6e9da
             contrasena = entry_contrasena.get()
-            rol = rol_var.get()  # Obtener el rol seleccionado
+            rol = rol_var.get()
 
+<<<<<<< HEAD
             if email and contrasena:
                 if self.controlador.registrar(email, contrasena, rol):
+=======
+            if "@" not in correo:
+                messagebox.showerror("Error", "El correo debe contener '@'.")
+                return
+
+            if correo and contrasena:
+                if self.controlador.registrar(correo, contrasena, rol):
+>>>>>>> 61792bf4a8fe34d1e373eb3924af351434b6e9da
                     messagebox.showinfo("Éxito", "Registro exitoso.")
                 else:
                     messagebox.showerror("Error", "El correo ya está registrado o ocurrió un error.")
@@ -78,15 +107,25 @@ class VistaUsuario:
 
             ventana_registro.destroy()
 
-        boton_confirmar_registro = tk.Button(ventana_registro, text="Registrar", command=registrar_usuario, bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
+        boton_confirmar_registro = tk.Button(ventana_registro, text="Registrar", command=registrar_usuario, bg="lightgreen", font=("Arial", 12, "bold"), cursor="hand2")
         boton_confirmar_registro.pack(pady=10)
 
     def iniciar_sesion(self):
+<<<<<<< HEAD
         email = self.entry_email.get()
         contrasena = self.entry_contrasena.get()
         if not self.controlador.iniciar_sesion(email, contrasena):
+=======
+        correo = self.entry_correo.get()
+        contrasena = self.entry_contrasena.get()
+
+        if "@" not in correo:
+            messagebox.showerror("Error", "El correo debe contener '@'.")
+            return
+
+        if not self.controlador.iniciar_sesion(correo, contrasena):
+>>>>>>> 61792bf4a8fe34d1e373eb3924af351434b6e9da
             messagebox.showerror("Error", "Correo electrónico o contraseña incorrectos.")
 
     def destruir(self):
         self.rootLogin.destroy()
-        
