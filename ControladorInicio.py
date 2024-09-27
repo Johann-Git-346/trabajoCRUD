@@ -30,8 +30,8 @@ class Controlador:
                 self.vistaInformes()  
             elif rol == "vendedor":
                 self.mostrar_vista_vendedor()
-            #elif rol == 'CLIENTE':
-                #self.mostrar_vista_cliente()
+            elif rol == 'CLIENTE':
+                self.mostrar_vista_cliente()
             return rol
         else:
             return None
