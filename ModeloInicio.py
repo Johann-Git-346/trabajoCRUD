@@ -81,6 +81,8 @@ class ModeloUsuario:
             cursor = self.connection.cursor()
             cursor.execute("""
                 SELECT r.nombre FROM usuario u
+                JOIN rol r ON u.Id_rol = r.id
+                WHERE u.email = %s AND u.password = %s
 
             """, (email, contrasena))
             resultado = cursor.fetchone()
