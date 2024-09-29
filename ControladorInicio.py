@@ -20,6 +20,9 @@ class Controlador:
     
     def subirImagen(self,nombre,imagen):
         return self.modelo.imagenABaseDatos(nombre, imagen)
+    
+    def subirImagen2(self,nombre,imagenBinaria):
+        return self.modelo.imagenABaseDatos2(nombre, imagenBinaria )
 
     def registrar(self, usuario, contrasena, rol):
         return self.modelo.registrar_usuario(usuario, contrasena, rol)
