@@ -194,35 +194,13 @@ class Davista3:
 
         print("Catálogo actualizado.")
 
-    def Agregar_Pedido(self):
+    def Agregar_Pedido(self):#cambiar la funcinalidad = comprar
         self.ventanaAgregar=tk.Toplevel()
         self.ventanaAgregar.title("agregar producto")
         self.ventanaAgregar.geometry("500x500")
         self.ventanaAgregar.config(bg="lightblue")
         self.contenedor2=tk.Frame(self.ventanaAgregar, bg="lightblue")
         self.contenedor2.pack()
-        nombre=tk.StringVar()
-        precio=tk.DoubleVar()
-        categoria=tk.StringVar()
-        cantidad=tk.IntVar()
-        self.labelNombre=tk.Label(self.contenedor2, text="ingrese el nombre del producto", bg="lightblue", font=("Arial", 12,"bold"))
-        self.labelNombre.pack(padx=10,pady=10)
-        self.entryNombre=tk.Entry(self.contenedor2,textvariable=nombre)
-        self.entryNombre.pack(padx=10,pady=10)
-        self.labelPrecio=tk.Label(self.contenedor2, text="ingrese el precio del producto", bg="lightblue", font=("Arial", 12,"bold"))
-        self.labelPrecio.pack(padx=10,pady=10)
-        self.entryPrecio=tk.Entry(self.contenedor2, textvariable=precio)
-        self.entryPrecio.pack(padx=10,pady=10)
-        self.labeCategoria=tk.Label(self.contenedor2, text="ingrese la categoria", bg="lightblue", font=("Arial", 12,"bold"))
-        self.labeCategoria.pack(padx=10,pady=10)
-        self.entryCategoria=tk.Entry(self.contenedor2, textvariable=categoria)
-        self.entryCategoria.pack(padx=10,pady=10)
-        self.labelCantidad=tk.Label(self.contenedor2, text="ingrese la cantidad del producto", bg="lightblue", font=("Arial", 12,"bold"))
-        self.labelCantidad.pack(padx=10,pady=10)
-        self.entryCantidad=tk.Entry(self.contenedor2, textvariable=cantidad)
-        self.entryCantidad.pack(padx=10,pady=10)
-        self.boton=tk.Button(self.contenedor2, text="agregar", command=lambda: self.agregarProducto(nombre,precio,categoria,cantidad), bg="lightgreen", font=("Arial", 12, "bold"), cursor="hand2")
-        self.boton.pack(padx=10,pady=10)
 
     def catalogoTelefono(self):
         self.catalog_title.config(text="celulares")
@@ -241,28 +219,7 @@ class Davista3:
         self.ventanaBuscarModificar.config(bg="lightblue")
         self.contenedor7=tk.Frame(self.ventanaBuscarModificar,bg="lightblue")
         self.contenedor7.pack(padx=10,pady=10)
-        nombreBuscar=tk.StringVar()
-        self.labelEliminar=tk.Label(self.contenedor7, text="ingrese el nombre del producto a modificar", bg="lightblue", font=("Arial", 12,"bold"))
-        self.labelEliminar.pack(padx=10,pady=10)
-        self.entryEliminar=tk.Entry(self.contenedor7, textvariable=nombreBuscar)
-        self.entryEliminar.pack(padx=10,pady=10)
-        self.botonEliminar=tk.Button(self.contenedor7, text="buscar", cursor="hand2", command=lambda:self.buscarProducto(nombreBuscar), bg="lightgreen", font=("Arial", 12, "bold"))
-        self.botonEliminar.pack(padx=10,pady=10)
-
-    #def modificar_Producto(self, datoNuevoNombre, datoPrecio, datoCategoria, datoCantidad):
-    #    self.ventanaModificar.destroy()
-    #    nuevo_nombre = datoNuevoNombre.get()
-    #    nuevo_precio = datoPrecio.get()
-    #    nueva_categoria = datoCategoria.get()
-    #    nueva_cantidad = datoCantidad.get()
-
-    #    try:
-    #        nuevo_precio = float(nuevo_precio) if nuevo_precio else None
-    #        nueva_cantidad = int(nueva_cantidad) if nueva_cantidad else None
-    #        self.objController.modificar_Producto(self.nombre, nuevo_nombre, nuevo_precio, nueva_categoria, nueva_cantidad)
-    #        messagebox.showinfo("Éxito", "Producto modificado con éxito")
-    #    except ValueError:
-    #        messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
+        
 
     def Comprar_Pedido(self):
         self.ventanaComprar=tk.Toplevel()
@@ -271,13 +228,7 @@ class Davista3:
         self.ventanaComprar.config(bg="lightblue")
         self.contenedor4=tk.Frame(self.ventanaComprar,bg="lightblue")
         self.contenedor4.pack(padx=10,pady=10)
-        nombreComprar=tk.StringVar()
-        self.labelComprar=tk.Label(self.contenedor4, text="ingrese el nombre del producto a eliminar", bg="lightblue", font=("Arial", 12,"bold"))
-        self.labelComprar.pack(padx=10,pady=10)
-        self.entryComprar=tk.Entry(self.contenedor4, textvariable=nombreComprar)
-        self.entryComprar.pack(padx=10,pady=10)
-        self.botonComprar=tk.Button(self.contenedor4, text="comprar", cursor="hand2", command=lambda:self.Comprar_Pedido(nombreComprar), bg="lightgreen", font=("Arial", 12, "bold"))
-        self.botonComprar.pack(padx=10,pady=10)
+        
 
     def Eliminar_Pedido(self):
         self.ventanaEliminar=tk.Toplevel()
