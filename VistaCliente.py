@@ -71,8 +71,8 @@ class Davista3:
         self.frame_sidebar.config(background="#D3D3D3")
 
         # Añadir botones de la barra lateral
-        sidebar_buttons = ["Comprar", "Modificar", "Eliminar", "Cerrar sesion"]
-        sidebar_commands = [ self.Agregar_Pedido, self.Modificar_Pedido, self.Eliminar_Pedido, self.CerrarSesion]
+        sidebar_buttons = ["Agregar", "Modificar", "Eliminar", "Comprar", "Cerrar sesion"]
+        sidebar_commands = [ self.Agregar_Pedido, self.Modificar_Pedido, self.Eliminar_Pedido, self.Comprar_Pedido, self.CerrarSesion]
 
         for text, command in zip(sidebar_buttons, sidebar_commands):
             tk.Button(self.frame_sidebar, cursor="hand2",bg="#87CEEB",foreground="black",font=("Arial", 10,"bold"),text=text, command=command).pack(fill=tk.X, padx=10, pady=20)
