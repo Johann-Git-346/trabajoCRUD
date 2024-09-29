@@ -66,6 +66,9 @@ class Controlador:
     def mostrar_vista_cliente(Self):
         VistaCliente.iniciarCliente()
 
+    def mostrar_vista_cliente(self):
+        vistaProductos.iniciarProductos()
+
     def mostrarLogin(self):
         vistaUsuario.iniciarUsuario()
 
