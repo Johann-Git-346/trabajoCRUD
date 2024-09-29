@@ -3,6 +3,7 @@ from ModeloInicio import ModeloUsuario
 from VistaInicio import VistaUsuario
 from VistaTablas import VistaTablas1
 from VistaVendedor import Davista2
+from VistaCliente import Davista3
 import json
 
 class Controlador:
@@ -62,6 +63,9 @@ class Controlador:
     def vistaInformes(self):
         vistaTablas.iniciarTablas()
 
+    def mostrar_vista_cliente(Self):
+        VistaCliente.iniciarCliente()
+
     def mostrarLogin(self):
         vistaUsuario.iniciarUsuario()
 
@@ -72,6 +76,7 @@ if conexion:
     controlador = Controlador(conexion,modelo)
     vistaTablas=VistaTablas1(controlador)
     vistaVendedor=Davista2(controlador)
+    VistaCliente=Davista3(controlador)
     vistaUsuario=VistaUsuario(controlador)
     vistaUsuario.iniciarUsuario()
 else:

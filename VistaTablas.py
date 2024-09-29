@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
-#import pandas as pd
 
 class VistaTablas1:
     def __init__(self,objController):
@@ -20,7 +19,6 @@ class VistaTablas1:
         self.create_top_frame()
         self.create_menu_frame()
         self.create_catalog_frame()
-
         self.rootTablas.mainloop()
 
     def create_top_frame(self):
