@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import os
+import io
 from tkinter import messagebox
 
 class Davista2:
@@ -115,45 +116,40 @@ class Davista2:
         self.mostrar_productos_categoria("celular")
     
     def mostrar_productos_categoria(self, categoria):
-        """ Muestra los productos filtrados por categoría. """
-        self.catalog_title.config(text=categoria)
+            """ Muestra los productos filtrados por categoría. """
+            self.catalog_title.config(text=categoria)
 
-        # Filtrar productos por categoría
-        self.productos_filtrados = [p for p in self.productos if p[3] == categoria]
+            # Filtrar productos por categoría
+            self.productos_filtrados = [p for p in self.productos if p[3] == categoria]
 
-        # Limpiar el marco de productos antes de agregar los productos filtrados
-        for widget in self.frame_products.winfo_children():
-            widget.destroy()
+            # Limpiar el marco de productos antes de agregar los productos filtrados
+            for widget in self.frame_products.winfo_children():
+                widget.destroy()
 
-        # Volver a crear los cuadros de productos filtrados
-        self.imagenes_tk = []  # Limpiar la lista de imágenes
-        self.labels_imagenes = []  # Limpiar la lista de etiquetas
+            # Volver a crear los cuadros de productos filtrados
+            self.imagenes_tk = []  # Limpiar la lista de imágenes
+            self.labels_imagenes = []  # Limpiar la lista de etiquetas
 
-        filas = (len(self.productos_filtrados) // 3) + (1 if len(self.productos_filtrados) % 3 != 0 else 0)  
+            filas = (len(self.productos_filtrados) // 3) + (1 if len(self.productos_filtrados) % 3 != 0 else 0)  
 
-        for i in range(filas):  # Crear las filas 
-            row = tk.Frame(self.frame_products)
-            row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
-            row.config(background="#D3D3D3")
-            
-            for j in range(7):  # columnas
-                img_index = (i * 7) + j
-                if img_index < len(self.productos_filtrados):  
-                    self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
-                    self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
-                    self.product_frame.config(bg="#B0E0E6")
-                    self.crear_cuadro_producto(self.product_frame, self.productos_filtrados[img_index])
+            for i in range(filas):  # Crear las filas 
+                row = tk.Frame(self.frame_products)
+                row.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
+                row.config(background="#D3D3D3")
+                
+                for j in range(7):  # columnas
+                    img_index = (i * 7) + j
+                    if img_index < len(self.productos_filtrados):  
+                        self.product_frame = tk.Frame(row, width=100, height=100, relief=tk.RAISED, borderwidth=1)
+                        self.product_frame.pack(side=tk.LEFT, padx=15, pady=5)
+                        self.product_frame.config(bg="#B0E0E6")
+                        self.crear_cuadro_producto(self.product_frame, self.productos_filtrados[img_index])
 
     def crear_cuadro_producto(self, product_frame, producto):
         """ Crea un cuadro individual para un producto. """
-        self.rutaimagen = producto[5]  
-        
-        if not os.path.exists(self.rutaimagen):
-            print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
-            return
-        
         try:
-            imagen = Image.open(self.rutaimagen)
+            # Convertir la imagen binaria a un objeto de imagen
+            imagen = Image.open(io.BytesIO(producto[6]))
             imagen = imagen.resize((110, 110))      
             imagen_tk = ImageTk.PhotoImage(imagen)
             self.imagenes_tk.append(imagen_tk)  
@@ -166,9 +162,9 @@ class Davista2:
         # Información del producto
         info_label = tk.Label(product_frame, text=f"Nombre: {producto[1]}\nPrecio: {producto[2]}\nCantidad: {producto[4]}", justify=tk.LEFT)
         info_label.pack()
-        info_label.config(bg="#B0E0E6",font=("Arial", 10,"bold"),foreground="#000000",)
+        info_label.config(bg="#B0E0E6", font=("Arial", 10, "bold"), foreground="#000000")
 
-    def actualizar_catalogo(self,categoria):
+    def actualizar_catalogo(self, categoria):
         self.productos = self.objController.obtener_productos()
         """ Método para refrescar el catálogo de productos. """
         self.productos_filtrados = [p for p in self.productos if p[3] == categoria]

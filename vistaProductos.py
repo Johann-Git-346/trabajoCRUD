@@ -10,7 +10,7 @@ class Davista:
     
     def iniciarProductos(self):
         self.rootVendedor = tk.Tk()
-        self.rootVendedor.title("VENDEDOR")
+        self.rootVendedor.title("cliente")
         self.rootVendedor.geometry("800x600")
 
         self.rootVendedor.state('zoomed')
