@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 import os
 from tkinter import messagebox
 import io
+
 class Davista:
     def __init__(self,objController):
         self.objController=objController
@@ -197,28 +198,6 @@ class Davista:
         self.ventanaAgregar.config(bg="lightblue")
         self.contenedor2=tk.Frame(self.ventanaAgregar,bg="lightblue")
         self.contenedor2.pack()
-        nombre=tk.StringVar()
-        precio=tk.DoubleVar()
-        categoria=tk.StringVar()
-        cantidad=tk.IntVar()
-        self.labelNombre=tk.Label(self.contenedor2, text="ingrese el nombre del producto",bg="lightblue",font=("Arial", 12,"bold"))
-        self.labelNombre.pack(padx=10,pady=10)
-        self.entryNombre=tk.Entry(self.contenedor2,textvariable=nombre)
-        self.entryNombre.pack(padx=10,pady=10)
-        self.labelPrecio=tk.Label(self.contenedor2, text="ingrese el precio del producto",bg="lightblue",font=("Arial", 12,"bold"))
-        self.labelPrecio.pack(padx=10,pady=10)
-        self.entryPrecio=tk.Entry(self.contenedor2, textvariable=precio)
-        self.entryPrecio.pack(padx=10,pady=10)
-        self.labeCategoria=tk.Label(self.contenedor2, text="ingrese la categoria",bg="lightblue",font=("Arial", 12,"bold"))
-        self.labeCategoria.pack(padx=10,pady=10)
-        self.entryCategoria=tk.Entry(self.contenedor2, textvariable=categoria)
-        self.entryCategoria.pack(padx=10,pady=10)
-        self.labelCantidad=tk.Label(self.contenedor2, text="ingrese la cantidad del producto",bg="lightblue",font=("Arial", 12,"bold"))
-        self.labelCantidad.pack(padx=10,pady=10)
-        self.entryCantidad=tk.Entry(self.contenedor2, textvariable=cantidad)
-        self.entryCantidad.pack(padx=10,pady=10)
-        self.boton=tk.Button(self.contenedor2, text="agregar",command=lambda: self.agregarProducto(nombre,precio,categoria,cantidad),bg="lightgreen", font=("Arial", 12, "bold"),cursor="hand2")
-        self.boton.pack(padx=10,pady=10)
 
     def agregarProducto(self,datoNombre,datoPrecio,datoCategoria,datoCantidad):
         self.ventanaAgregar.destroy()
