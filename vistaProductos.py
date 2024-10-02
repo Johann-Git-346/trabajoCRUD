@@ -11,19 +11,19 @@ class Davista:
         self.productos_seleccionados = []
 
     def iniciarProductos(self):
-        self.rootVendedor = tk.Tk()
-        self.rootVendedor.title("Cliente")
-        self.rootVendedor.geometry("800x600")
-        self.rootVendedor.state('zoomed')
+        self.rootCliente = tk.Tk()
+        self.rootCliente.title("Cliente")
+        self.rootCliente.geometry("800x600")
+        self.rootCliente.state('zoomed')
 
         self.create_top_frame()
         self.create_sidebar_frame()
         self.create_catalog_frame()
-        self.rootVendedor.mainloop()
+        self.rootCliente.mainloop()
 
     def create_top_frame(self):
         """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
-        self.frame_top = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
+        self.frame_top = tk.Frame(self.rootCliente, relief=tk.RAISED, borderwidth=1)
         self.frame_top.pack(side=tk.TOP, fill=tk.X)
         self.frame_top.config(background="#333333")
 
@@ -57,7 +57,7 @@ class Davista:
 
     def create_sidebar_frame(self):
         """ Crear el marco lateral con los botones de opciones. """
-        self.frame_sidebar = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
+        self.frame_sidebar = tk.Frame(self.rootCliente, relief=tk.RAISED, borderwidth=1)
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
         self.frame_sidebar.config(background="#D3D3D3")
 
@@ -71,7 +71,7 @@ class Davista:
         """ Crear el marco para las categorías y el catálogo. """
         self.productos = self.objController.obtener_productos()
 
-        self.frame_catalog = tk.Frame(self.rootVendedor)
+        self.frame_catalog = tk.Frame(self.rootCliente)
         self.frame_catalog.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
         self.frame_catalog.config(background="#D3D3D3")
 
@@ -122,7 +122,7 @@ class Davista:
     def crear_cuadro_producto(self, product_frame, producto):
         """ Crea un cuadro individual para un producto. """
         try:
-            imagen = Image.open(io.BytesIO(producto[6]))
+            imagen = Image.open(io.BytesIO(producto[5]))
             imagen = imagen.resize((110, 110))
             imagen_tk = ImageTk.PhotoImage(imagen)
             self.imagenes_tk.append(imagen_tk)
@@ -161,7 +161,7 @@ class Davista:
             messagebox.showinfo("Carrito vacío", "No ha seleccionado ningún producto para el pedido.")
             return
 
-        self.ventana_pedido = tk.Toplevel(self.rootVendedor)
+        self.ventana_pedido = tk.Toplevel(self.rootCliente)
         self.ventana_pedido.title("Productos Seleccionados")
         self.ventana_pedido.geometry("400x400")
         self.ventana_pedido.config(bg="#f0f0f0")
@@ -189,7 +189,8 @@ class Davista:
     def CerrarSesion(self):
         confirm = messagebox.askyesno("Cerrar Sesión", "¿Está seguro de que desea cerrar sesión?")
         if confirm:
-            self.rootVendedor.destroy()
+            self.rootCliente.destroy()
+            self.objController.mostrarLogin()
 
     def catalogoTelefono(self):
         self.mostrar_productos_categoria("celular")

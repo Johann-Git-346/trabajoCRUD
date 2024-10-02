@@ -149,7 +149,7 @@ class Davista2:
         """ Crea un cuadro individual para un producto. """
         try:
             # Convertir la imagen binaria a un objeto de imagen
-            imagen = Image.open(io.BytesIO(producto[6]))
+            imagen = Image.open(io.BytesIO(producto[5]))
             imagen = imagen.resize((110, 110))      
             imagen_tk = ImageTk.PhotoImage(imagen)
             self.imagenes_tk.append(imagen_tk)  
@@ -250,7 +250,7 @@ class Davista2:
             print("No se seleccionó ninguna imagen")
             return
         imagen=ruta_imagen
-        self.objController.subirImagen(nombre,imagen)
+        self.objController.subirImagen2(nombre,imagen)
         messagebox.showinfo("Éxito", "Producto agregado correctamente")
 
     def catalogoTelefono(self):
@@ -345,7 +345,7 @@ class Davista2:
             print("No se seleccionó ninguna imagen")
             return
         imagen=ruta_imagen
-        self.objController.subirImagen(self.nombre,imagen)
+        self.objController.subirImagen2(self.nombre,imagen)
         messagebox.showinfo("Éxito", "Producto modificado con éxito")
 
     def eliminarProducto(self):
@@ -378,24 +378,7 @@ class Davista2:
             messagebox.showerror("Error", "Producto no encontrado")
 
     def CerrarSesion(self):
-        self.mensajeCerrrarSesion=tk.Toplevel()
-        self.mensajeCerrrarSesion.title("¿seguro?")
-        self.mensajeCerrrarSesion.geometry("350x250")
-        self.mensajeCerrrarSesion.config(bg="lightblue")
-        self.respuesta=tk.StringVar()
-        self.contenedorMensaje=tk.Frame(self.mensajeCerrrarSesion,bg="lightblue")
-        self.contenedorMensaje.pack()
-        self.labelMensaje=tk.Label(self.contenedorMensaje,text="¿Esta seguro que desea cerrar sesion?",font=("Arial", 12,"bold"),bg="lightblue")
-        self.labelMensaje.pack(padx=10,pady=10)
-        self.botonSi=tk.Button(self.contenedorMensaje,text="SI",command=self.salirTodo,bg="red",cursor="hand2", font=("Arial", 12, "bold"))
-        self.botonSi.pack(padx=10,pady=10)
-        self.botonNo=tk.Button(self.contenedorMensaje,text="NO",command=self.destruirMensaje,cursor="hand2", bg="lightgreen", font=("Arial", 12, "bold"))
-        self.botonNo.pack(padx=10,pady=10)
-        
-    def destruirMensaje(self):
-        self.mensajeCerrrarSesion.destroy()
-
-    def salirTodo(self):
-        self.mensajeCerrrarSesion.destroy()
-        self.rootVendedor.destroy()
-        self.objController.mostrarLogin()
+        confirm = messagebox.askyesno("Cerrar Sesión", "¿Está seguro de que desea cerrar sesión?")
+        if confirm:
+            self.rootVendedor.destroy()
+            self.objController.mostrarLogin()

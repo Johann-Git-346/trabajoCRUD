@@ -170,24 +170,7 @@ class VistaTablas1:
         messagebox.showinfo("Informe listo","informe creado con exito")
 
     def CerrarSesion(self):
-        self.mensajeCerrrarSesion=tk.Toplevel()
-        self.mensajeCerrrarSesion.title("¿seguro?")
-        self.mensajeCerrrarSesion.geometry("350x250")
-        self.mensajeCerrrarSesion.config(bg="lightblue")
-        self.respuesta=tk.StringVar()
-        self.contenedorMensaje=tk.Frame(self.mensajeCerrrarSesion,bg="lightblue")
-        self.contenedorMensaje.pack()
-        self.labelMensaje=tk.Label(self.contenedorMensaje,text="¿Esta seguro que desea cerrar sesion?",font=("Arial", 12,"bold"),bg="lightblue")
-        self.labelMensaje.pack(padx=10,pady=10)
-        self.botonSi=tk.Button(self.contenedorMensaje,text="SI",command=self.salirTodo,bg="red",font=("Arial", 12, "bold"))
-        self.botonSi.pack(padx=10,pady=10)
-        self.botonNo=tk.Button(self.contenedorMensaje,text="NO",command=self.destruirMensaje,bg="lightgreen", font=("Arial", 12, "bold"))
-        self.botonNo.pack(padx=10,pady=10)
-        
-    def destruirMensaje(self):
-        self.mensajeCerrrarSesion.destroy()
-
-    def salirTodo(self):
-        self.mensajeCerrrarSesion.destroy()
-        self.rootTablas.destroy()
-        self.objController.mostrarLogin() 
+        confirm = messagebox.askyesno("Cerrar Sesión", "¿Está seguro de que desea cerrar sesión?")
+        if confirm:
+            self.rootTablas.destroy()
+            self.objController.mostrarLogin()
