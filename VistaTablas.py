@@ -74,8 +74,8 @@ class VistaTablas1:
         frame_menu.config(background="#D3D3D3")
 
         # Botones de navegación
-        menu_buttons = ["Cerrar Sesion"]
-        commands = [self.CerrarSesion]
+        menu_buttons = ["inicio", "Cerrar Sesion"]
+        commands = [self.inicio, self.CerrarSesion]
 
         for text, command in zip(menu_buttons, commands):
             tk.Button(frame_menu, text=text,cursor="hand2",bg="#87CEEB",foreground="#000000",font=("Arial", 10,"bold") ,command=command).grid(row=0, column=menu_buttons.index(text), padx=10, pady=5)
@@ -168,6 +168,9 @@ class VistaTablas1:
 
         self.objController.generarInforme(mas_vendidos, menos_vendidos)
         messagebox.showinfo("Informe listo","informe creado con exito")
+
+    def inicio(self):
+        pass
 
     def CerrarSesion(self):
         confirm = messagebox.askyesno("Cerrar Sesión", "¿Está seguro de que desea cerrar sesión?")
