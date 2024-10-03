@@ -149,7 +149,7 @@ class Davista2:
         """ Crea un cuadro individual para un producto. """
         try:
             # Convertir la imagen binaria a un objeto de imagen
-            imagen = Image.open(io.BytesIO(producto[5]))
+            imagen = Image.open(io.BytesIO(producto[6]))
             imagen = imagen.resize((110, 110))      
             imagen_tk = ImageTk.PhotoImage(imagen)
             self.imagenes_tk.append(imagen_tk)  
