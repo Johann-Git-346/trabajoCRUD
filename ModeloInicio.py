@@ -91,23 +91,6 @@ class ModeloUsuario:
                 return resultado[0]
         return None  
 
-    
-    def imagenABaseDatos(self, nombreProducto, imagen):
-        if self.connection:
-            cursor = self.connection.cursor()
-            try:
-                # Consulta para actualizar la imagen del producto basado en el nombre
-                sql = "UPDATE productos SET imagenes = %s WHERE nombre = %s"
-                valores = (imagen, nombreProducto)
-                cursor.execute(sql, valores)
-                self.connection.commit()
-                print("Imagen actualizada exitosamente en la base de datos")
-            
-            except Exception as e:
-                print(f"Error al actualizar en la base de datos: {e}")
-            finally:
-                cursor.close()
-
     def imagenABaseDatos2(self, nombreProducto, imagenBinario):
         if self.connection:
             cursor = self.connection.cursor()

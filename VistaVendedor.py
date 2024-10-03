@@ -149,7 +149,7 @@ class Davista2:
         """ Crea un cuadro individual para un producto. """
         try:
             # Convertir la imagen binaria a un objeto de imagen
-            imagen = Image.open(io.BytesIO(producto[6]))
+            imagen = Image.open(io.BytesIO(producto[5]))
             imagen = imagen.resize((110, 110))      
             imagen_tk = ImageTk.PhotoImage(imagen)
             self.imagenes_tk.append(imagen_tk)  
@@ -250,8 +250,13 @@ class Davista2:
             print("No se seleccionó ninguna imagen")
             return
         imagen=ruta_imagen
-        self.objController.subirImagen2(nombre,imagen)
+        self.convertir_imagen_a_binario(nombre,imagen)
         messagebox.showinfo("Éxito", "Producto agregado correctamente")
+
+    def convertir_imagen_a_binario(self,nombre,ruta_imagen):
+        with open(ruta_imagen, 'rb') as archivo:
+            binario = archivo.read()
+        return self.objController.subirImagen2(nombre,binario)
 
     def catalogoTelefono(self):
         self.catalog_title.config(text="celulares")
@@ -345,7 +350,7 @@ class Davista2:
             print("No se seleccionó ninguna imagen")
             return
         imagen=ruta_imagen
-        self.objController.subirImagen2(self.nombre,imagen)
+        self.convertir_imagen_a_binario(self.nombre,imagen)
         messagebox.showinfo("Éxito", "Producto modificado con éxito")
 
     def eliminarProducto(self):

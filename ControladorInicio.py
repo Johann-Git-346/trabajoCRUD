@@ -18,9 +18,6 @@ class Controlador:
     def agregar_productos(self, nombre, precio, categoria, cantidad):
         return self.modelo.agregar_producto(nombre, precio, categoria, cantidad)
     
-    def subirImagen(self,nombre,imagen):
-        return self.modelo.imagenABaseDatos(nombre, imagen)
-    
     def subirImagen2(self,nombre,imagenBinaria):
         return self.modelo.imagenABaseDatos2(nombre, imagenBinaria )
 
