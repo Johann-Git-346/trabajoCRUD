@@ -122,7 +122,7 @@ class Davista:
     def crear_cuadro_producto(self, product_frame, producto):
         """ Crea un cuadro individual para un producto. """
         try:
-            imagen = Image.open(io.BytesIO(producto[6]))
+            imagen = Image.open(io.BytesIO(producto[5]))
             imagen = imagen.resize((110, 110))
             imagen_tk = ImageTk.PhotoImage(imagen)
             self.imagenes_tk.append(imagen_tk)
