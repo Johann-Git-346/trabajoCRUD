@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 import os
 import io
 from tkinter import messagebox
-#vista del admin
+#Vista Admin
 class Davista3:
     def __init__(self, objController):
         self.objController=objController
@@ -16,12 +16,12 @@ class Davista3:
 
         self.rootVendedor.state('zoomed')
 
-        self.create_top_frame()
-        self.create_sidebar_frame()
-        self.create_catalog_frame()
+        self.CrearSlider()
+        self.CrearSliderLateral()
+        self.CrearSliderCatalogo()
         self.rootVendedor.mainloop()
         
-    def create_top_frame(self):
+    def CrearSlider(self):
         """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
         self.frame_top = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
         self.frame_top.pack(side=tk.TOP, fill=tk.X)
@@ -66,7 +66,7 @@ class Davista3:
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
 
-    def create_sidebar_frame(self):
+    def CrearSliderLateral(self):
         """ Crear el marco para la barra lateral izquierda y añadir botones. """
         self.frame_sidebar = tk.Frame(self.rootVendedor, relief=tk.RAISED, borderwidth=1)
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
@@ -83,7 +83,7 @@ class Davista3:
         multimedia_frame = tk.Frame(self.frame_sidebar)
         multimedia_frame.pack(fill=tk.X, padx=10, pady=10)
 
-    def create_catalog_frame(self):
+    def CrearSliderCatalogo(self):
         """ Crear el marco para las categorías y el catálogo. """
         self.productos = self.objController.obtener_productos()
 

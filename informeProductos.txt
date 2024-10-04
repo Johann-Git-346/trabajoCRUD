@@ -1,0 +1,26 @@
+{
+    "Mas Vendidos": [
+        {
+            "Producto": "hp",
+            "Cantidad": "35",
+            "Categoria": "laptop"
+        },
+        {
+            "Producto": "honor x8a",
+            "Cantidad": "6",
+            "Categoria": "celular"
+        }
+    ],
+    "Menos Vendidos": [
+        {
+            "Producto": "huawei y9",
+            "Cantidad": "5",
+            "Categoria": "celular"
+        },
+        {
+            "Producto": "asus",
+            "Cantidad": "4",
+            "Categoria": "laptop"
+        }
+    ]
+}

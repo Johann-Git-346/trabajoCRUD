@@ -9,19 +9,19 @@ class VistaTablas1:
         self.objController=objController
 
     def iniciarTablas(self):
-        # Crear la ventana principal
+        # Venta Tablas 
         self.rootTablas = tk.Tk()
         self.rootTablas.title("ADMINISTRADOR")
         self.rootTablas.geometry("800x600")
 
         self.rootTablas.state('zoomed')
 
-        self.create_top_frame()
-        self.create_menu_frame()
-        self.create_catalog_frame()
+        self.CrearSlider()
+        self.CrearMenu()
+        self.CrearCatalogo()
         self.rootTablas.mainloop()
 
-    def create_top_frame(self):
+    def CrearSlider(self):
         """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
         self.frame_top = tk.Frame(self.rootTablas, relief=tk.RAISED, borderwidth=1)
         self.frame_top.pack(side=tk.TOP, fill=tk.X)
@@ -49,7 +49,7 @@ class VistaTablas1:
         etiqueta.pack(side=tk.RIGHT)
         etiqueta.config(background="#333333")
 
-        self.rutaimagen= "LOGO2.jpg"
+        self.rutaimagen= "imagenes/LOGO2.jpg"
 
         if not os.path.exists(self.rutaimagen):
             print(f"Error: La ruta de la imagen no existe: {self.rutaimagen}")
@@ -67,7 +67,7 @@ class VistaTablas1:
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
 
-    def create_menu_frame(self):
+    def CrearMenu(self):
         # Crear el marco para el menú de navegación
         frame_menu = tk.Frame(self.rootTablas, relief=tk.RAISED, borderwidth=0.5)
         frame_menu.pack(side=tk.TOP, fill=tk.X)
@@ -84,7 +84,7 @@ class VistaTablas1:
         for i in range(len(menu_buttons)):
             frame_menu.grid_columnconfigure(i, weight=1)
     
-    def create_catalog_frame(self):
+    def CrearCatalogo(self):
         # Crear el marco para las categorías y el informe de productos
         frame_report = tk.Frame(self.rootTablas)
         frame_report.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
