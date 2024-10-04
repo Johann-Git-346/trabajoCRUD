@@ -3,7 +3,7 @@ from ModeloInicio import ModeloUsuario
 from VistaInicio import VistaUsuario
 from VistaTablas import VistaTablas1
 from VistaVendedor import Davista2
-from vistaProductos import Davista
+from VistaProductos import Davista
 import json
 
 class Controlador:
@@ -60,9 +60,6 @@ class Controlador:
     def actualizar_cantidad_productos(self,productos):
         self.modelo.actualizar_cantidad_productos(productos)
 
-    def realizar_pedido(self,productos):
-        self.modelo.comprar_producto(productos)
-
     def obtener_producto_por_nombre(self, nombre):
         return self.modelo.obtener_producto_por_nombre(nombre)
 
@@ -77,6 +74,47 @@ class Controlador:
 
     def mostrarLogin(self):
         vistaUsuario.iniciarUsuario()
+
+    
+    def actualizar_inventario(self, id_producto, cantidad_comprada):
+        """ Actualiza el inventario de un producto tras realizar una compra. """
+        if self.conexion:
+            cursor = self.conexion.cursor()
+            try:
+                # Primero, obtener la cantidad actual del producto
+                cursor.execute("SELECT cantidad FROM productos WHERE id = %s", (id_producto,))
+                cantidad_actual = cursor.fetchone()[0]
+
+                # Calcular la nueva cantidad después de la compra
+                nueva_cantidad = cantidad_actual - cantidad_comprada
+
+                # Evitar cantidades negativas
+                if nueva_cantidad < 0:
+                    nueva_cantidad = 0
+
+                # Actualizar la cantidad en la base de datos
+                cursor.execute("UPDATE productos SET cantidad = %s WHERE id = %s", (nueva_cantidad, id_producto))
+                self.conexion.commit()
+
+            except Exception as e:
+                print(f"Error al actualizar el inventario: {e}")
+            finally:
+                cursor.close()
+
+    def realizar_pedido(self, productos_seleccionados):
+        """ Realiza un pedido y actualiza el inventario para cada producto. """
+        for producto in productos_seleccionados:
+            id_producto = producto[0]  # Suponiendo que el ID del producto está en la primera posición
+            cantidad_comprada = producto[4]  # La cantidad comprada está en la posición 4
+
+            # Actualizar el inventario por cada producto
+            self.actualizar_inventario(id_producto, cantidad_comprada)
+
+        # Aquí puedes agregar más lógica para finalizar el pedido, como registrar el pedido en la base de datos
+        print("Pedido realizado con éxito.")
+        
+    def realizar_pedido(self,productos):
+        self.modelo.comprar_producto(productos)
 
 # PRINCIPAL
 conexion = Crear_Conexion.conexionBaseDeDatos()
