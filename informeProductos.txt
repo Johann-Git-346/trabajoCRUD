@@ -11,16 +11,16 @@
             "Categoria": "laptop"
         },
         {
-            "Producto": "acer",
-            "Cantidad": "26",
-            "Categoria": "laptop"
+            "Producto": "redmi",
+            "Cantidad": "25",
+            "Categoria": "celular"
         }
     ],
     "Menos Vendidos": [
         {
-            "Producto": "nokia",
-            "Cantidad": "25",
-            "Categoria": "celular"
+            "Producto": "acer",
+            "Cantidad": "22",
+            "Categoria": "laptop"
         },
         {
             "Producto": "iphone",
