@@ -14,8 +14,8 @@ class Controlador:
     def obtener_productos(self):
         return self.modelo.obtener_productos()
         
-    def agregar_productos(self, nombre, precio, categoria, cantidad):
-        return self.modelo.agregar_producto(nombre, precio, categoria, cantidad)
+    def agregar_productos(self,Id, nombre, precio, categoria, cantidad):
+        return self.modelo.agregar_producto(Id,nombre, precio, categoria, cantidad)
     
     def subirImagen2(self,nombre,imagenBinaria):
         return self.modelo.imagenABaseDatos2(nombre, imagenBinaria )
@@ -51,11 +51,17 @@ class Controlador:
         json_data = json.dumps(data, indent=4)
         self.modelo.setInforme(json_data)
     
-    def modificar_producto(self, nombre,nuevoNombre=None,nuevo_precio=None, nueva_descripcion=None, nueva_cantidad=None):
-        self.modelo.modificar_producto(nombre,nuevoNombre, nuevo_precio, nueva_descripcion, nueva_cantidad)
+    def modificar_producto(self, id,nuevoNombre=None,nuevo_precio=None, nueva_descripcion=None, nueva_cantidad=None):
+        self.modelo.modificar_producto(id,nuevoNombre, nuevo_precio, nueva_descripcion, nueva_cantidad)
 
-    def eliminar_producto(self, nombre):
-        self.modelo.eliminar_producto(nombre)
+    def eliminar_producto(self, id):
+        self.modelo.eliminar_producto(id)
+
+    def actualizar_cantidad_productos(self,productos):
+        self.modelo.actualizar_cantidad_productos(productos)
+
+    def realizar_pedido(self,productos):
+        self.modelo.comprar_producto(productos)
 
     def obtener_producto_por_nombre(self, nombre):
         return self.modelo.obtener_producto_por_nombre(nombre)

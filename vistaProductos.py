@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import filedialog
 from PIL import Image, ImageTk
 import os
 from tkinter import messagebox
@@ -16,12 +15,12 @@ class Davista:
         self.rootCliente.geometry("800x600")
         self.rootCliente.state('zoomed')
 
-        self.create_top_frame()
-        self.create_sidebar_frame()
-        self.create_catalog_frame()
+        self.CrearSlider()
+        self.CrearSliderLateral()
+        self.CrearSliderCatalogo()
         self.rootCliente.mainloop()
 
-    def create_top_frame(self):
+    def CrearSlider(self):
         """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
         self.frame_top = tk.Frame(self.rootCliente, relief=tk.RAISED, borderwidth=1)
         self.frame_top.pack(side=tk.TOP, fill=tk.X)
@@ -55,7 +54,7 @@ class Davista:
         except Exception as e:
             print(f"Error al abrir o procesar la imagen: {e}")
 
-    def create_sidebar_frame(self):
+    def CrearSliderLateral(self):
         """ Crear el marco lateral con los botones de opciones. """
         self.frame_sidebar = tk.Frame(self.rootCliente, relief=tk.RAISED, borderwidth=1)
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
@@ -67,7 +66,7 @@ class Davista:
         for text, command in zip(sidebar_buttons, sidebar_commands):
             tk.Button(self.frame_sidebar, cursor="hand2", bg="#87CEEB", foreground="black", font=("Arial", 10, "bold"), text=text, command=command).pack(fill=tk.X, padx=10, pady=20)
 
-    def create_catalog_frame(self):
+    def CrearSliderCatalogo(self):
         """ Crear el marco para las categorías y el catálogo. """
         self.productos = self.objController.obtener_productos()
 

@@ -1,0 +1,36 @@
+{
+    "Mas Vendidos": [
+        {
+            "Producto": "asus",
+            "Cantidad": "35",
+            "Categoria": "laptop"
+        },
+        {
+            "Producto": "hp",
+            "Cantidad": "30",
+            "Categoria": "laptop"
+        },
+        {
+            "Producto": "redmi",
+            "Cantidad": "25",
+            "Categoria": "celular"
+        }
+    ],
+    "Menos Vendidos": [
+        {
+            "Producto": "acer",
+            "Cantidad": "22",
+            "Categoria": "laptop"
+        },
+        {
+            "Producto": "iphone",
+            "Cantidad": "18",
+            "Categoria": "celular"
+        },
+        {
+            "Producto": "huawey y9",
+            "Cantidad": "12",
+            "Categoria": "celular"
+        }
+    ]
+}
