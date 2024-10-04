@@ -51,8 +51,8 @@ class Controlador:
         json_data = json.dumps(data, indent=4)
         self.modelo.setInforme(json_data)
     
-    def modificar_producto(self, nombre,nuevoNombre=None,nuevo_precio=None, nueva_descripcion=None, nueva_cantidad=None):
-        self.modelo.modificar_producto(nombre,nuevoNombre, nuevo_precio, nueva_descripcion, nueva_cantidad)
+    def modificar_producto(self, id,nuevoNombre=None,nuevo_precio=None, nueva_descripcion=None, nueva_cantidad=None):
+        self.modelo.modificar_producto(id,nuevoNombre, nuevo_precio, nueva_descripcion, nueva_cantidad)
 
     def eliminar_producto(self, id):
         self.modelo.eliminar_producto(id)

@@ -348,13 +348,13 @@ class Davista2:
             messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
 
     def modificarDatos(self,dato):
-        nombre2=dato[1].get()
+        id=dato[0].get()
         nuevo_nombre=dato[1].get()
         nuevo_cantidad=dato[2].get()
         nuevo_categoria=dato[3].get()
         nuevo_precio=dato[4].get()
         try:
-            self.objController.modificar_producto(nombre2,nuevo_nombre,nuevo_precio,nuevo_categoria,nuevo_cantidad)
+            self.objController.modificar_producto(id,nuevo_nombre,nuevo_precio,nuevo_categoria,nuevo_cantidad)
             self.cargar_datos()
             self.limpiar_campos()
             messagebox.showinfo("Éxito", "Producto modificado con éxito")
@@ -381,6 +381,7 @@ class Davista2:
         self.limpiar_campos()
 
     def limpiar_campos(self):
+        self.entry_Id.delete(0,tk.END)
         self.entry_producto.delete(0, tk.END)
         self.entry_cantidad.delete(0, tk.END)
         self.entry_categoria.delete(0, tk.END)

@@ -22,7 +22,7 @@ class ModeloUsuario:
             except Exception as e:
                 print(f"Error al obtener producto: {e}")
                 return []
-       
+
     def obtenerMasYMenosVendidos(self):
         if self.connection:
             cursor = self.connection.cursor()
@@ -52,6 +52,7 @@ class ModeloUsuario:
                 print(f"Error: {e}")
                 return [], []
 
+            
     def registrar_usuario(self, email, contrasena, rol):
         if self.connection:
             cursor = self.connection.cursor()
@@ -76,7 +77,6 @@ class ModeloUsuario:
             print("No hay conexión con la base de datos.")
             return False
 
-
     def autenticar_usuario(self, email, contrasena):
         if self.connection:
             cursor = self.connection.cursor()
@@ -84,7 +84,6 @@ class ModeloUsuario:
                 SELECT r.nombre FROM usuario u
                 JOIN rol r ON u.Id_rol = r.id
                 WHERE u.email = %s AND u.password = %s
-
             """, (email, contrasena))
             resultado = cursor.fetchone()
             cursor.close()
@@ -95,7 +94,54 @@ class ModeloUsuario:
     
     def obtener_usuario_id(self):
         return self.session.get('usuario_id')
-    
+
+    def comprar_producto(self, productos):
+        for producto in productos:
+            nombre=productos[0]
+            cantidad_comprada=productos[1]
+
+        producto = self.obtener_producto_por_nombre(nombre)
+        if producto:
+            cantidad_actual = producto[4]  # Asumiendo que la cantidad está en la columna 4
+            if cantidad_actual >= cantidad_comprada:
+                nueva_cantidad = cantidad_actual - cantidad_comprada
+                if nueva_cantidad == 0:
+                    self.eliminar_producto(nombre)
+                else:
+                    self.modificar_producto(nombre, nueva_cantidad=nueva_cantidad)
+                return True
+            else:
+                print("No hay suficiente cantidad disponible.")
+                return False
+        else:
+            print("Producto no encontrado.")
+            return False
+        
+    def actualizar_cantidad_productos(self, productos):
+        if self.connection:
+            cursor = self.connection.cursor()
+            try:
+                for producto in productos:
+                    nombre, cantidad_seleccionada = producto[0], producto[1]
+                    cursor.execute("SELECT cantidad FROM productos WHERE nombre = ?", (nombre,))
+                    cantidad_actual = cursor.fetchone()[0]
+
+                    if cantidad_actual >= cantidad_seleccionada:
+                        nueva_cantidad = cantidad_actual - cantidad_seleccionada
+                        cursor.execute("UPDATE productos SET cantidad = ? WHERE nombre = ?", (nueva_cantidad, nombre))
+                    else:
+                        print(f"No hay suficiente cantidad para el producto: {nombre}.")
+                        return False
+                
+                self.connection.commit()
+                cursor.close()
+                return True
+            except Exception as e:
+                print(f"Error al actualizar la cantidad de productos: {e}")
+                return False
+        else:
+            print("No hay conexión con la base de datos.")
+
     def imagenABaseDatos2(self, nombreProducto, imagenBinario):
         if self.connection:
             cursor = self.connection.cursor()
@@ -112,17 +158,29 @@ class ModeloUsuario:
             finally:
                 cursor.close()
 
-    def agregar_producto(self,nombre,precio,categoria,cantidad):
+    def agregar_producto(self, id, nombre, precio, categoria, cantidad):
         if self.connection:
-            cursor=self.connection.cursor()
+            cursor = self.connection.cursor()
             try:
-                cursor.execute("INSERT INTO productos (nombre, precio, categoria, cantidad) VALUES (%s, %s, %s, %s)",
-                                (nombre,precio,categoria,cantidad))
-                self.connection.commit()
+                # Check if the product with the same ID already exists
+                cursor.execute("SELECT id FROM productos WHERE id = %s", (id,))
+                if cursor.fetchone():
+                    print(f"Error: Ya existe un producto con el ID {id}.")
+                    return False
 
+                # Insert the new product
+                cursor.execute("INSERT INTO productos (id, nombre, precio, categoria, cantidad) VALUES (%s, %s, %s, %s, %s)",
+                            (id, nombre, precio, categoria, cantidad))
+                self.connection.commit()
+                cursor.close()
+                return True
             except Exception as e:
                 print(f"Error al agregar producto: {e}")
                 return False
+        else:
+            print("No hay conexión con la base de datos.")
+            return False
+
             
     def obtener_producto_por_nombre(self, nombre):
         if self.connection:
@@ -135,7 +193,7 @@ class ModeloUsuario:
                 print(f"Error al obtener producto: {e}")
                 return []
 
-    def modificar_producto(self, nombre, nuevo_nombre=None, nuevo_precio=None, nueva_categoria=None, nueva_cantidad=None):
+    def modificar_producto(self, ID, nuevo_nombre=None, nuevo_precio=None, nueva_categoria=None, nueva_cantidad=None):
         if self.connection:
             cursor = self.connection.cursor()
             try:
@@ -154,20 +212,20 @@ class ModeloUsuario:
                     sql += "cantidad = %s, "
                     params.append(nueva_cantidad)
                 
-                sql = sql.rstrip(", ") + " WHERE nombre = %s"
-                params.append(nombre)
+                sql = sql.rstrip(", ") + " WHERE id = %s"
+                params.append(ID)
                 cursor.execute(sql, tuple(params))
                 self.connection.commit()
             except Exception as e:
                 print(f"Error al modificar producto: {e}")
                 return []
 
-    def eliminar_producto(self, nombre):
+    def eliminar_producto(self, id):
         if self.connection:
             cursor=self.connection.cursor()
             try:
-                sql = "DELETE FROM productos WHERE nombre = %s"
-                cursor.execute(sql, (nombre,))
+                sql = "DELETE FROM productos WHERE Id = %s"
+                cursor.execute(sql, (id,))
                 self.connection.commit()
 
             except Exception as e:
