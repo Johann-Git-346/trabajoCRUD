@@ -2,6 +2,7 @@ class ModeloUsuario:
     def __init__(self, conexion):
         self.connection = conexion
         self.informe=None
+        self.session = {}
 
     def getInforme(self):
         return self.informe
@@ -88,9 +89,13 @@ class ModeloUsuario:
             resultado = cursor.fetchone()
             cursor.close()
             if resultado:
+                self.session['usuario_id'] = resultado[0]
                 return resultado[0]
-        return None  
-
+        return None
+    
+    def obtener_usuario_id(self):
+        return self.session.get('usuario_id')
+    
     def imagenABaseDatos2(self, nombreProducto, imagenBinario):
         if self.connection:
             cursor = self.connection.cursor()

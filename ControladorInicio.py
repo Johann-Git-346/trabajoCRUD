@@ -3,7 +3,6 @@ from ModeloInicio import ModeloUsuario
 from VistaInicio import VistaUsuario
 from VistaTablas import VistaTablas1
 from VistaVendedor import Davista2
-from VistaCliente import Davista3
 from vistaProductos import Davista
 import json
 
@@ -29,7 +28,7 @@ class Controlador:
         if rol:
             vistaUsuario.destruir()
             if rol == 'administra':#<-- esto lo cambia a minusculas tal cual como lo tiene en la base de datos.
-                self.vistaInformes()  
+                self.mostrar_vista_vendedor()  
             elif rol == "vendedor":
                 self.mostrar_vista_vendedor()
             elif rol == 'CLIENTE':
@@ -38,6 +37,9 @@ class Controlador:
         else:
             return None
         
+    def get_user_role(self):
+        return self.modelo.obtener_usuario_id()
+    
     def obtenerMasYMenosVendidos(self):
         return self.modelo.obtenerMasYMenosVendidos()
     
@@ -64,9 +66,6 @@ class Controlador:
     def vistaInformes(self):
         vistaTablas.iniciarTablas()
 
-    def mostrar_vista_cliente(Self):
-        VistaCliente.iniciarCliente()
-
     def mostrar_vista_cliente(self):
         vista_producto.iniciarProductos()
 
@@ -81,7 +80,6 @@ if conexion:
     vista_producto=Davista(controlador)
     vistaTablas=VistaTablas1(controlador)
     vistaVendedor=Davista2(controlador)
-    VistaCliente=Davista3(controlador)
     vistaUsuario=VistaUsuario(controlador)
     vistaUsuario.iniciarUsuario()
 else:

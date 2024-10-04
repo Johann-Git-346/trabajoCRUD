@@ -170,7 +170,8 @@ class VistaTablas1:
         messagebox.showinfo("Informe listo","informe creado con exito")
 
     def inicio(self):
-        pass
+        self.rootTablas.destroy()
+        self.objController.mostrar_vista_vendedor()
 
     def CerrarSesion(self):
         confirm = messagebox.askyesno("Cerrar Sesión", "¿Está seguro de que desea cerrar sesión?")
