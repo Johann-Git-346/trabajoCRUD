@@ -1,26 +1,36 @@
 {
     "Mas Vendidos": [
         {
-            "Producto": "hp",
+            "Producto": "asus",
             "Cantidad": "35",
             "Categoria": "laptop"
         },
         {
-            "Producto": "honor x8a",
-            "Cantidad": "6",
-            "Categoria": "celular"
+            "Producto": "hp",
+            "Cantidad": "30",
+            "Categoria": "laptop"
+        },
+        {
+            "Producto": "acer",
+            "Cantidad": "26",
+            "Categoria": "laptop"
         }
     ],
     "Menos Vendidos": [
         {
-            "Producto": "huawei y9",
-            "Cantidad": "5",
+            "Producto": "nokia",
+            "Cantidad": "25",
             "Categoria": "celular"
         },
         {
-            "Producto": "asus",
-            "Cantidad": "4",
-            "Categoria": "laptop"
+            "Producto": "iphone",
+            "Cantidad": "18",
+            "Categoria": "celular"
+        },
+        {
+            "Producto": "huawey y9",
+            "Cantidad": "12",
+            "Categoria": "celular"
         }
     ]
 }

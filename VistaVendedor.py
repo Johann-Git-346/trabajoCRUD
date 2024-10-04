@@ -11,7 +11,7 @@ class Davista2:
     
     def iniciarVendedor(self):
         self.rootVendedor = tk.Tk()
-        self.rootVendedor.title("VENDEDOR")
+        self.rootVendedor.title("PRODUCTOS")
         self.rootVendedor.geometry("800x600")
 
         self.rootVendedor.state('zoomed')
@@ -231,13 +231,15 @@ class Davista2:
         mostrarProductos = tk.Label(self.frameMostrar, text="Productos",foreground="#000000", font=("Arial", 16,"bold"),bg="#B0E0E6",relief=tk.SOLID, borderwidth=1)
         mostrarProductos.pack(side=tk.TOP, pady=20,padx=30)
 
-        self.mostrarProductos_tree = ttk.Treeview(self.frameMostrar,columns=("Producto", "Cantidad", "Categoria","Precio" , "Imagen"), show="headings")
+        self.mostrarProductos_tree = ttk.Treeview(self.frameMostrar,columns=("ID","Producto", "Cantidad", "Categoria","Precio" , "Imagen"), show="headings")
+        self.mostrarProductos_tree.heading("ID", text="ID")
         self.mostrarProductos_tree.heading("Producto", text="Nombre Producto")
         self.mostrarProductos_tree.heading("Cantidad", text="Cantidad")
         self.mostrarProductos_tree.heading("Categoria", text="Categoria")
         self.mostrarProductos_tree.heading("Precio", text="Precio")
         self.mostrarProductos_tree.heading("Imagen", text="Imagen")
         
+        self.mostrarProductos_tree.column("ID", width=30)
         self.mostrarProductos_tree.column("Producto", width=30)
         self.mostrarProductos_tree.column("Cantidad", width=30)
         self.mostrarProductos_tree.column("Categoria", width=30)
@@ -252,10 +254,16 @@ class Davista2:
         entry_frame = tk.Frame(self.frameMostrar,bg="#D3D3D3")
         entry_frame.pack(padx=5, pady=5)
 
+        Id=tk.IntVar()
         nombre=tk.StringVar()
         precio=tk.DoubleVar()
         categoria=tk.StringVar()
         cantidad=tk.IntVar()
+
+        self.labelId = tk.Label(entry_frame, text="ID:",bg="#D3D3D3",font=("Arial", 10,"bold"),foreground="black")
+        self.labelId.pack(side=tk.LEFT, padx=15, pady=5)
+        self.entry_Id = tk.Entry(entry_frame,textvariable=Id)
+        self.entry_Id.pack(side=tk.LEFT, padx=10, pady=5)
 
         self.labelProducto = tk.Label(entry_frame, text="Nombre:",bg="#D3D3D3",font=("Arial", 10,"bold"),foreground="black")
         self.labelProducto.pack(side=tk.LEFT, padx=15, pady=5)
@@ -280,7 +288,7 @@ class Davista2:
         button_frame = tk.Frame(self.frameMostrar,bg="#D3D3D3")
         button_frame.pack(padx=5, pady=5)
 
-        datos=[nombre,cantidad,categoria,precio]
+        datos=[Id,nombre,cantidad,categoria,precio]
 
         self.botonAgregar=tk.Button(button_frame,text="Agregar",command=lambda:self.agregar_Producto(datos),cursor="hand2", bg="#87CEEB",font=("Arial", 10,"bold"),foreground="black")
         self.botonAgregar.pack(side=tk.LEFT, padx=15, pady=5)
@@ -303,32 +311,35 @@ class Davista2:
         self.Productos = self.objController.obtener_productos()
         for producto in self.Productos:
             imagen_text = "Sí" if producto[5] else "No"
-            self.mostrarProductos_tree.insert("", "end", values=(producto[1], producto[4], producto[3], producto[2], imagen_text))
+            self.mostrarProductos_tree.insert("", "end", values=(producto[0], producto[1], producto[4], producto[3],producto[2], imagen_text))
 
     def on_tree_select(self, event):
         selected_item = self.mostrarProductos_tree.selection()[0]
         item_values = self.mostrarProductos_tree.item(selected_item, "values")
+        self.entry_Id.delete(0, tk.END)
+        self.entry_Id.insert(0, item_values[0])
         self.entry_producto.delete(0, tk.END)
-        self.entry_producto.insert(0, item_values[0])
+        self.entry_producto.insert(0, item_values[1])
         self.entry_cantidad.delete(0, tk.END)
-        self.entry_cantidad.insert(0, item_values[1])
+        self.entry_cantidad.insert(0, item_values[2])
         self.entry_categoria.delete(0, tk.END)
-        self.entry_categoria.insert(0, item_values[2])
+        self.entry_categoria.insert(0, item_values[3])
         self.entry_Precio.delete(0, tk.END)
-        self.entry_Precio.insert(0, item_values[3])
+        self.entry_Precio.insert(0, item_values[4])
         self.selected_item = selected_item
 
     def agregar_Producto(self,dato):
-        nombre=dato[0].get()
-        cantidad=dato[1].get()
-        categoria=dato[2].get()
-        precio=dato[3].get()
+        Id=dato[0].get()
+        nombre=dato[1].get()
+        cantidad=dato[2].get()
+        categoria=dato[3].get()
+        precio=dato[4].get()
         if not nombre or not precio or not categoria or not cantidad:
             messagebox.showerror("Error", "Todos los campos son obligatorios para agregar un producto")
             return
 
         try:
-            self.objController.agregar_productos(nombre,precio,categoria,cantidad)
+            self.objController.agregar_productos(Id,nombre,precio,categoria,cantidad)
             self.cargar_datos()
             self.limpiar_campos()
             messagebox.showinfo("Exito","producto creado con exito")
@@ -337,11 +348,11 @@ class Davista2:
             messagebox.showerror("Error", "Por favor, ingrese valores numéricos válidos para el precio y la cantidad")
 
     def modificarDatos(self,dato):
-        nombre2=dato[0].get()
-        nuevo_nombre=dato[0].get()
-        nuevo_cantidad=dato[1].get()
-        nuevo_categoria=dato[2].get()
-        nuevo_precio=dato[3].get()
+        nombre2=dato[1].get()
+        nuevo_nombre=dato[1].get()
+        nuevo_cantidad=dato[2].get()
+        nuevo_categoria=dato[3].get()
+        nuevo_precio=dato[4].get()
         try:
             self.objController.modificar_producto(nombre2,nuevo_nombre,nuevo_precio,nuevo_categoria,nuevo_cantidad)
             self.cargar_datos()
@@ -352,10 +363,11 @@ class Davista2:
 
 
     def eliminarDatos(self,dato):
-        nombre=dato[0].get()
+        Id=dato[0].get()
+        nombre=dato[1].get()
         producto = self.objController.obtener_producto_por_nombre(nombre)
         if producto:
-            self.objController.eliminar_producto(nombre)
+            self.objController.eliminar_producto(Id)
             self.cargar_datos()
             self.limpiar_campos()
             messagebox.showinfo("Éxito", "Producto eliminado correctamente")
@@ -363,7 +375,7 @@ class Davista2:
             messagebox.showerror("Error", "Producto no encontrado")
 
     def agregar_modificar_imagen(self,dato):
-        nombre=dato[0].get()
+        nombre=dato[1].get()
         self.montarImagen(nombre)
         self.cargar_datos()
         self.limpiar_campos()
