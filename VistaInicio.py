@@ -57,7 +57,7 @@ class VistaUsuario:
 
         rol_var = tk.StringVar(value="Usuario")
 
-        radio_usuario = tk.Radiobutton(self.ventana_registro, text="Administrador", variable=rol_var, value="administras", bg="#D3D3D3", font=("Arial", 12))
+        radio_usuario = tk.Radiobutton(self.ventana_registro, text="Cliente", variable=rol_var, value="CLIENTE", bg="#D3D3D3", font=("Arial", 12))
         radio_usuario.pack()
 
         radio_vendedor = tk.Radiobutton(self.ventana_registro, text="Vendedor", variable=rol_var, value="Vendedor", bg="#D3D3D3", font=("Arial", 12))

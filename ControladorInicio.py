@@ -31,6 +31,8 @@ class Controlador:
                 self.mostrar_vista_vendedor()  
             elif rol == "vendedor":
                 self.mostrar_vista_vendedor()
+            elif rol == 'CLIENTE':
+                self.mostrar_vista_cliente()
             return rol
         else:
             return None
@@ -69,6 +71,9 @@ class Controlador:
 
     def vistaInformes(self):
         vistaTablas.iniciarTablas()
+
+    def mostrar_vista_cliente(self):
+        vista_producto.iniciarProductos()
 
     def mostrarLogin(self):
         vistaUsuario.iniciarUsuario()
