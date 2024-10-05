@@ -3,7 +3,7 @@ from ModeloInicio import ModeloUsuario
 from VistaInicio import VistaUsuario
 from VistaTablas import VistaTablas1
 from VistaVendedor import Davista2
-from VistaProductos import Davista
+from vistaProductos import Davista
 import json
 
 class Controlador:

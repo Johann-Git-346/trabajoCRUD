@@ -34,6 +34,16 @@ class Davista:
         logo.pack(side=tk.RIGHT, padx=10, pady=10)
         logo.config(background="#333333")
 
+        # Añadir un widget de Frame central vacío para centrar los otros widgets
+        spacer_left = tk.Frame(self.frame_top)
+        spacer_left.pack(side=tk.LEFT, expand=True)
+        spacer_left.config(background="#333333")
+
+        # Añadir un widget de Frame central vacío para centrar los otros widgets
+        spacer_right = tk.Frame(self.frame_top)
+        spacer_right.pack(side=tk.RIGHT, expand=True)
+        spacer_right.config(background="#333333")
+
         etiqueta = tk.Label(logo)
         etiqueta.pack(side=tk.RIGHT)
         etiqueta.config(background="#333333")
