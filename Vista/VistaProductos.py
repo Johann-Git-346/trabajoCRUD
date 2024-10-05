@@ -23,7 +23,7 @@ class Davista:
         self.rootCliente.mainloop()
 
     def create_top_frame(self):
-        """ Crear el marco superior para el nombre de la empresa y la imagen del logo. """
+        # Crear el marco superior para el nombre de la empresa y la imagen del logo. 
         self.frame_top = tk.Frame(self.rootCliente, relief=tk.RAISED, borderwidth=1)
         self.frame_top.pack(side=tk.TOP, fill=tk.X)
         self.frame_top.config(background="#333333")
@@ -67,7 +67,7 @@ class Davista:
             print(f"Error al abrir o procesar la imagen: {e}")
 
     def create_sidebar_frame(self):
-        """ Crear el marco lateral con los botones de opciones. """
+        # Crear el marco lateral con los botones de opciones. 
         self.frame_sidebar = tk.Frame(self.rootCliente, relief=tk.RAISED, borderwidth=1)
         self.frame_sidebar.pack(side=tk.LEFT, fill=tk.Y)
         self.frame_sidebar.config(background="#D3D3D3")
@@ -88,7 +88,7 @@ class Davista:
       
 
     def create_catalog_frame(self):
-        """ Crear el marco para las categorías y el catálogo. """
+        # Crear el marco para las categorías y el catálogo. 
         self.productos = self.objController.obtener_productos()
 
         self.frame_catalog = tk.Frame(self.rootCliente)
@@ -115,17 +115,17 @@ class Davista:
         self.mostrar_productos_categoria("celular")
 
     def catalogoTelefono(self):
-        """ Muestra los productos de la categoría celulares. """
+        # Muestra los productos de la categoría celulares. 
         self.catalog_title.config(text="Celulares")
         self.mostrar_productos_categoria("celular")
 
     def catalogoLaptop(self):
-        """ Muestra los productos de la categoría laptops. """
+        # Muestra los productos de la categoría laptops. 
         self.catalog_title.config(text="Laptops")
         self.mostrar_productos_categoria("laptop")
 
     def mostrar_productos_categoria(self, categoria):
-        """ Muestra los productos filtrados por categoría. """
+        # Muestra los productos filtrados por categoría. 
         self.catalog_title.config(text=categoria)
 
         self.productos_filtrados = [p for p in self.productos if p[3].lower() == categoria.lower()]
@@ -150,7 +150,7 @@ class Davista:
                     self.crear_cuadro_producto(self.product_frame, self.productos_filtrados[img_index])
 
     def crear_cuadro_producto(self, product_frame, producto):
-        """ Crea un cuadro individual para un producto. """
+        # Crea un cuadro individual para un producto. 
         try:
             imagen = Image.open(io.BytesIO(producto[5]))
             imagen = imagen.resize((110, 110))
@@ -170,7 +170,7 @@ class Davista:
 
 
     def agregar_al_carrito(self, producto, info_label):
-        """ Agrega el producto al carrito de compras. """
+        #Agrega el producto al carrito de compras. 
         if producto[4] > 0:  # Solo agregar si hay stock disponible
             cantidad_a_agregar = 1
                 
@@ -187,7 +187,7 @@ class Davista:
             messagebox.showwarning("Sin stock", f"No hay suficiente stock para {producto[1]}")
 
     def actualizar_cantidad_producto(self, producto, cantidad, info_label):
-        """ Actualiza la cantidad del producto en la vista y en la base de datos. """
+        # Actualiza la cantidad del producto en la vista y en la base de datos. 
         nuevo_stock = producto[4] - cantidad
         # Actualizar la cantidad en la base de datos
         self.objController.actualizar_inventario(producto[0], cantidad)  # Suponiendo que el ID del producto está en la primera posición
@@ -196,7 +196,7 @@ class Davista:
         #info_label.config(text=f"Nombre: {producto[1]}\nPrecio: {producto[2]}\nCantidad: {nuevo_stock}")
 
     def mostrarCarrito(self):
-        """ Muestra los productos en el carrito. """
+        # Muestra los productos en el carrito.
         if not self.carrito:
             messagebox.showinfo("Carrito", "El carrito está vacío.")
             return
@@ -222,7 +222,7 @@ class Davista:
 
 
     def modificar_producto(self, producto, cantidad_actual):
-        """ Modifica la cantidad de un producto en el carrito. """
+        #Modifica la cantidad de un producto en el carrito. 
         def guardar_cambio():
             nueva_cantidad = int(entry.get())
             if nueva_cantidad < 0:
@@ -256,11 +256,11 @@ class Davista:
         self.objController.mostrar_vista_cliente()
 
     def actualizar_stock_producto(self, producto, cantidad):
-        """ Actualiza el stock del producto en la base de datos. """
+       # Actualiza el stock del producto en la base de datos.
         self.objController.actualizar_inventario(producto[0], -cantidad)  # Actualiza el stock en la base de datos
 
     def realizar_pedido(self):
-        """ Realiza el pedido, limpia el carrito y actualiza la interfaz. """
+        # Realiza el pedido, limpia el carrito y actualiza la interfaz. 
         if not self.carrito:
             messagebox.showwarning("Carrito vacío", "El carrito está vacío, no puedes realizar un pedido.")
             return
