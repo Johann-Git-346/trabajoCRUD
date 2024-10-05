@@ -6,14 +6,14 @@
             "Categoria": "laptop"
         },
         {
+            "Producto": "huawey y9",
+            "Cantidad": "33",
+            "Categoria": "celular"
+        },
+        {
             "Producto": "hp",
             "Cantidad": "30",
             "Categoria": "laptop"
-        },
-        {
-            "Producto": "redmi",
-            "Cantidad": "25",
-            "Categoria": "celular"
         }
     ],
     "Menos Vendidos": [
@@ -24,12 +24,12 @@
         },
         {
             "Producto": "iphone",
-            "Cantidad": "18",
+            "Cantidad": "20",
             "Categoria": "celular"
         },
         {
-            "Producto": "huawey y9",
-            "Cantidad": "12",
+            "Producto": "redmi",
+            "Cantidad": "17",
             "Categoria": "celular"
         }
     ]
