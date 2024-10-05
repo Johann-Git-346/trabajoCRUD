@@ -6,6 +6,7 @@ from Vista.VistaVendedor import Davista2
 from Vista.VistaProductos import Davista
 import json
 
+
 class Controlador:
     def __init__(self, conexion, modelo):
         self.conexion=conexion
