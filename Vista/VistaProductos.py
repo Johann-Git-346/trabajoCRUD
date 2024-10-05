@@ -191,9 +191,6 @@ class Davista:
         nuevo_stock = producto[4] - cantidad
         # Actualizar la cantidad en la base de datos
         self.objController.actualizar_inventario(producto[0], cantidad)  # Suponiendo que el ID del producto está en la primera posición
-        # Actualiza la vista
-       
-        #info_label.config(text=f"Nombre: {producto[1]}\nPrecio: {producto[2]}\nCantidad: {nuevo_stock}")
 
     def mostrarCarrito(self):
         # Muestra los productos en el carrito.
