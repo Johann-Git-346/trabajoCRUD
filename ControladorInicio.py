@@ -1,9 +1,9 @@
-from BaseInicio import Crear_Conexion
-from ModeloInicio import ModeloUsuario
-from VistaInicio import VistaUsuario
-from VistaTablas import VistaTablas1
-from VistaVendedor import Davista2
-from VistaProductos import Davista
+from basee.BaseInicio import Crear_Conexion
+from Modelo.ModeloInicio import ModeloUsuario
+from Vista.VistaInicio import VistaUsuario
+from Vista.VistaTablas import VistaTablas1
+from Vista.VistaVendedor import Davista2
+from Vista.VistaProductos import Davista
 import json
 
 class Controlador:
