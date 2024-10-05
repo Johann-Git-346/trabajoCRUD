@@ -232,6 +232,43 @@ class ModeloUsuario:
                 print(f"Error al eliminar producto: {e}")
                 return False
             
+    def realizar_pedido(self,productos_seleccionados):
+        """ Realiza un pedido y actualiza el inventario para cada producto. """
+        for producto in productos_seleccionados:
+            id_producto = producto[0]  # Suponiendo que el ID del producto está en la primera posición
+            cantidad_comprada = producto[4]  # La cantidad comprada está en la posición 4
+
+            # Actualizar el inventario por cada producto
+            self.actualizar_inventario(id_producto, cantidad_comprada)
+
+        # Aquí puedes agregar más lógica para finalizar el pedido, como registrar el pedido en la base de datos
+        print("Pedido realizado con éxito.")
+
+    def actualizar_inventario(self, id_producto, cantidad_comprada):
+        """ Actualiza el inventario de un producto tras realizar una compra. """
+        if self.connection:
+            cursor = self.connection.cursor()
+            try:
+                # Primero, obtener la cantidad actual del producto
+                cursor.execute("SELECT cantidad FROM productos WHERE id = %s", (id_producto,))
+                cantidad_actual = cursor.fetchone()[0]
+
+                # Calcular la nueva cantidad después de la compra
+                nueva_cantidad = cantidad_actual - cantidad_comprada
+
+                # Evitar cantidades negativas
+                if nueva_cantidad < 0:
+                    nueva_cantidad = 0
+
+                # Actualizar la cantidad en la base de datos
+                cursor.execute("UPDATE productos SET cantidad = %s WHERE id = %s", (nueva_cantidad, id_producto))
+                self.connection.commit()
+
+            except Exception as e:
+                print(f"Error al actualizar el inventario: {e}")
+            finally:
+                cursor.close()
+            
     def guardarInforme(self):
         try:
             with open("informeProductos.txt", "w") as file:

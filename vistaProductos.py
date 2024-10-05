@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
 import io
@@ -102,7 +102,7 @@ class Davista:
         categories = ["Celular", "Laptops"]
         comandoCategoria = [self.catalogoTelefono, self.catalogoLaptop]
         for text, comando in zip(categories, comandoCategoria):
-            tk.Button(self.frame_categories, cursor="hand2", bg="#ADD8E6", font=("Arial", 10, "bold"), foreground="black", text=text, command=comando).pack(side=tk.LEFT, padx=280, pady=5)
+            tk.Button(self.frame_categories, cursor="hand2", bg="#ADD8E6", font=("Arial", 10, "bold"), foreground="black", text=text, command=comando).pack(side=tk.LEFT, padx=260, pady=5)
 
         self.catalog_title = tk.Label(self.frame_catalog, text="Celular", foreground="#000000", font=("Arial", 16, "bold"), relief=tk.GROOVE, borderwidth=2)
         self.catalog_title.pack(side=tk.TOP, pady=10)
